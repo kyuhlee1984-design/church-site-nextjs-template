@@ -459,6 +459,10 @@ section {
     margin-bottom: var(--space-lg);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     line-height: 1.2;
+    white-space: nowrap;
+    /* Prevent text wrapping */
+    overflow: visible;
+    /* Allow text to extend */
 }
 
 .hero-subtitle {
@@ -690,6 +694,8 @@ section {
 
     .hero-title {
         font-size: clamp(1.75rem, 8vw, 2rem);
+        white-space: normal;
+        /* Allow wrapping on small mobile screens */
     }
 
     .hero-subtitle {
