@@ -27,7 +27,7 @@ export default function Give() {
             >
                 <div className="hero-content">
                     <h1 className="hero-title">Give</h1>
-                    <p className="hero-subtitle">Generosity changes lives and builds God's kingdom</p>
+                    <p className="hero-subtitle">Generosity changes lives and builds God&apos;s kingdom</p>
                 </div>
             </section>
 

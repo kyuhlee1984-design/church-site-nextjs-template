@@ -32,7 +32,7 @@ export default function Live() {
                                         Stream Offline
                                     </h3>
                                     <p style={{ color: "rgba(255,255,255,0.9)" }}>
-                                        We're not currently streaming. Check back during service times!
+                                        We&apos;re not currently streaming. Check back during service times!
                                     </p>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@ export default function Live() {
                                 </li>
                             </ul>
                             <p className="mt-lg text-light">
-                                Can't make it in person? We live stream both services every Sunday!
+                                Can&apos;t make it in person? We live stream both services every Sunday!
                             </p>
                         </div>
                     </div>
