@@ -1,82 +1,92 @@
-# Grace Community Church Website
+# Westside Presbyterian Church - Next.js Site
 
-A modern, responsive church website with bilingual support (English/Korean) featuring card-based design and comprehensive functionality.
+This is a Next.js-based website for Westside Presbyterian Church, migrated from vanilla HTML/CSS/JS.
 
-## 🚀 Quick Start
+## Getting Started
 
-1. **Open the website**: Double-click `index.html` to view in your browser
-2. **Navigate**: Click menu items to explore all 7 pages
-3. **Switch languages**: Click EN / 한국어 buttons in the top-right corner
-4. **Mobile view**: Resize your browser to see the responsive mobile menu
+### Development Server
 
-## 📋 Features
+First, install dependencies:
+```bash
+npm install
+```
 
-✅ **7 Complete Pages**: Home, About, Ministries, Sermons, Events, Live Worship, Give  
-✅ **Bilingual**: Instant English ↔ Korean switching  
-✅ **Responsive**: Perfect on mobile, tablet, and desktop  
-✅ **Modern Design**: Card-based UI with smooth animations  
-✅ **Search**: Filter sermons in real-time  
-✅ **Accessible**: Keyboard navigation and screen reader friendly  
+Then, run the development server:
+```bash
+npm run dev
+```
 
-## 📁 Files
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- `index.html` - Main website file (all pages)
-- `styles.css` - Complete design system
-- `script.js` - Interactive features
-- `images/` - Placeholder for your photos (see images/README.md)
+### Building for Production
 
-## 🎨 Customize
+```bash
+npm run build
+npm start
+```
 
-### Add Your Photos
-1. See `images/README.md` for specifications
-2. Save images with exact filenames (e.g., `hero-home.jpg`)
-3. Place in `images/` folder
+## Features
 
-### Update Content
-1. Open `index.html` in any text editor
-2. Find and replace "Grace Community Church" with your church name
-3. Update contact info, service times, etc.
-4. Update both `data-en` (English) and `data-ko` (Korean) attributes
+- **Bilingual Support**: English and Korean language toggle
+- **Responsive Design**: Fully responsive across all devices
+- **Multiple Pages**: Home, About, Ministries, Sermons, Events, Live Worship, Give
+- **Modern Stack**: Built with Next.js 15, React 19, and TypeScript
 
-### Enable Live Streaming
-1. Open `script.js`
-2. Find line: `// embedYouTubeLive('YOUR_VIDEO_ID_HERE');`
-3. Uncomment and add your YouTube video ID
+## Project Structure
 
-## 🌐 Deploy Online
+```
+├── app/
+│   ├── about/          # About page
+│   ├── ministries/     # Ministries page
+│   ├── sermons/        # Sermons page
+│   ├── events/         # Events page
+│   ├── live/           # Live worship page
+│   ├── give/           # Give page
+│   ├── components/     # Shared components (Header, Footer)
+│   ├── data/           # Content data files
+│   ├── globals.css     # Global styles
+│   ├── layout.tsx      # Root layout
+│   └── page.tsx        # Home page
+├── public/
+│   └── images/         # Static images
+└── README.md
+```
 
-**GitHub Pages (Free)**
-1. Create GitHub account
-2. Create new repository
-3. Upload all files
-4. Enable GitHub Pages in settings
+## Content Management
 
-**Netlify (Free)**
-1. Visit netlify.com
-2. Drag and drop the project folder
-3. Your site is live!
+### Updating Content
 
-## 📖 Documentation
+All content is currently embedded in the page components. To update:
 
-See comprehensive documentation in the artifacts:
-- Implementation details
-- Feature guide
-- Customization instructions
-- Deployment options
+1. Navigate to the respective page file in `app/[page]/page.tsx`
+2. Modify the content directly in the component
+3. The changes will hot-reload automatically in development
 
-## 🎯 Browser Support
+### Future Improvements
 
-Works on all modern browsers:
-- Chrome, Firefox, Safari, Edge (latest versions)
-- Mobile browsers on iOS and Android
+For easier content management, consider:
+- Moving content to JSON files in `app/data/`
+- Using a headless CMS like Contentful or Sanity
+- Implementing a simple admin panel
 
-## ✨ Technologies
+## Deployment
 
-- Vanilla HTML5, CSS3, JavaScript
-- No frameworks or dependencies
-- Google Fonts (Inter, Outfit)
-- Native lazy loading for images
+### Netlify (Recommended)
 
----
+1. Push your code to GitHub
+2. Connect your repository to Netlify
+3. Netlify will auto-detect Next.js and configure build settings
+4. Deploy!
 
-**Built with ❤️ for ministry**
+### Vercel
+
+1. Push your code to GitHub
+2. Import project in Vercel
+3. Deploy!
+
+## Technologies
+
+- **Framework**: Next.js 15.5.12
+- **Language**: TypeScript 5
+- **Styling**: CSS Modules & Global CSS
+- **Fonts**: Google Fonts (Inter, Outfit)
