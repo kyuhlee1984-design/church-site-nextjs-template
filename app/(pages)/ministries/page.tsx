@@ -13,6 +13,7 @@ export default function Ministries() {
         },
         ministries: [
             {
+                id: "promise-land",
                 title: { en: "Promise Land (Children)", ko: "Promise Land (유아·초등부)" },
                 description: {
                     en: "Our children's ministry (Promise Land) provides a loving environment for infants through elementary students to learn about God's love through engaging activities, worship, and Bible stories.",
@@ -20,6 +21,7 @@ export default function Ministries() {
                 },
             },
             {
+                id: "kings-army",
                 title: { en: "King's Army (Middle School)", ko: "King's Army (중학부)" },
                 description: {
                     en: "King's Army is our middle school ministry where students develop strong faith foundations, build lasting friendships, and learn to serve God with courage and passion.",
@@ -27,6 +29,7 @@ export default function Ministries() {
                 },
             },
             {
+                id: "second-chapter",
                 title: { en: "Second Chapter (High School)", ko: "Second Chapter (고등부)" },
                 description: {
                     en: "Second Chapter is our high school ministry empowering students to write their faith story with purpose, helping them navigate challenges and discover their identity in Christ.",
@@ -34,10 +37,19 @@ export default function Ministries() {
                 },
             },
             {
-                title: { en: "English Ministry & Young Adults", ko: "영어부 및 청년부" },
+                id: "korean-school",
+                title: { en: "Westside Korean Language School", ko: "서부한국어학교" },
                 description: {
-                    en: "Our English Ministry and Young Adult Community provide worship, fellowship, and discipleship opportunities for English-speaking members and young adults, building a vibrant community of faith.",
-                    ko: "영어 공동체는 영어권 교인들과 청년들을 위한 예배, 친교, 그리고 제자 훈련의 기회를 제공하며, 활기찬 믿음의 공동체를 세워갑니다.",
+                    en: "Our Korean Language School helps children and youth learn Korean language and culture in a fun and engaging environment. We offer classes for various age groups and proficiency levels.",
+                    ko: "서부한국어학교는 아이들과 청소년들이 재미있고 흥미로운 환경에서 한국어와 문화를 배울 수 있도록 돕습니다. 다양한 연령대와 수준별 클래스를 제공합니다.",
+                },
+            },
+            {
+                id: "enoch-university",
+                title: { en: "Enoch University Canada", ko: "캐나다 에녹대학" },
+                description: {
+                    en: "Enoch University Canada offers theological education and ministry training. We partner with this institution to provide opportunities for spiritual growth and leadership development.",
+                    ko: "캐나다 에녹대학은 신학 교육과 사역 훈련을 제공합니다. 이 기관과 협력하여 영적 성장과 리더십 개발의 기회를 제공합니다.",
                 },
             },
         ],
@@ -59,7 +71,7 @@ export default function Ministries() {
             <section className="container">
                 <div className="card-grid card-grid-2">
                     {t.ministries.map((ministry, index) => (
-                        <div key={index} className="card scroll-fade">
+                        <div key={index} id={ministry.id} className="card scroll-fade">
                             <div className="card-content">
                                 <h3 className="card-title">{ministry.title[lang]}</h3>
                                 <p className="card-description">{ministry.description[lang]}</p>

@@ -11,12 +11,43 @@ export default function About() {
             title: { en: "Welcome to Westside Presbyterian", ko: "서부장로교회에 오신 것을 환영합니다!" },
             subtitle: { en: "We're glad you're here!", ko: "참! 잘 오셨습니다." },
         },
+        vision: {
+            title: { en: "Church Vision", ko: "교회 비전" },
+            mission: {
+                en: "To be a church that truly worships God and faithfully proclaims the Gospel of Jesus Christ.",
+                ko: "하나님을 진정으로 예배하며 예수 그리스도의 복음을 충실히 선포하는 교회가 되는 것입니다.",
+            },
+            values: [
+                {
+                    title: { en: "Gospel-Centered", ko: "복음 중심" },
+                    description: { en: "We proclaim the Gospel to make the church truly the church.", ko: "오직 복음을 선포하여 교회를 교회되게 합니다." },
+                },
+                {
+                    title: { en: "Worship-Focused", ko: "예배 중심" },
+                    description: { en: "We strive to make worship truly worship in spirit and truth.", ko: "예배를 예배되게 하여 신령과 진정으로 드립니다." },
+                },
+                {
+                    title: { en: "Community Service", ko: "지역 사회 섬김" },
+                    description: { en: "We serve our community with love as salt and light in the world.", ko: "온 세상에 빛과 소금이 되어 사랑으로 지역사회를 섬깁니다." },
+                },
+            ],
+        },
         about: {
             title: { en: "About Us", ko: "교회 소개" },
             content: {
                 en: "Westside Presbyterian Church is located in Mississauga, Ontario, Canada. Founded in 1987, our church has been faithfully serving the Korean-Canadian community for over 35 years. We are part of the Presbyterian Church in Canada, committed to biblical teaching, worship, and mission work.\n\nSince 1994, under the leadership of Senior Pastor Hunseung Park, we have been dedicated to preaching the Gospel, making the church truly the church, and making worship truly worship. We strive to be salt and light in the world, witnessing the Gospel and serving our community with love.",
                 ko: "서부장로교회는 캐나다 온타리오주 미시사가에 위치하고 있으며, 1987년에 창립되었습니다. 35년이 넘는 기간 동안 한인 커뮤니티를 섬겨왔습니다. 본 교회는 캐나다장로교(Presbyterian Church in Canada)에 소속되어 있으며, 성경적 가르침과 예배, 그리고 선교에 힘쓰고 있습니다.\n\n1994년부터 담임목사 박헌승 목사님과 더불어, 오직 복음을 선포하여 교회를 교회되게 하고, 예배를 예배되게 하는 교회입니다. 그리고 온 세상에 빛과 소금이 되어 사랑으로 지역사회를 섬기며 복음을 증거하는 교회입니다.",
             },
+        },
+        history: {
+            title: { en: "Our History", ko: "발자취" },
+            timeline: [
+                { year: "1987", event: { en: "Westside Presbyterian Church founded", ko: "서부장로교회 창립" } },
+                { year: "1994", event: { en: "Rev. Hunseung Park begins serving as Senior Pastor", ko: "박헌승 목사님 담임목사로 부임" } },
+                { year: "2000s", event: { en: "Expansion of ministry programs and community outreach", ko: "사역 프로그램 확장 및 지역 사회 봉사 활동 강화" } },
+                { year: "2010s", event: { en: "Launch of English Ministry (EM) and youth programs", ko: "영어권 예배(EM) 및 청소년 프로그램 시작" } },
+                { year: "Present", event: { en: "Continuing to serve the community with God's love", ko: "하나님의 사랑으로 지역사회를 계속 섬기고 있습니다" } },
+            ],
         },
         pastor: {
             title: { en: "Senior Pastor", ko: "담임 목사" },
@@ -148,6 +179,9 @@ export default function About() {
             {/* Quick Navigation */}
             <section className="container">
                 <div className="quick-nav">
+                    <a href="#vision" className="quick-nav-item">
+                        {lang === "en" ? "Vision" : "교회비전"}
+                    </a>
                     <a href="#about" className="quick-nav-item">
                         {lang === "en" ? "About" : "교회소개"}
                     </a>
@@ -160,6 +194,32 @@ export default function About() {
                     <a href="#location" className="quick-nav-item">
                         {lang === "en" ? "Location" : "찾아오시는 길"}
                     </a>
+                    <a href="#history" className="quick-nav-item">
+                        {lang === "en" ? "History" : "발자취"}
+                    </a>
+                </div>
+            </section>
+
+            {/* Vision Section */}
+            <section id="vision" className="container">
+                <h2 className="section-title">{t.vision.title[lang]}</h2>
+                <div className="content-wrapper">
+                    <div className="card scroll-fade" style={{ marginBottom: 'var(--space-2xl)' }}>
+                        <div className="card-content">
+                            <h3 className="card-title">{lang === "en" ? "Our Mission" : "우리의 사명"}</h3>
+                            <p className="text-lg">{t.vision.mission[lang]}</p>
+                        </div>
+                    </div>
+                    <div className="card-grid card-grid-3">
+                        {t.vision.values.map((value, index) => (
+                            <div key={index} className="card scroll-fade">
+                                <div className="card-content">
+                                    <h3 className="card-title">{value.title[lang]}</h3>
+                                    <p className="card-description">{value.description[lang]}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
@@ -251,6 +311,23 @@ export default function About() {
                             </div>
                         </div>
                     ))}
+                </div>
+            </section>
+
+            {/* History Section */}
+            <section id="history" className="container">
+                <h2 className="section-title">{t.history.title[lang]}</h2>
+                <div className="content-wrapper">
+                    <div className="timeline">
+                        {t.history.timeline.map((item, index) => (
+                            <div key={index} className="timeline-item scroll-fade">
+                                <div className="timeline-year">{item.year}</div>
+                                <div className="timeline-content">
+                                    <p>{item.event[lang]}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
 
@@ -357,6 +434,60 @@ export default function About() {
           color: var(--color-text-light);
         }
 
+        .timeline {
+          max-width: 800px;
+          margin: 0 auto;
+          position: relative;
+          padding-left: var(--space-2xl);
+        }
+
+        .timeline::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 3px;
+          background: linear-gradient(to bottom, var(--color-accent), var(--color-secondary));
+        }
+
+        .timeline-item {
+          position: relative;
+          padding-bottom: var(--space-2xl);
+        }
+
+        .timeline-item::before {
+          content: '';
+          position: absolute;
+          left: calc(-1 * var(--space-2xl) - 6px);
+          top: 0;
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          background-color: var(--color-accent);
+          border: 3px solid white;
+          box-shadow: 0 0 0 3px var(--color-accent);
+        }
+
+        .timeline-year {
+          font-size: var(--font-size-xl);
+          font-weight: var(--font-weight-bold);
+          color: var(--color-accent);
+          margin-bottom: var(--space-sm);
+        }
+
+        .timeline-content {
+          background-color: white;
+          padding: var(--space-lg);
+          border-radius: var(--radius-md);
+          box-shadow: var(--shadow-sm);
+        }
+
+        .timeline-content p {
+          margin: 0;
+          line-height: var(--line-height-relaxed);
+        }
+
         @media (max-width: 768px) {
           .quick-nav {
             gap: var(--space-md);
@@ -365,6 +496,10 @@ export default function About() {
           .quick-nav-item {
             padding: var(--space-sm) var(--space-lg);
             font-size: var(--font-size-sm);
+          }
+
+          .timeline {
+            padding-left: var(--space-xl);
           }
         }
       `}</style>
