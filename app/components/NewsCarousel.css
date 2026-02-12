@@ -1,0 +1,131 @@
+/* === NEWS CAROUSEL === */
+.news-carousel {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.carousel-content {
+    text-align: center;
+    color: white;
+    max-width: 800px;
+    padding: var(--space-2xl);
+}
+
+.carousel-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--space-lg);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+    color: white;
+}
+
+.carousel-description {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    margin-bottom: var(--space-2xl);
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.6;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: var(--space-xl);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--space-md);
+    z-index: 2;
+}
+
+.carousel-indicators .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid white;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    padding: 0;
+}
+
+.carousel-indicators .indicator:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: scale(1.2);
+}
+
+.carousel-indicators .indicator.active {
+    background-color: white;
+    width: 32px;
+    border-radius: 6px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .news-carousel {
+        height: 350px;
+    }
+
+    .carousel-content {
+        padding: var(--space-lg);
+    }
+
+    .carousel-title {
+        font-size: clamp(1.75rem, 6vw, 2rem);
+        margin-bottom: var(--space-md);
+    }
+
+    .carousel-description {
+        font-size: clamp(0.875rem, 4vw, 1rem);
+        margin-bottom: var(--space-xl);
+    }
+
+    .carousel-indicators {
+        bottom: var(--space-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .news-carousel {
+        height: 300px;
+    }
+
+    .carousel-title {
+        font-size: clamp(1.5rem, 7vw, 1.75rem);
+    }
+
+    .carousel-indicators .indicator {
+        width: 10px;
+        height: 10px;
+    }
+
+    .carousel-indicators .indicator.active {
+        width: 24px;
+    }
+}
