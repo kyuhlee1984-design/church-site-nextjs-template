@@ -287,6 +287,11 @@ export default function Header() {
                     }
 
                     .header-actions {
+                        display: flex;
+                        gap: var(--space-sm);
+                    }
+
+                    .mega-menu-btn {
                         display: none;
                     }
 
@@ -295,9 +300,11 @@ export default function Header() {
                     }
 
                     .lang-toggle {
-                        position: absolute;
-                        top: var(--space-md);
-                        right: var(--space-md);
+                        display: flex;
+                    }
+
+                    .site-logo {
+                        max-width: 160px; /* Resize logo to fit mobile header alongside menu buttons */
                     }
                 }
             `}</style>
