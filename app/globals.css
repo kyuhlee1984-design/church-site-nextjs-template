@@ -3,16 +3,16 @@
    ======================================== */
 
 /* === GOOGLE FONTS IMPORT === */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
 
 /* === CSS CUSTOM PROPERTIES === */
 :root {
     /* Color Palette - Warm Neutrals */
-    --color-primary: #f8f6f3;
-    --color-secondary: #e8e4dd;
+    --color-primary: #f5f4f1;
+    --color-secondary: #e6e4df;
     --color-tertiary: #d4cdc3;
-    --color-text-primary: #2c2923;
-    --color-text-secondary: #5a524a;
+    --color-text-primary: #1f1d1a;
+    --color-text-secondary: #524b43;
     --color-text-light: #8a8177;
 
     /* Accent Color */
@@ -27,7 +27,7 @@
     --color-info: #7a9ec1;
 
     /* Background Colors */
-    --color-bg-main: #ffffff;
+    --color-bg-main: #faf9f8;
     --color-bg-secondary: var(--color-primary);
     --color-bg-card: #ffffff;
 

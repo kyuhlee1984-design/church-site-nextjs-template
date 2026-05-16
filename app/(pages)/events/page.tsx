@@ -8,7 +8,7 @@ export default function Events() {
 
     const t = {
         hero: {
-            title: { en: "Events", ko: "행사" },
+            title: { en: "Community", ko: "서부광장" },
             subtitle: { en: "Connect with others and grow together", ko: "다른 사람들과 연결하고 함께 성장하세요" },
         },
         sectionTitle: { en: "Upcoming Events", ko: "다가오는 행사" },

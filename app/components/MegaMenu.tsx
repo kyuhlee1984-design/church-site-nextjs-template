@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "../contexts/LanguageContext";
+import "./MegaMenu.css";
 
 interface MegaMenuProps {
     isOpen: boolean;
@@ -11,6 +12,7 @@ interface MegaMenuProps {
 
 export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
     const { lang } = useLanguage();
+    const menuRef = useRef<HTMLDivElement>(null);
 
     // Close on ESC key
     useEffect(() => {
@@ -27,8 +29,6 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
         };
     }, [isOpen, onClose]);
 
-    if (!isOpen) return null;
-
     const menuSections = [
         {
             title: { en: "About", ko: "교회안내" },
@@ -44,6 +44,7 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
         {
             title: { en: "Ministries", ko: "사역" },
             links: [
+                { href: "/next-gen", label: { en: "Next Generation", ko: "다음세대" } },
                 { href: "/ministries#promise-land", label: { en: "Promise Land", ko: "Promise Land" } },
                 { href: "/ministries#kings-army", label: { en: "King's Army", ko: "King's Army" } },
                 { href: "/ministries#second-chapter", label: { en: "Second Chapter", ko: "Second Chapter" } },
@@ -55,273 +56,137 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
             title: { en: "Worship & Connect", ko: "예배 및 교제" },
             links: [
                 { href: "/em", label: { en: "English Ministry", ko: "영어권 예배" } },
-                { href: "/sermons", label: { en: "Sermons", ko: "설교" } },
+                { href: "/sermons", label: { en: "Sermons", ko: "말씀" } },
                 { href: "/live", label: { en: "Live Stream", ko: "생방송" } },
-                { href: "/events", label: { en: "Events", ko: "행사" } },
+                { href: "/events", label: { en: "Community", ko: "서부광장" } },
             ],
         },
         {
             title: { en: "Get Involved", ko: "참여하기" },
             links: [
-                { href: "/give", label: { en: "Give", ko: "헌금" } },
+                { href: "/give", label: { en: "Online Giving", ko: "온라인헌금" } },
                 { href: "/about#staff", label: { en: "Contact Us", ko: "문의하기" } },
             ],
         },
     ];
 
+    const quickLinks = [
+        {
+            href: "/",
+            label: { en: "Home", ko: "홈" },
+            icon: (
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <path
+                        d="M3 10L10 3L17 10M4 9V16C4 16.5523 4.44772 17 5 17H8V13C8 12.4477 8.44772 12 9 12H11C11.5523 12 12 12.4477 12 13V17H15C15.5523 17 16 16.5523 16 16V9"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                </svg>
+            ),
+        },
+        {
+            href: "/live",
+            label: { en: "Live", ko: "생방송" },
+            icon: (
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <circle cx="10" cy="10" r="3" fill="currentColor" />
+                    <path
+                        d="M10 5V2M10 18V15M15 10H18M2 10H5"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                    />
+                </svg>
+            ),
+        },
+        {
+            href: "/give",
+            label: { en: "Online Giving", ko: "온라인헌금" },
+            icon: (
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <path
+                        d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                    />
+                    <path d="M10 6V14M6 10H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+            ),
+        },
+        {
+            href: "/sermons",
+            label: { en: "Sermons", ko: "말씀" },
+            icon: (
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <path
+                        d="M4 3H16C16.5523 3 17 3.44772 17 4V16C17 16.5523 16.5523 17 16 17H4C3.44772 17 3 16.5523 3 16V4C3 3.44772 3.44772 3 4 3Z"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                    />
+                    <path d="M7 7H13M7 10H13M7 13H10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+            ),
+        },
+    ];
+
     return (
         <>
-            {/* Overlay */}
-            <div className="mega-menu-overlay" onClick={onClose} />
+            {/* Overlay - click to close */}
+            <div
+                className={`mega-menu-overlay ${isOpen ? "active" : ""}`}
+                onClick={onClose}
+            />
 
-            {/* Mega Menu Content */}
-            <div className="mega-menu-content">
-                <div className="mega-menu-header">
-                    <h2>{lang === "en" ? "Full Menu" : "전체메뉴"}</h2>
-                    <button className="mega-menu-close" onClick={onClose} aria-label="Close menu">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path
-                                d="M18 6L6 18M6 6l12 12"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                            />
-                        </svg>
-                    </button>
-                </div>
-
-                <div className="mega-menu-grid">
-                    {menuSections.map((section, index) => (
-                        <div key={index} className="mega-menu-section">
-                            <h3 className="mega-menu-section-title">{section.title[lang]}</h3>
-                            <ul className="mega-menu-links">
-                                {section.links.map((link, linkIndex) => (
-                                    <li key={linkIndex}>
-                                        <Link href={link.href} onClick={onClose}>
-                                            {link.label[lang]}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
+            {/* Mega Menu Panel - drops down from header */}
+            <div
+                ref={menuRef}
+                className={`mega-menu-panel ${isOpen ? "active" : ""}`}
+            >
+                <div className="mega-menu-inner">
+                    {/* Quick Links Row */}
+                    <div className="mega-menu-quick-row">
+                        <span className="quick-label">QUICK LINKS</span>
+                        <div className="quick-links-row">
+                            {quickLinks.map((link, i) => (
+                                <Link key={i} href={link.href} onClick={onClose} className="quick-link-item">
+                                    {link.icon}
+                                    <span>{link.label[lang]}</span>
+                                </Link>
+                            ))}
                         </div>
-                    ))}
-                </div>
+                        <button className="mega-menu-close" onClick={onClose} aria-label="Close menu">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M18 6L6 18M6 6l12 12"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                />
+                            </svg>
+                        </button>
+                    </div>
 
-                {/* Quick Links */}
-                <div className="mega-menu-footer">
-                    <div className="quick-links">
-                        <Link href="/" onClick={onClose} className="quick-link-btn">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path
-                                    d="M3 10L10 3L17 10M4 9V16C4 16.5523 4.44772 17 5 17H8V13C8 12.4477 8.44772 12 9 12H11C11.5523 12 12 12.4477 12 13V17H15C15.5523 17 16 16.5523 16 16V9"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            </svg>
-                            {lang === "en" ? "Home" : "홈"}
-                        </Link>
-                        <Link href="/live" onClick={onClose} className="quick-link-btn">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <circle cx="10" cy="10" r="3" fill="currentColor" />
-                                <path
-                                    d="M10 5V2M10 18V15M15 10H18M2 10H5"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                />
-                            </svg>
-                            {lang === "en" ? "Live" : "생방송"}
-                        </Link>
-                        <Link href="/give" onClick={onClose} className="quick-link-btn">
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path
-                                    d="M10 17.5C14.1421 17.5 17.5 14.1421 17.5 10C17.5 5.85786 14.1421 2.5 10 2.5C5.85786 2.5 2.5 5.85786 2.5 10C2.5 14.1421 5.85786 17.5 10 17.5Z"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                />
-                                <path d="M10 6V14M6 10H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            </svg>
-                            {lang === "en" ? "Give" : "헌금"}
-                        </Link>
+                    {/* Category Grid */}
+                    <div className="mega-menu-grid">
+                        {menuSections.map((section, index) => (
+                            <div key={index} className="mega-menu-column">
+                                <h3 className="mega-menu-category">{section.title[lang]}</h3>
+                                <ul className="mega-menu-links">
+                                    {section.links.map((link, linkIndex) => (
+                                        <li key={linkIndex}>
+                                            <Link href={link.href} onClick={onClose}>
+                                                {link.label[lang]}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
-
-            <style jsx>{`
-                .mega-menu-overlay {
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    background-color: rgba(0, 0, 0, 0.5);
-                    z-index: 9998;
-                    animation: fadeIn 0.2s ease-out;
-                }
-
-                .mega-menu-content {
-                    position: fixed;
-                    top: 0;
-                    right: 0;
-                    width: 100%;
-                    max-width: 600px;
-                    height: 100vh;
-                    background-color: white;
-                    z-index: 9999;
-                    overflow-y: auto;
-                    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
-                    animation: slideInRight 0.3s ease-out;
-                    display: flex;
-                    flex-direction: column;
-                }
-
-                .mega-menu-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    padding: var(--space-xl);
-                    border-bottom: 1px solid var(--color-tertiary);
-                    flex-shrink: 0;
-                }
-
-                .mega-menu-header h2 {
-                    font-size: var(--font-size-2xl);
-                    font-weight: var(--font-weight-bold);
-                    color: var(--color-text-primary);
-                    margin: 0;
-                }
-
-                .mega-menu-close {
-                    background: none;
-                    border: none;
-                    cursor: pointer;
-                    color: var(--color-text-secondary);
-                    padding: var(--space-sm);
-                    transition: color var(--transition-base);
-                }
-
-                .mega-menu-close:hover {
-                    color: var(--color-accent);
-                }
-
-                .mega-menu-grid {
-                    flex: 1;
-                    padding: var(--space-xl);
-                    display: grid;
-                    gap: var(--space-2xl);
-                }
-
-                .mega-menu-section-title {
-                    font-size: var(--font-size-lg);
-                    font-weight: var(--font-weight-bold);
-                    color: var(--color-accent);
-                    margin-bottom: var(--space-md);
-                    padding-bottom: var(--space-sm);
-                    border-bottom: 2px solid var(--color-accent);
-                }
-
-                .mega-menu-links {
-                    list-style: none;
-                    padding: 0;
-                    margin: 0;
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--space-sm);
-                }
-
-                .mega-menu-links li a {
-                    display: block;
-                    padding: var(--space-sm) var(--space-md);
-                    color: var(--color-text-secondary);
-                    font-weight: var(--font-weight-medium);
-                    transition: all var(--transition-base);
-                    border-radius: var(--radius-sm);
-                }
-
-                .mega-menu-links li a:hover {
-                    background-color: var(--color-bg-secondary);
-                    color: var(--color-accent);
-                    transform: translateX(4px);
-                }
-
-                .mega-menu-footer {
-                    padding: var(--space-xl);
-                    border-top: 1px solid var(--color-tertiary);
-                    background-color: var(--color-bg-secondary);
-                    flex-shrink: 0;
-                }
-
-                .quick-links {
-                    display: flex;
-                    gap: var(--space-md);
-                    justify-content: center;
-                }
-
-                .quick-link-btn {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: var(--space-xs);
-                    padding: var(--space-md);
-                    background-color: white;
-                    border-radius: var(--radius-md);
-                    color: var(--color-text-secondary);
-                    font-size: var(--font-size-sm);
-                    font-weight: var(--font-weight-semibold);
-                    transition: all var(--transition-base);
-                    flex: 1;
-                    max-width: 120px;
-                    box-shadow: var(--shadow-sm);
-                }
-
-                .quick-link-btn:hover {
-                    background-color: var(--color-accent);
-                    color: white;
-                    transform: translateY(-2px);
-                    box-shadow: var(--shadow-md);
-                }
-
-                @keyframes fadeIn {
-                    from {
-                        opacity: 0;
-                    }
-                    to {
-                        opacity: 1;
-                    }
-                }
-
-                @keyframes slideInRight {
-                    from {
-                        transform: translateX(100%);
-                    }
-                    to {
-                        transform: translateX(0);
-                    }
-                }
-
-                @media (max-width: 768px) {
-                    .mega-menu-content {
-                        max-width: 100%;
-                    }
-
-                    .mega-menu-header,
-                    .mega-menu-grid,
-                    .mega-menu-footer {
-                        padding: var(--space-lg);
-                    }
-
-                    .quick-links {
-                        gap: var(--space-sm);
-                    }
-
-                    .quick-link-btn {
-                        font-size: 0.75rem;
-                        padding: var(--space-sm);
-                    }
-                }
-            `}</style>
         </>
     );
 }

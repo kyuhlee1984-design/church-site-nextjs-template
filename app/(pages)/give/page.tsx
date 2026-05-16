@@ -8,7 +8,7 @@ export default function Give() {
 
     const t = {
         hero: {
-            title: { en: "Give", ko: "헌금" },
+            title: { en: "Online Giving", ko: "온라인헌금" },
             subtitle: {
                 en: "Generosity changes lives and builds God&apos;s kingdom",
                 ko: "너그러움은 삶을 변화시키고 하나님의 나라를 세웁니다",

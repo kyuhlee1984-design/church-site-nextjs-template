@@ -15,23 +15,24 @@ export default function Header() {
 
   const navItems = [
     { href: "/about", en: "About", ko: "교회안내" },
-    { href: "/ministries", en: "Ministries", ko: "사역" },
+    { href: "/sermons", en: "Sermons", ko: "말씀" },
+    { href: "/next-gen", en: "Next Gen", ko: "다음세대" },
     { href: "/em", en: "EM", ko: "EM" },
-    { href: "/events", en: "Events", ko: "행사" },
-    { href: "/sermons", en: "Sermons", ko: "설교" },
-    { href: "/live", en: "Live", ko: "생방송" },
-    { href: "/give", en: "Give", ko: "헌금" },
+    { href: "/ministries", en: "Ministries", ko: "사역" },
+    { href: "/events", en: "Community", ko: "서부광장" },
+    { href: "/give", en: "Online Giving", ko: "온라인헌금" },
   ];
 
   return (
+    <>
     <header className="site-header">
-      <div className="container header-container">
+      <div className="header-container">
         <Link href="/" className="site-logo">
           <Image
-            src="/images/church-logo.svg"
+            src="/images/church-logo-to-replace.png"
             alt="Westside Presbyterian Church"
-            width={180}
-            height={60}
+            width={329}
+            height={71}
             className="logo-image"
             priority
           />
@@ -98,9 +99,6 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mega Menu Component */}
-      <MegaMenu isOpen={megaMenuOpen} onClose={() => setMegaMenuOpen(false)} />
-
       <style jsx>{`
                 .site-header {
                     position: sticky;
@@ -117,7 +115,9 @@ export default function Header() {
                     align-items: center;
                     justify-content: space-between;
                     height: 100%;
-                    gap: var(--space-md);
+                    width: 100%;
+                    padding: 0 clamp(1rem, 3vw, 2rem);
+                    position: relative;
                 }
 
                 .site-logo {
@@ -138,8 +138,9 @@ export default function Header() {
                 }
 
                 .main-nav {
-                    flex: 1;
-                    max-width: 800px;
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
                 }
 
                 .main-nav ul {
@@ -264,6 +265,7 @@ export default function Header() {
                         top: var(--header-height);
                         left: 0;
                         right: 0;
+                        transform: none;
                         background-color: white;
                         box-shadow: var(--shadow-lg);
                         padding: var(--space-lg);
@@ -300,5 +302,9 @@ export default function Header() {
                 }
             `}</style>
     </header>
+
+    {/* Mega Menu Component - placed outside header to avoid backdrop-filter containing block */}
+    <MegaMenu isOpen={megaMenuOpen} onClose={() => setMegaMenuOpen(false)} />
+    </>
   );
 }

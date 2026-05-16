@@ -1,14 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 export default function Sermons() {
     const { lang } = useLanguage();
+    const [searchQuery, setSearchQuery] = useState("");
 
     const t = {
         hero: {
-            title: { en: "Sermons", ko: "설교" },
+            title: { en: "Sermons", ko: "말씀" },
             subtitle: { en: "Listen to messages that inspire and challenge", ko: "영감을 주고 도전하는 메시지를 들으세요" },
         },
         searchPlaceholder: { en: "Search sermons...", ko: "설교 검색..." },
@@ -89,6 +91,8 @@ export default function Sermons() {
                         type="text"
                         id="sermonSearch"
                         placeholder={t.searchPlaceholder[lang]}
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         style={{
                             width: "100%",
                             padding: "var(--space-md)",
@@ -100,7 +104,14 @@ export default function Sermons() {
                 </div>
 
                 <div className="card-grid card-grid-3" id="sermonGrid">
-                    {t.sermons.map((sermon, index) => (
+                    {t.sermons.filter(sermon => {
+                        const query = searchQuery.toLowerCase();
+                        return (
+                            sermon.title[lang].toLowerCase().includes(query) ||
+                            sermon.speaker[lang].toLowerCase().includes(query) ||
+                            sermon.description[lang].toLowerCase().includes(query)
+                        );
+                    }).map((sermon, index) => (
                         <div key={index} className="card scroll-fade sermon-card">
                             <div className="card-content">
                                 <div className="card-meta">

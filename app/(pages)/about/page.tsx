@@ -129,36 +129,45 @@ export default function About() {
             },
         },
         serviceTime: {
-            title: { en: "Service Times", ko: "예배 시간" },
+            title: { en: "Service Times", ko: "예배시간" },
             services: [
                 {
-                    category: { en: "Sunday Worship", ko: "주일 예배" },
+                    category: { en: "Sunday Worship", ko: "주일예배" },
                     items: [
-                        { time: "10:00 AM", name: { en: "First Service", ko: "1부 예배" }, location: { en: "Main Sanctuary", ko: "본당" } },
-                        { time: "12:30 PM", name: { en: "Second Service", ko: "2부 예배" }, location: { en: "Main Sanctuary", ko: "본당" } },
+                        { time: { en: "8:00 AM", ko: "오전 8:00" }, name: { en: "Steward Service", ko: "청지기 예배" } },
+                        { time: { en: "9:40 AM", ko: "오전 9:40" }, name: { en: "1st Service", ko: "1부" } },
+                        { time: { en: "11:40 AM", ko: "오전 11:40" }, name: { en: "2nd Service", ko: "2부" } },
+                        { time: { en: "9:40 AM", ko: "오전 9:40" }, name: { en: "EM Service", ko: "EM 예배" } },
+                        { time: { en: "2:40 PM", ko: "오후 2:40" }, name: { en: "Youth Service", ko: "청년예배" } },
                     ],
                 },
                 {
-                    category: { en: "Weekday Services", ko: "주중 예배" },
+                    category: { en: "Church School", ko: "교회학교" },
                     items: [
-                        { time: "Wed 7:30 PM", name: { en: "Wednesday Evening Service", ko: "수요 저녁 예배" }, location: { en: "Main Sanctuary", ko: "본당" } },
-                        { time: "Sat 6:00 AM", name: { en: "Saturday Dawn Prayer", ko: "토요 새벽 기도회" }, location: { en: "Main Sanctuary", ko: "본당" } },
+                        { time: { en: "9:40 AM / 11:40 AM", ko: "오전 9:40 / 오전 11:40" }, name: { en: "Infant & Toddler", ko: "영.유아부" } },
+                        { time: { en: "9:40 AM / 11:40 AM", ko: "오전 9:40 / 오전 11:40" }, name: { en: "Kindergarten", ko: "유치부" } },
+                        { time: { en: "9:40 AM / 11:40 AM", ko: "오전 9:40 / 오전 11:40" }, name: { en: "Elementary", ko: "유.초등부" } },
+                        { time: { en: "11:40 AM", ko: "오전 11:40" }, name: { en: "Middle & High School", ko: "중.고등부" } },
                     ],
                 },
                 {
-                    category: { en: "Prayer Meetings", ko: "기도회" },
+                    category: { en: "Weekday Services", ko: "주중예배" },
                     items: [
-                        { time: "Tue-Fri 5:30 AM", name: { en: "Dawn Prayer Meeting", ko: "새벽 기도회" }, location: { en: "Main Sanctuary", ko: "본당" } },
+                        { time: { en: "6:00 AM", ko: "오전 6:00" }, name: { en: "365 Dawn Prayer", ko: "365일 새벽기도회" } },
+                        { time: { en: "7:30 PM", ko: "오후 7:30" }, name: { en: "Wednesday Service", ko: "수요예배" } },
+                        { time: { en: "7:30 PM", ko: "오후 7:30" }, name: { en: "Friday Spirit Prayer", ko: "금요성령기도회" } },
                     ],
                 },
             ],
         },
         location: {
-            title: { en: "Location & Directions", ko: "찾아오시는 길" },
+            title: { en: "Contact & Location", ko: "Contact" },
             address: {
-                en: "3637 Grand Park Dr, Mississauga, ON L5B 4L6, Canada",
-                ko: "캐나다 온타리오주 미시사가 Grand Park Dr 3637, L5B 4L6",
+                en: "3637 Grand Park Dr, Mississauga, ON L5B 4L6",
+                ko: "3637 Grand Park Dr, Mississauga, ON L5B 4L6",
             },
+            phone: "(905) 803-8800",
+            email: "westside3637@gmail.com",
             directions: {
                 en: "First-time visitors, please turn on your hazard lights when entering the parking lot, and our volunteers will guide you. We offer parking assistance for families with young children, expectant mothers, and seniors.",
                 ko: "처음 오시는 분은 비상등을 켜고 들어오시면 안내해 드립니다. 새가족과 어린아이를 동반한 부모님, 임산부, 노약자를 위한 주차 안내를 제공합니다.",
@@ -258,12 +267,33 @@ export default function About() {
                 <div className="card-grid card-grid-3">
                     {t.staff.members.map((member, index) => (
                         <div key={index} className="card scroll-fade">
-                            <div className="card-content">
-                                <h3 className="card-title">{member.name[lang]}</h3>
-                                <div className="card-meta">{member.role[lang]}</div>
+                            <div className="card-content" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                {/* Profile Image Placeholder */}
+                                <div style={{ 
+                                    width: '120px', 
+                                    height: '120px', 
+                                    borderRadius: '50%', 
+                                    backgroundColor: 'var(--color-bg-secondary)', 
+                                    margin: '0 auto var(--space-lg)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    overflow: 'hidden',
+                                    border: '3px solid var(--color-tertiary)',
+                                    flexShrink: 0
+                                }}>
+                                    {/* TODO: Replace with real images when available: <img src="/images/staff/name.jpg" alt="..." /> */}
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </div>
+                                
+                                <h3 className="card-title" style={{ marginBottom: 'var(--space-xs)' }}>{member.name[lang]}</h3>
+                                <div className="card-meta" style={{ marginBottom: member.email ? 'var(--space-xs)' : '0' }}>{member.role[lang]}</div>
                                 {member.email && (
-                                    <div className="card-description" style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>
-                                        <a href={`mailto:${member.email}`} style={{ color: 'var(--color-accent)' }}>
+                                    <div className="card-description" style={{ fontSize: '0.875rem', marginTop: '0' }}>
+                                        <a href={`mailto:${member.email}`} style={{ color: 'var(--color-accent)', textDecoration: 'none' }}>
                                             {member.email}
                                         </a>
                                     </div>
@@ -280,8 +310,29 @@ export default function About() {
                 <div className="card-grid card-grid-5">
                     {t.staff.elders.members.map((elder, index) => (
                         <div key={index} className="card scroll-fade">
-                            <div className="card-content">
-                                <h4 className="card-title" style={{ fontSize: 'var(--font-size-base)' }}>
+                            <div className="card-content" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                {/* Profile Image Placeholder */}
+                                <div style={{ 
+                                    width: '80px', 
+                                    height: '80px', 
+                                    borderRadius: '50%', 
+                                    backgroundColor: 'var(--color-bg-secondary)', 
+                                    margin: '0 auto var(--space-md)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    overflow: 'hidden',
+                                    border: '2px solid var(--color-tertiary)',
+                                    flexShrink: 0
+                                }}>
+                                    {/* TODO: Replace with real images when available: <img src="/images/elders/name.jpg" alt="..." /> */}
+                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-tertiary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </div>
+                                
+                                <h4 className="card-title" style={{ fontSize: 'var(--font-size-base)', margin: 0 }}>
                                     {elder.name[lang]}
                                 </h4>
                             </div>
@@ -302,9 +353,9 @@ export default function About() {
                                 <div className="service-list">
                                     {service.items.map((item, idx) => (
                                         <div key={idx} className="service-item">
-                                            <div className="service-time">{item.time}</div>
+                                            <div className="service-time">{item.time[lang]}</div>
                                             <div className="service-name">{item.name[lang]}</div>
-                                            <div className="service-location">{item.location[lang]}</div>
+                                            {item.location && <div className="service-location">{item.location[lang]}</div>}
                                         </div>
                                     ))}
                                 </div>
@@ -338,7 +389,14 @@ export default function About() {
                     <div className="card scroll-fade">
                         <div className="card-content">
                             <h3 className="card-title">{lang === "en" ? "Address" : "주소"}</h3>
-                            <p className="text-lg mb-lg">{t.location.address[lang]}</p>
+                            <p className="text-lg mb-sm">{t.location.address[lang]}</p>
+                            
+                            <h3 className="card-title" style={{ marginTop: 'var(--space-lg)' }}>{lang === "en" ? "Phone" : "전화번호"}</h3>
+                            <p className="text-lg mb-sm">{t.location.phone}</p>
+                            
+                            <h3 className="card-title" style={{ marginTop: 'var(--space-lg)' }}>{lang === "en" ? "Email" : "이메일"}</h3>
+                            <p className="text-lg mb-lg"><a href={`mailto:${t.location.email}`} style={{ color: 'var(--color-accent)' }}>{t.location.email}</a></p>
+                            
                             <p className="card-description">{t.location.directions[lang]}</p>
                             <div className="card-footer">
                                 <a
