@@ -170,9 +170,9 @@ export default function Home() {
             {/* Sunday Sermons */}
             <section className="container">
                 <h2 className="section-title">{t.sermons.title[lang]}</h2>
-                <div className="card-grid card-grid-3">
+                <div style={{ marginBottom: 'var(--space-xl)' }}>
                     {/* YouTube Live Card */}
-                    <Link href="/sermons" className="card scroll-fade card-featured" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: '300px', background: 'linear-gradient(135deg, #cc0000 0%, #ff4d4d 100%)', textDecoration: 'none' }}>
+                    <Link href="/sermons" className="card scroll-fade card-featured" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 'clamp(200px, 30vh, 300px)', background: 'linear-gradient(135deg, #cc0000 0%, #ff4d4d 100%)', textDecoration: 'none' }}>
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="white" style={{ marginBottom: 'var(--space-md)' }}>
                             <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
                         </svg>
@@ -181,7 +181,9 @@ export default function Home() {
                             {lang === 'en' ? 'Watch our Sunday service live' : '주일 예배 실시간 방송'}
                         </p>
                     </Link>
-                    
+                </div>
+                
+                <div className="card-grid card-grid-3 horizontal-scroll-mobile">
                     {/* Recent Sermons 1 to 5 */}
                     {[1, 2, 3, 4, 5].map((item, index) => (
                         <div key={index} className="card scroll-fade">
