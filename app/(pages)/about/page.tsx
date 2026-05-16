@@ -355,7 +355,6 @@ export default function About() {
                                         <div key={idx} className="service-item">
                                             <div className="service-time">{item.time[lang]}</div>
                                             <div className="service-name">{item.name[lang]}</div>
-                                            {item.location && <div className="service-location">{item.location[lang]}</div>}
                                         </div>
                                     ))}
                                 </div>
