@@ -112,7 +112,7 @@ export default function Sermons() {
                             sermon.description[lang].toLowerCase().includes(query)
                         );
                     }).map((sermon, index) => (
-                        <div key={index} className="card scroll-fade sermon-card">
+                        <div key={index} className="card scroll-fade sermon-card compact-card-mobile">
                             <div className="card-content">
                                 <div className="card-meta">
                                     {sermon.date[lang]} • {sermon.speaker[lang]}

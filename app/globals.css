@@ -2,8 +2,7 @@
    MODERN CHURCH WEBSITE - DESIGN SYSTEM
    ======================================== */
 
-/* === GOOGLE FONTS IMPORT === */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+/* === GOOGLE FONTS IMPORT (Moved to layout.tsx) === */
 
 /* === CSS CUSTOM PROPERTIES === */
 :root {
@@ -112,6 +111,8 @@ body {
     line-height: var(--line-height-normal);
     color: var(--color-text-primary);
     background-color: var(--color-bg-main);
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 img {
@@ -321,7 +322,8 @@ section {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+    /* Dark overlay to make images vivid and white text readable */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7));
 }
 
 .hero-content {
@@ -336,18 +338,17 @@ section {
 .hero-title {
     font-size: clamp(2rem, 5vw, 3rem);
     font-weight: var(--font-weight-bold);
+    color: white;
     margin-bottom: var(--space-lg);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     line-height: 1.2;
-    white-space: nowrap;
-    overflow: visible;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .hero-subtitle {
     font-size: clamp(1rem, 2.5vw, 1.25rem);
     margin-bottom: var(--space-2xl);
-    color: rgba(255, 255, 255, 0.95);
     line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* === BUTTONS === */
@@ -569,7 +570,7 @@ section {
     }
 
     section {
-        padding: clamp(32px, 6vw, 64px) 0;
+        padding: clamp(24px, 4vw, 40px) 0;
     }
 
     h1 {
@@ -583,6 +584,27 @@ section {
     /* Mobile Card Optimizations */
     .card-content {
         padding: var(--space-lg); /* Reduce padding on mobile */
+    }
+
+    .compact-card-mobile {
+        min-height: auto;
+    }
+    .compact-card-mobile .card-content {
+        padding: var(--space-md);
+    }
+    .compact-card-mobile .card-title {
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--space-xs);
+    }
+    .compact-card-mobile .card-meta {
+        margin-bottom: var(--space-xs);
+    }
+    .compact-card-mobile .card-description {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: var(--space-sm);
     }
 
     .horizontal-scroll-mobile {
@@ -606,6 +628,28 @@ section {
         min-width: 260px;
         flex: 0 0 auto;
         scroll-snap-align: start;
+    }
+
+    /* Mobile Footer Optimizations */
+    .site-footer {
+        padding: var(--space-xl) 0 var(--space-md);
+        margin-top: var(--space-2xl);
+    }
+
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-md);
+        margin-bottom: var(--space-lg);
+    }
+
+    .footer-section h4 {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--space-xs);
+    }
+
+    .footer-section p, 
+    .footer-section a {
+        font-size: var(--font-size-xs);
     }
 }
 

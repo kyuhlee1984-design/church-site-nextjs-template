@@ -219,7 +219,7 @@ export default function About() {
                             <p className="text-lg">{t.vision.mission[lang]}</p>
                         </div>
                     </div>
-                    <div className="card-grid card-grid-3">
+                    <div className="card-grid card-grid-3 horizontal-scroll-mobile">
                         {t.vision.values.map((value, index) => (
                             <div key={index} className="card scroll-fade">
                                 <div className="card-content">
@@ -264,7 +264,7 @@ export default function About() {
                 <h2 className="section-title">{t.staff.title[lang]}</h2>
                 <p className="section-subtitle">{t.staff.verse[lang]}</p>
 
-                <div className="card-grid card-grid-3">
+                <div className="card-grid card-grid-3 horizontal-scroll-mobile">
                     {t.staff.members.map((member, index) => (
                         <div key={index} className="card scroll-fade">
                             <div className="card-content" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -307,7 +307,7 @@ export default function About() {
                 <h3 className="section-title" style={{ marginTop: 'var(--space-3xl)' }}>
                     {t.staff.elders.title[lang]}
                 </h3>
-                <div className="card-grid card-grid-5">
+                <div className="card-grid card-grid-5 horizontal-scroll-mobile">
                     {t.staff.elders.members.map((elder, index) => (
                         <div key={index} className="card scroll-fade">
                             <div className="card-content" style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

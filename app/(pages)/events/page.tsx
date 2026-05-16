@@ -69,7 +69,7 @@ export default function Events() {
 
                 <div className="card-grid card-grid-2">
                     {t.events.map((event, index) => (
-                        <div key={index} className="card scroll-fade">
+                        <div key={index} className="card scroll-fade compact-card-mobile">
                             <div className="card-content">
                                 <div className="card-meta">{event.date[lang]}</div>
                                 <h3 className="card-title">{event.title[lang]}</h3>

@@ -71,7 +71,7 @@ export default function Ministries() {
             <section className="container">
                 <div className="card-grid card-grid-2">
                     {t.ministries.map((ministry, index) => (
-                        <div key={index} id={ministry.id} className="card scroll-fade">
+                        <div key={index} id={ministry.id} className="card scroll-fade compact-card-mobile">
                             <div className="card-content">
                                 <h3 className="card-title">{ministry.title[lang]}</h3>
                                 <p className="card-description">{ministry.description[lang]}</p>

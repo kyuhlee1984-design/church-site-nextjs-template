@@ -69,7 +69,7 @@ export default function Give() {
                         </Link>
                     </div>
 
-                    <div className="card-grid card-grid-3">
+                    <div className="card-grid card-grid-3 horizontal-scroll-mobile">
                         {t.givingOptions.map((option, index) => (
                             <div key={index} className="card scroll-fade">
                                 <div className="card-content">
