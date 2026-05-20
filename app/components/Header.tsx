@@ -51,25 +51,27 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+            <li>
+              <button
+                className="mega-menu-btn"
+                onClick={() => setMegaMenuOpen(!megaMenuOpen)}
+                aria-label={lang === "en" ? "Full Menu" : "전체메뉴"}
+              >
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path
+                    d="M3 5h14M3 10h14M3 15h14"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <span>{lang === "en" ? "Menu" : "전체메뉴"}</span>
+              </button>
+            </li>
           </ul>
         </nav>
 
         <div className="header-actions">
-          <button
-            className="mega-menu-btn"
-            onClick={() => setMegaMenuOpen(!megaMenuOpen)}
-            aria-label={lang === "en" ? "Full Menu" : "전체메뉴"}
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M3 5h14M3 10h14M3 15h14"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-            <span>{lang === "en" ? "Menu" : "전체메뉴"}</span>
-          </button>
 
           <div className="lang-toggle">
             <button
@@ -104,10 +106,11 @@ export default function Header() {
                     position: sticky;
                     top: 0;
                     z-index: 1000;
-                    background-color: rgba(255, 255, 255, 0.95);
-                    backdrop-filter: blur(10px);
-                    box-shadow: var(--shadow-sm);
+                    background: rgba(255, 255, 255, 0.98);
+                    backdrop-filter: blur(12px);
+                    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
                     height: var(--header-height);
+                    border-bottom: 1px solid rgba(226, 232, 240, 0.6);
                 }
 
                 .header-container {
@@ -132,7 +135,7 @@ export default function Header() {
 
                 .logo-image {
                     height: auto;
-                    max-height: 50px;
+                    max-height: 44px;
                     width: auto;
                     object-fit: contain;
                 }
@@ -159,6 +162,7 @@ export default function Header() {
                     padding: var(--space-sm) 0;
                     white-space: nowrap;
                     font-size: var(--font-size-sm);
+                    letter-spacing: 0.01em;
                 }
 
                 .nav-link:hover,
@@ -169,12 +173,13 @@ export default function Header() {
                 .nav-link::after {
                     content: "";
                     position: absolute;
-                    bottom: 0;
+                    bottom: -2px;
                     left: 0;
                     width: 0;
                     height: 2px;
                     background-color: var(--color-accent);
                     transition: width var(--transition-base);
+                    border-radius: 1px;
                 }
 
                 .nav-link:hover::after,
@@ -185,7 +190,7 @@ export default function Header() {
                 .header-actions {
                     display: flex;
                     align-items: center;
-                    gap: var(--space-md);
+                    gap: var(--space-sm);
                     flex-shrink: 0;
                 }
 
@@ -193,9 +198,9 @@ export default function Header() {
                     display: flex;
                     align-items: center;
                     gap: var(--space-xs);
-                    padding: var(--space-sm) var(--space-md);
-                    background: none;
-                    border: 1px solid var(--color-tertiary);
+                    padding: 6px 14px;
+                    background: var(--color-bg-card);
+                    border: 1px solid var(--color-secondary);
                     border-radius: var(--radius-md);
                     color: var(--color-text-secondary);
                     font-weight: var(--font-weight-medium);
@@ -207,39 +212,50 @@ export default function Header() {
                 .mega-menu-btn:hover {
                     border-color: var(--color-accent);
                     color: var(--color-accent);
+                    background: var(--color-bg-main);
                 }
 
                 .lang-toggle {
                     display: flex;
-                    gap: var(--space-sm);
+                    gap: 2px;
+                    background: var(--color-primary);
+                    border-radius: var(--radius-md);
+                    padding: 2px;
                 }
 
                 .lang-toggle button {
-                    padding: var(--space-sm) var(--space-md);
-                    border-radius: var(--radius-md);
-                    font-size: var(--font-size-sm);
-                    font-weight: var(--font-weight-medium);
-                    color: var(--color-text-secondary);
+                    padding: 5px 12px;
+                    border-radius: calc(var(--radius-md) - 2px);
+                    font-size: var(--font-size-xs);
+                    font-weight: var(--font-weight-semibold);
+                    color: var(--color-text-light);
                     transition: all var(--transition-base);
+                    letter-spacing: 0.02em;
                 }
 
                 .lang-toggle button.active {
                     background-color: var(--color-accent);
                     color: white;
+                    box-shadow: 0 1px 3px rgba(37, 99, 235, 0.3);
+                }
+
+                .lang-toggle button:not(.active):hover {
+                    color: var(--color-text-primary);
                 }
 
                 .mobile-menu-toggle {
                     display: none;
                     flex-direction: column;
-                    gap: 4px;
+                    gap: 5px;
                     padding: var(--space-sm);
                 }
 
                 .mobile-menu-toggle span {
-                    width: 24px;
+                    width: 22px;
                     height: 2px;
                     background-color: var(--color-text-primary);
                     transition: all var(--transition-fast);
+                    border-radius: 1px;
                 }
 
                 @media (max-width: 1200px) {
@@ -259,6 +275,7 @@ export default function Header() {
                 }
 
                 @media (max-width: 768px) {
+
                     .main-nav {
                         display: none;
                         position: absolute;
@@ -304,7 +321,11 @@ export default function Header() {
                     }
 
                     .site-logo {
-                        max-width: 160px; /* Resize logo to fit mobile header alongside menu buttons */
+                        max-width: 140px;
+                    }
+
+                    .logo-image {
+                        max-height: 38px;
                     }
                 }
             `}</style>

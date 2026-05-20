@@ -247,7 +247,7 @@ export default function About() {
             </section>
 
             {/* Pastor Section */}
-            <section className="container bg-light">
+            <section className="container bg-light" style={{ marginBottom: 'var(--space-3xl)' }}>
                 <div className="content-wrapper">
                     <div className="card scroll-fade">
                         <div className="card-content">

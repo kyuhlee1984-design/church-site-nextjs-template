@@ -6,28 +6,28 @@
 
 /* === CSS CUSTOM PROPERTIES === */
 :root {
-    /* Color Palette - Warm Neutrals */
-    --color-primary: #f5f4f1;
-    --color-secondary: #e6e4df;
-    --color-tertiary: #d4cdc3;
+    /* Color Palette - Warm & Inviting */
+    --color-primary: #f5f1eb;
+    --color-secondary: #e8e2d9;
+    --color-tertiary: #d6cfc4;
     --color-text-primary: #1f1d1a;
     --color-text-secondary: #524b43;
     --color-text-light: #8a8177;
 
-    /* Accent Color */
-    --color-accent: #c17a5f;
-    --color-accent-hover: #a96750;
-    --color-accent-light: #e8bcab;
+    /* Accent Color - Calm Muted Blue */
+    --color-accent: #4a6fa5;
+    --color-accent-hover: #365583;
+    --color-accent-light: #e6eef7;
 
     /* Semantic Colors */
-    --color-success: #7b9e7a;
-    --color-warning: #d4a574;
-    --color-error: #c17a7a;
-    --color-info: #7a9ec1;
+    --color-success: #16a34a;
+    --color-warning: #d97706;
+    --color-error: #dc2626;
+    --color-info: #0284c7;
 
     /* Background Colors */
-    --color-bg-main: #faf9f8;
-    --color-bg-secondary: var(--color-primary);
+    --color-bg-main: #fcfaf8;
+    --color-bg-secondary: #f4f1eb;
     --color-bg-card: #ffffff;
 
     /* Typography Scale */
@@ -63,15 +63,19 @@
     --space-3xl: 4rem;
     --space-4xl: 6rem;
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    --shadow-card-hover: 0 12px 24px -4px rgba(0, 0, 0, 0.12), 0 6px 12px -2px rgba(0, 0, 0, 0.08);
+    /* Consistent Section Spacing */
+    --section-padding-y: clamp(48px, 6vw, 80px);
+    --section-gap: var(--space-xl);
+
+    /* Shadows - softer, more modern */
+    --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -1px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
+    --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 10px 10px -5px rgba(15, 23, 42, 0.03);
+    --shadow-card-hover: 0 12px 28px -4px rgba(15, 23, 42, 0.12), 0 6px 12px -2px rgba(15, 23, 42, 0.06);
 
     /* Border Radius */
-    --radius-sm: 0.25rem;
+    --radius-sm: 0.375rem;
     --radius-md: 0.5rem;
     --radius-lg: 0.75rem;
     --radius-xl: 1rem;
@@ -84,9 +88,9 @@
     --transition-slow: 350ms ease;
 
     /* Layout */
-    --max-width-container: 1280px;
-    --max-width-content: 960px;
-    --header-height: 80px;
+    --max-width-container: 1200px;
+    --max-width-content: 860px;
+    --header-height: 72px;
 }
 
 /* === RESET & BASE STYLES === */
@@ -194,7 +198,7 @@ p {
     width: 100%;
     max-width: var(--max-width-container);
     margin: 0 auto;
-    padding: 0 clamp(16px, 4vw, 24px);
+    padding: 0 clamp(20px, 4vw, 40px);
 }
 
 .content-wrapper {
@@ -204,15 +208,15 @@ p {
 }
 
 section {
-    padding: clamp(48px, 8vw, 96px) 0;
+    padding: var(--section-padding-y) 0;
 }
 
 /* === CARD COMPONENT SYSTEM === */
 .card {
     background-color: var(--color-bg-card);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-secondary);
     overflow: hidden;
     transition: all var(--transition-base);
     height: 100%;
@@ -221,9 +225,9 @@ section {
 }
 
 .card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
-    transform: translateY(-6px);
-    border-color: rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-4px);
+    border-color: var(--color-tertiary);
 }
 
 .card-image {
@@ -296,8 +300,9 @@ section {
     background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
     color: white;
     padding: var(--space-3xl);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 8px 20px rgba(193, 122, 95, 0.3);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+    border: none;
 }
 
 .card-featured .card-title,
@@ -472,10 +477,10 @@ section {
 
 /* Footer */
 .site-footer {
-    background-color: var(--color-text-primary);
+    background-color: #0f172a;
     color: white;
     padding: var(--space-3xl) 0 var(--space-xl);
-    margin-top: var(--space-4xl);
+    margin-top: var(--section-padding-y);
 }
 
 .footer-content {
@@ -531,7 +536,7 @@ section {
 /* Large Desktop (1440px+) */
 @media (min-width: 1440px) {
     .container {
-        padding: 0 clamp(24px, 5vw, 48px);
+        padding: 0 clamp(32px, 5vw, 48px);
     }
 }
 
@@ -555,7 +560,7 @@ section {
     }
 
     .container {
-        padding: 0 clamp(16px, 3vw, 24px);
+        padding: 0 clamp(16px, 4vw, 24px);
     }
 
     .hero-banner {
@@ -704,48 +709,48 @@ section {
     opacity: 0.1;
 }
 
-/* Slide 1 - Welcome (Warm Blue/Purple) */
+/* Slide 1 - Welcome (Deep Navy → Blue) */
 .carousel-slide-1 .carousel-background {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1c2833 0%, #2c3e50 50%, #4a6fa5 100%);
 }
 
 .carousel-slide-1 .carousel-pattern {
     background-image:
-        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+        radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
 }
 
-/* Slide 2 - New Year (Pink/Red) */
+/* Slide 2 - New Year (Indigo → Blue) */
 .carousel-slide-2 .carousel-background {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(135deg, #312e81 0%, #3730a3 50%, #6366f1 100%);
 }
 
 .carousel-slide-2 .carousel-pattern {
     background-image:
-        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 30% 70%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
 }
 
-/* Slide 3 - Prayer (Blue/Cyan) */
+/* Slide 3 - Prayer (Slate → Blue) */
 .carousel-slide-3 .carousel-background {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #3b82f6 100%);
 }
 
 .carousel-slide-3 .carousel-pattern {
     background-image:
-        radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 80% 60%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+        radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 60%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
 }
 
-/* Slide 4 - Youth (Green/Teal) */
+/* Slide 4 - Youth (Dark Blue → Cyan) */
 .carousel-slide-4 .carousel-background {
-    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0ea5e9 100%);
 }
 
 .carousel-slide-4 .carousel-pattern {
     background-image:
-        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 60% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
 }
 
 .carousel-content {
@@ -896,7 +901,7 @@ section {
     }
 
     .container {
-        padding: 0 16px;
+        padding: 0 20px;
     }
 
     .hero-banner {

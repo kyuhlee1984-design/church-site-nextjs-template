@@ -111,7 +111,9 @@ export default function Home() {
     return (
         <>
             {/* News Carousel */}
-            <section className="news-carousel">
+            <section style={{ padding: 'var(--section-padding-y) 0' }}>
+                <div className="container">
+                    <div className="news-carousel" style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
                 <div className="carousel-container">
                     {newsSlides.map((slide, index) => (
                         <div
@@ -165,14 +167,16 @@ export default function Home() {
                         />
                     ))}
                 </div>
+                </div>
+                </div>
             </section>
 
-            {/* Sunday Sermons */}
+            {/* Sunday Sermons Section */}
             <section className="container">
                 <h2 className="section-title">{t.sermons.title[lang]}</h2>
                 <div style={{ marginBottom: 'var(--space-xl)' }}>
                     {/* YouTube Live Card */}
-                    <Link href="/sermons" className="card scroll-fade card-featured" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 'clamp(200px, 30vh, 300px)', background: 'linear-gradient(135deg, #cc0000 0%, #ff4d4d 100%)', textDecoration: 'none' }}>
+                    <Link href="/sermons" className="card scroll-fade card-featured" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 'clamp(200px, 30vh, 300px)', background: 'linear-gradient(135deg, #1c2833 0%, #2c3e50 50%, #4a6fa5 100%)', textDecoration: 'none', border: 'none' }}>
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="white" style={{ marginBottom: 'var(--space-md)' }}>
                             <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
                         </svg>
@@ -201,8 +205,8 @@ export default function Home() {
             </section>
 
             {/* Service Times */}
-            <section id="service-times" className="container" style={{ padding: '0 clamp(16px, 4vw, 24px)' }}>
-                <div style={{ backgroundColor: 'var(--color-bg-secondary)', padding: 'clamp(32px, 5vw, 64px) clamp(16px, 4vw, 32px)', borderRadius: 'var(--radius-xl)' }}>
+            <section id="service-times" className="container">
+                <div style={{ backgroundColor: 'var(--color-bg-secondary)', padding: 'clamp(32px, 5vw, 64px) clamp(24px, 4vw, 40px)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-secondary)' }}>
                     <h2 className="section-title" style={{ marginBottom: 'var(--space-2xl)' }}>{t.serviceTime.title[lang]}</h2>
                     <div className="card-grid card-grid-3" style={{ gap: 'var(--space-2xl)', marginBottom: 0 }}>
                         {t.serviceTime.services.map((service, index) => (

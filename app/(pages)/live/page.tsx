@@ -21,8 +21,10 @@ export default function Live() {
         serviceTimes: {
             title: { en: "Service Times", ko: "예배 시간" },
             subtitle: { en: "Sunday Worship Services:", ko: "주일 예배:" },
-            first: { en: "First Service", ko: "1부 예배" },
-            second: { en: "Second Service", ko: "2부 예배" },
+            first: { en: "1st Service", ko: "1부 예배" },
+            second: { en: "2nd Service", ko: "2부 예배" },
+            firstTime: { en: "9:40 AM", ko: "오전 9:40" },
+            secondTime: { en: "11:40 AM", ko: "오전 11:40" },
             note: {
                 en: "Can&apos;t make it in person? We live stream both services every Sunday!",
                 ko: "직접 참석하기 어려우신가요? 매주 일요일 두 예배 모두 실시간 중계합니다!",
@@ -81,10 +83,10 @@ export default function Live() {
                                         borderBottom: "1px solid var(--color-secondary)",
                                     }}
                                 >
-                                    <strong>{t.serviceTimes.first[lang]}</strong> • <span>10:00 AM</span>
+                                    <strong>{t.serviceTimes.first[lang]}</strong> • <span>{t.serviceTimes.firstTime[lang]}</span>
                                 </li>
                                 <li style={{ padding: "var(--space-sm) 0" }}>
-                                    <strong>{t.serviceTimes.second[lang]}</strong> • <span>12:30 PM</span>
+                                    <strong>{t.serviceTimes.second[lang]}</strong> • <span>{t.serviceTimes.secondTime[lang]}</span>
                                 </li>
                             </ul>
                             <p className="mt-lg text-light">{t.serviceTimes.note[lang]}</p>
