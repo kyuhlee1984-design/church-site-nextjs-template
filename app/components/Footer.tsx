@@ -45,7 +45,7 @@ export default function Footer() {
                                 Website
                             </a>
                             <br />
-                            <a href="https://www.youtube.com/@westsidepc" target="_blank" rel="noopener noreferrer">
+                            <a href="https://www.youtube.com/@westsidepresbyterianchurch8383/featured" target="_blank" rel="noopener noreferrer">
                                 YouTube
                             </a>
                         </p>
