@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import ReactMarkdown from "react-markdown";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { ChurchEvent, ChurchAlbum, Devotional } from "../../lib/notion";
@@ -19,6 +20,14 @@ export default function CommunityClient({ events, albums, devotionals }: { event
     const [viewingDevotional, setViewingDevotional] = useState<Devotional | null>(null);
     const [devotionalContent, setDevotionalContent] = useState<string | null>(null);
     const [isLoadingContent, setIsLoadingContent] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    // The body overflow: hidden useEffect was removed because it breaks internal scrolling on iOS Safari.
+    // Instead, we use overscrollBehavior: 'contain' on the modal containers.
 
     const openDevotional = async (devotional: Devotional) => {
         setViewingDevotional(devotional);
@@ -292,7 +301,7 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                     </div>
                 )}
 
-                {viewingAlbum && (
+                {mounted && viewingAlbum && createPortal((
                     <div 
                         onClick={() => setViewingAlbum(null)}
                         style={{ 
@@ -306,6 +315,8 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                         flexDirection: 'column',
                         animation: 'fadeIn 0.3s ease',
                         overflowY: 'auto',
+                        overscrollBehavior: 'contain',
+                        WebkitOverflowScrolling: 'touch',
                         padding: 'var(--space-2xl) 0',
                     }}>
                         <div 
@@ -363,11 +374,11 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                         </div>
                     </div>
                     </div>
-                )}
+                ), document.body)}
             </section>
 
             {/* Gallery Modal Carousel */}
-            {selectedAlbum && (
+            {mounted && selectedAlbum && createPortal((
                 <div 
                     onClick={() => setSelectedAlbum(null)}
                     style={{
@@ -377,6 +388,7 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                     zIndex: 9999,
                     display: 'flex',
                     flexDirection: 'column',
+                    overscrollBehavior: 'none',
                     alignItems: 'center',
                     justifyContent: 'center'
                 }}>
@@ -415,58 +427,44 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                         {selectedAlbum.title}
                     </div>
 
-                    {/* Previous Button */}
-                    {selectedAlbum.gallery.length > 1 && (
-                        <button 
-                            onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                            style={{
-                                position: 'absolute',
-                                left: '24px', top: '50%', transform: 'translateY(-50%)',
-                                background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white',
-                                width: '48px', height: '48px', borderRadius: '50%',
-                                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
-                            }}
-                        >
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="15 18 9 12 15 6"></polyline>
-                            </svg>
-                        </button>
-                    )}
-
-                    {/* Next Button */}
-                    {selectedAlbum.gallery.length > 1 && (
-                        <button 
-                            onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                            style={{
-                                position: 'absolute',
-                                right: '24px', top: '50%', transform: 'translateY(-50%)',
-                                background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white',
-                                width: '48px', height: '48px', borderRadius: '50%',
-                                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center'
-                            }}
-                        >
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </button>
-                    )}
-
-                    {/* Current Image */}
-                    <img 
-                        src={selectedAlbum.gallery[currentImageIndex]} 
-                        alt={`${selectedAlbum.title} image ${currentImageIndex + 1}`}
+                    {/* Current Image Wrapper with Instagram-style click areas */}
+                    <div 
+                        style={{ position: 'relative', display: 'flex', maxWidth: '95vw', maxHeight: '90vh' }}
                         onClick={(e) => e.stopPropagation()}
-                        style={{
-                            maxWidth: '95vw',
-                            maxHeight: '90vh',
-                            objectFit: 'contain'
-                        }}
-                    />
+                    >
+                        <img 
+                            src={selectedAlbum.gallery[currentImageIndex]} 
+                            alt={`${selectedAlbum.title} image ${currentImageIndex + 1}`}
+                            style={{
+                                maxWidth: '100%',
+                                maxHeight: '100%',
+                                objectFit: 'contain'
+                            }}
+                        />
+                        
+                        {/* Left invisible click area (Previous) */}
+                        {selectedAlbum.gallery.length > 1 && (
+                            <div 
+                                onClick={prevImage}
+                                style={{ position: 'absolute', top: 0, left: 0, width: '50%', height: '100%', cursor: 'pointer' }}
+                                title={lang === 'en' ? 'Previous image' : '이전 사진'}
+                            />
+                        )}
+                        
+                        {/* Right invisible click area (Next) */}
+                        {selectedAlbum.gallery.length > 1 && (
+                            <div 
+                                onClick={nextImage}
+                                style={{ position: 'absolute', top: 0, right: 0, width: '50%', height: '100%', cursor: 'pointer' }}
+                                title={lang === 'en' ? 'Next image' : '다음 사진'}
+                            />
+                        )}
+                    </div>
                 </div>
-            )}
+            ), document.body)}
             {/* Devotional Modal */}
             {/* Devotional Modal */}
-            {viewingDevotional && (
+            {mounted && viewingDevotional && createPortal((
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}>
                     {/* Backdrop */}
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(245, 241, 235, 0.95)', backdropFilter: 'blur(12px)' }} />
@@ -475,7 +473,7 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                     <div 
                         id="devotional-scroll-container"
                         onClick={() => setViewingDevotional(null)}
-                        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, overflowY: 'auto' }}
+                        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, overflowY: 'auto', overscrollBehavior: 'contain', WebkitOverflowScrolling: 'touch' }}
                     >
                         <div 
                             className="container" 
@@ -522,7 +520,7 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                             document.getElementById('devotional-scroll-container')?.scrollTo({ top: 0, behavior: 'smooth' });
                         }}
                         style={{
-                            position: 'absolute',
+                            position: 'fixed',
                             bottom: '30px',
                             right: '30px',
                             width: '50px',
@@ -549,38 +547,41 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                         </svg>
                     </button>
                 </div>
-            )}
+            ), document.body)}
 
             {/* Global Scroll to Top Button for the page */}
-            <button
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                style={{
-                    position: 'fixed',
-                    bottom: '30px',
-                    right: '30px',
-                    width: '50px',
-                    height: '50px',
-                    borderRadius: '50%',
-                    backgroundColor: 'var(--color-accent)',
-                    color: 'white',
-                    border: 'none',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 9000,
-                    opacity: 0.9,
-                    transition: 'opacity 0.2s'
-                }}
-                onMouseOver={(e) => e.currentTarget.style.opacity = '1'}
-                onMouseOut={(e) => e.currentTarget.style.opacity = '0.9'}
-                title={lang === 'en' ? 'Scroll to top' : '맨 위로'}
-            >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M18 15l-6-6-6 6"/>
-                </svg>
-            </button>
+            {mounted && createPortal(
+                <button
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    style={{
+                        position: 'fixed',
+                        bottom: '30px',
+                        right: '30px',
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
+                        backgroundColor: 'var(--color-accent)',
+                        color: 'white',
+                        border: 'none',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 9000,
+                        opacity: 0.9,
+                        transition: 'opacity 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.opacity = '1'}
+                    onMouseOut={(e) => e.currentTarget.style.opacity = '0.9'}
+                    title={lang === 'en' ? 'Scroll to top' : '맨 위로'}
+                >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18 15l-6-6-6 6"/>
+                    </svg>
+                </button>,
+                document.body
+            )}
         </div>
     );
 }

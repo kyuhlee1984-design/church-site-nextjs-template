@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { createPortal } from "react-dom";
 
 function getYoutubeEmbedUrl(url: string): string | null {
     if (!url) return null;
@@ -21,6 +22,11 @@ interface VideoModalProps {
 
 export default function VideoModal({ url, title, onClose }: VideoModalProps) {
     const [isVisible, setIsVisible] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => {
         if (url) {
@@ -48,18 +54,18 @@ export default function VideoModal({ url, title, onClose }: VideoModalProps) {
         return () => window.removeEventListener("keydown", handleKey);
     }, [handleClose]);
 
-    if (!url) return null;
+    if (!mounted || !url) return null;
 
     const embedUrl = getYoutubeEmbedUrl(url);
     if (!embedUrl) return null;
 
-    return (
+    const modalContent = (
         <div
             onClick={handleClose}
             style={{
                 position: "fixed",
                 inset: 0,
-                zIndex: 9999,
+                zIndex: 99999,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -142,4 +148,6 @@ export default function VideoModal({ url, title, onClose }: VideoModalProps) {
             </div>
         </div>
     );
+
+    return createPortal(modalContent, document.body);
 }
