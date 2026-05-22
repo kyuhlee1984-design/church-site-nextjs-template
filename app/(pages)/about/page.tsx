@@ -251,7 +251,7 @@ export default function About() {
                 <div className="content-wrapper">
                     <div className="card scroll-fade">
                         <div className="card-content">
-                            <h3 className="card-title">{t.pastor.name[lang]}</h3>
+                            <h3 className="staff-name" style={{ marginBottom: 'var(--space-xs)' }}>{t.pastor.name[lang]}</h3>
                             <div className="card-meta">{t.pastor.title[lang]}</div>
                             <p className="card-description">{t.pastor.bio[lang]}</p>
                         </div>
@@ -289,7 +289,7 @@ export default function About() {
                                     </svg>
                                 </div>
                                 
-                                <h3 className="card-title" style={{ marginBottom: 'var(--space-xs)' }}>{member.name[lang]}</h3>
+                                <h3 className="staff-name" style={{ marginBottom: 'var(--space-xs)' }}>{member.name[lang]}</h3>
                                 <div className="card-meta" style={{ marginBottom: member.email ? 'var(--space-xs)' : '0' }}>{member.role[lang]}</div>
                                 {member.email && (
                                     <div className="card-description" style={{ fontSize: '0.875rem', marginTop: '0' }}>
@@ -332,7 +332,7 @@ export default function About() {
                                     </svg>
                                 </div>
                                 
-                                <h4 className="card-title" style={{ fontSize: 'var(--font-size-base)', margin: 0 }}>
+                                <h4 className="staff-name" style={{ fontSize: 'var(--font-size-base)', margin: 0, marginBottom: 'var(--space-xs)' }}>
                                     {elder.name[lang]}
                                 </h4>
                             </div>

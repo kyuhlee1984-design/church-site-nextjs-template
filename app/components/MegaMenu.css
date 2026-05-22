@@ -224,7 +224,7 @@
     }
 
     .mega-menu-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: var(--space-lg, 1.5rem);
         padding: var(--space-xl, 2rem) 0;
     }

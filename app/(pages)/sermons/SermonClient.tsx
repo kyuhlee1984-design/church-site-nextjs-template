@@ -179,7 +179,7 @@ export default function SermonClient({ initialSermons }: { initialSermons: Sermo
                                 {searchResults.length}{t.sermonCount[lang]}
                             </span>
                         </h2>
-                        <div className="card-grid card-grid-3" id="sermonGrid">
+                        <div className="card-grid card-grid-3 gallery-grid-mobile" id="sermonGrid">
                             {searchResults.map(sermon => renderSermonCard(sermon))}
                             {searchResults.length === 0 && (
                                 <div style={{ textAlign: "center", gridColumn: "1 / -1", padding: "var(--space-3xl)" }}>
@@ -224,7 +224,7 @@ export default function SermonClient({ initialSermons }: { initialSermons: Sermo
 
                         {/* Month Grid or Sermon Cards */}
                         {selectedMonth === null ? (
-                            <div style={{
+                            <div className="gallery-grid-mobile" style={{
                                 display: 'grid',
                                 gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
                                 gap: 'var(--space-xl)',
@@ -240,7 +240,7 @@ export default function SermonClient({ initialSermons }: { initialSermons: Sermo
                                         <div
                                             key={month}
                                             onClick={() => setSelectedMonth(month)}
-                                            className="card scroll-fade"
+                                            className="card scroll-fade compact-card-mobile"
                                             style={{
                                                 cursor: 'pointer',
                                                 padding: 0,
@@ -302,7 +302,7 @@ export default function SermonClient({ initialSermons }: { initialSermons: Sermo
                                     </h2>
                                 </div>
 
-                                <div className="card-grid card-grid-3" id="sermonGrid">
+                                <div className="card-grid card-grid-3 gallery-grid-mobile" id="sermonGrid">
                                     {currentSermons.map(sermon => renderSermonCard(sermon))}
                                     {currentSermons.length === 0 && (
                                         <div style={{ textAlign: "center", gridColumn: "1 / -1", padding: "var(--space-3xl)" }}>

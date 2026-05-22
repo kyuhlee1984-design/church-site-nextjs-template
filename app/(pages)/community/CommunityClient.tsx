@@ -133,7 +133,7 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                             transition: 'all 0.3s ease'
                         }}
                     >
-                        {lang === 'en' ? "Pastor's Devotionals" : '목사님 푸른초장'}
+                        {lang === 'en' ? "Devotionals" : '푸른초장'}
                     </button>
                 </div>
 
@@ -166,7 +166,7 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                     <div className="card-grid card-grid-3">
                         {events.length > 0 ? events.map((event) => (
                             <div key={event.id} className="card scroll-fade" style={{ overflow: 'hidden', padding: 0, display: 'flex', flexDirection: 'column' }}>
-                                <div style={{ aspectRatio: '1/1', background: 'var(--color-primary)', position: 'relative' }}>
+                                <div className="skeleton-loading" style={{ aspectRatio: '1/1', position: 'relative' }}>
                                     {event.imageUrl ? (
                                         <img 
                                             src={event.imageUrl} 
@@ -239,7 +239,7 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                                             <div style={{ flex: 1, height: '1px', background: 'var(--color-border)' }}></div>
                                         </div>
                                         
-                                        <div className="card-grid card-grid-3">
+                                        <div className="card-grid gallery-grid-mobile">
                                             {albumsByYear[year].map(album => (
                                                 <div 
                                                     key={album.id} 
@@ -247,7 +247,7 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                                                     style={{ overflow: 'hidden', padding: 0, cursor: 'pointer' }}
                                                     onClick={() => openAlbum(album)}
                                                 >
-                                                    <div style={{ aspectRatio: '4/3', background: 'var(--color-primary)', position: 'relative' }}>
+                                                    <div className="skeleton-loading" style={{ aspectRatio: '4/3', position: 'relative' }}>
                                                         {album.coverImage ? (
                                                             <img 
                                                                 src={album.coverImage} 
@@ -335,7 +335,7 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                                 {viewingAlbum.title}
                             </h2>
 
-                            <div className="card-grid card-grid-4" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
+                            <div className="card-grid gallery-grid-mobile">
                             {viewingAlbum.gallery.map((img, index) => (
                                 <div 
                                     key={index} 
@@ -347,7 +347,7 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                                         setCurrentImageIndex(index);
                                     }}
                                 >
-                                    <div style={{ aspectRatio: '1/1', background: 'var(--color-primary)', position: 'relative' }}>
+                                    <div className="skeleton-loading" style={{ aspectRatio: '1/1', position: 'relative' }}>
                                         <img 
                                             src={img} 
                                             alt={`${viewingAlbum.title} thumbnail ${index + 1}`} 

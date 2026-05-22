@@ -2,37 +2,51 @@
    MODERN CHURCH WEBSITE - DESIGN SYSTEM
    ======================================== */
 
-/* === GOOGLE FONTS IMPORT (Moved to layout.tsx) === */
+@font-face {
+    font-family: 'Cafe24Shiningstar';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Shiningstar.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SangSangRock';
+    src: url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/SangSangRockOTF.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RIDIBatang';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.5/RIDIBatang.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 
 /* === CSS CUSTOM PROPERTIES === */
 :root {
     /* Color Palette - Warm & Inviting */
-    --color-primary: #f5f1eb;
-    --color-secondary: #e8e2d9;
-    --color-tertiary: #d6cfc4;
-    --color-text-primary: #1f1d1a;
-    --color-text-secondary: #524b43;
-    --color-text-light: #8a8177;
-
-    /* Accent Color - Calm Muted Blue */
-    --color-accent: #4a6fa5;
-    --color-accent-hover: #365583;
-    --color-accent-light: #e6eef7;
-
-    /* Semantic Colors */
-    --color-success: #16a34a;
-    --color-warning: #d97706;
-    --color-error: #dc2626;
-    --color-info: #0284c7;
-
-    /* Background Colors */
-    --color-bg-main: #fcfaf8;
-    --color-bg-secondary: #f4f1eb;
+    /* === DESIGN TOKENS === */
+    /* Colors */
+    --color-primary: #8b181b; /* Default deep red */
+    --color-primary-dark: #6a1215;
+    --color-secondary: #ebe5d9; /* Default cream/gold */
+    --color-accent: #c19a5b; /* Gold accent */
+    
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #4a4a4a;
+    --color-text-tertiary: #888888;
+    --color-text-light: #71717a;
+    
+    --color-bg-main: #fcfbf9;
+    --color-bg-secondary: #f4f1ea;
     --color-bg-card: #ffffff;
 
     /* Typography Scale */
-    --font-family-primary: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-family-heading: 'Outfit', var(--font-family-primary);
+    --font-family-primary: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-family-heading: 'Outfit', 'Pretendard', var(--font-family-primary);
+    --font-family-cute: 'Cafe24Shiningstar', 'Jua', 'Nunito', cursive;
+    --font-family-hero: 'RIDIBatang', serif;
 
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
@@ -88,8 +102,8 @@
     --transition-slow: 350ms ease;
 
     /* Layout */
-    --max-width-container: 1200px;
-    --max-width-content: 860px;
+    --max-width-container: 1440px;
+    --max-width-content: 1000px;
     --header-height: 72px;
 }
 
@@ -104,6 +118,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-height) + 24px);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -246,8 +261,17 @@ section {
 
 .card-title {
     font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
+    font-family: 'SangSangRock', cursive;
+    font-weight: normal; /* SangSangRock doesn't need bold to look good, it's naturally thick */
     margin-bottom: var(--space-md);
+    color: var(--color-text-primary);
+    line-height: 1.3;
+}
+
+.staff-name {
+    font-size: var(--font-size-xl);
+    font-family: var(--font-family-primary);
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-primary);
     line-height: 1.3;
 }
@@ -293,6 +317,12 @@ section {
 
 .card-grid-5 {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.gallery-grid-mobile {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-xl);
 }
 
 /* Featured Card (Live Video Container) */
@@ -356,7 +386,35 @@ section {
     color: rgba(255, 255, 255, 0.9);
 }
 
-/* === BUTTONS === */
+/* Page Transition Animations */
+@keyframes pageIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-page-in {
+    animation: pageIn 1.2s ease-out forwards;
+}
+
+/* Image Loading Skeleton */
+@keyframes skeletonPulse {
+    0% { background-color: rgba(200, 200, 200, 0.2); }
+    50% { background-color: rgba(200, 200, 200, 0.4); }
+    100% { background-color: rgba(200, 200, 200, 0.2); }
+}
+
+.skeleton-loading {
+    animation: skeletonPulse 1.5s ease-in-out infinite;
+    min-height: 200px;
+}
+
+/* === UTILITIES === */
 .btn {
     display: inline-block;
     padding: var(--space-md) var(--space-xl);
@@ -462,9 +520,64 @@ section {
     margin-top: var(--space-xl);
 }
 
+.section-bracket-top {
+    width: 100%;
+    max-width: 1000px;
+    height: 24px;
+    margin: var(--space-md) auto var(--space-xl); /* reduced top margin to pull bracket closer to title */
+    border-top: 4px solid var(--color-primary);
+    border-left: 4px solid var(--color-primary);
+    border-right: 4px solid var(--color-primary);
+}
+
+.section-bracket-bottom {
+    width: 100%;
+    max-width: 1000px;
+    height: 24px;
+    margin: var(--space-xl) auto var(--space-3xl);
+    border-bottom: 4px solid var(--color-primary);
+    border-left: 4px solid var(--color-primary);
+    border-right: 4px solid var(--color-primary);
+}
+
+.live-stream-card {
+    display: grid;
+    grid-template-columns: 3.5fr 6.5fr; /* Give more width to the video pane to reduce black bars */
+    min-height: 450px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 768px) {
+    .live-stream-card {
+        grid-template-columns: 1fr;
+    }
+    .live-stream-card .image-pane {
+        min-height: 250px;
+    }
+}
+
 .section-title {
-    text-align: center;
-    margin-bottom: var(--space-3xl);
+    justify-content: center;
+    margin-top: var(--space-xl);
+    margin-bottom: var(--space-xs); /* reduced bottom margin so bracket sits right underneath */
+    font-size: 1.8rem;
+    font-family: var(--font-family-cute);
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+}
+
+.section-title span:first-child {
+    font-family: var(--font-family-cute);
+    font-weight: 400 !important; /* Jua is naturally thick, faux bold ruins it */
+    letter-spacing: 1px;
+}
+
+.section-title span:last-child {
+    font-family: var(--font-family-primary); /* Keep secondary English text as sans-serif for contrast */
 }
 
 .section-subtitle {
@@ -574,6 +687,11 @@ section {
         gap: var(--space-lg);
     }
 
+    .gallery-grid-mobile {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: var(--space-md) !important;
+    }
+
     section {
         padding: clamp(24px, 4vw, 40px) 0;
     }
@@ -630,9 +748,11 @@ section {
     }
 
     .horizontal-scroll-mobile > .card {
-        min-width: 260px;
-        flex: 0 0 auto;
+        width: 280px;
+        flex: 0 0 280px;
         scroll-snap-align: start;
+        align-self: stretch;
+        height: auto;
     }
 
     /* Mobile Footer Optimizations */
@@ -688,6 +808,21 @@ section {
 .carousel-slide.active {
     opacity: 1;
     z-index: 1;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media (max-width: 768px) {
+    .carousel-image {
+        object-fit: contain;
+    }
 }
 
 /* Carousel Background Layer */
@@ -764,9 +899,10 @@ section {
 
 .carousel-title {
     font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: var(--font-weight-bold);
+    font-family: var(--font-family-hero);
+    font-weight: normal;
     margin-bottom: var(--space-lg);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     line-height: 1.2;
     color: white;
 }
@@ -854,7 +990,8 @@ section {
 /* Carousel Responsive - Tablet */
 @media (max-width: 768px) {
     .news-carousel {
-        height: 500px;
+        height: 50vw; /* Wide aspect ratio for tablet */
+        min-height: 350px;
     }
 
     .carousel-content {
@@ -952,7 +1089,8 @@ section {
     }
 
     .news-carousel {
-        height: 400px;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        min-height: 250px; /* Ensure it doesn't get too small on very tiny screens */
     }
 
     .carousel-title {

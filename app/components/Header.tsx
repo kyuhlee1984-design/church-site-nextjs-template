@@ -9,26 +9,19 @@ import MegaMenu from "./MegaMenu";
 
 export default function Header() {
   const { lang, setLang } = useLanguage();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const pathname = usePathname();
 
-  // Close mobile menu on scroll or resize
+  // Close mega menu on resize (optional, but good practice)
   useEffect(() => {
-      const handleScroll = () => {
-          if (mobileMenuOpen) {
-              setMobileMenuOpen(false);
-          }
+      const handleResize = () => {
+          // If resizing to desktop, you might want to keep it open or close it
+          // We'll leave it as is, or you can add logic here if needed
       };
       
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      window.addEventListener('resize', handleScroll);
-      
-      return () => {
-          window.removeEventListener('scroll', handleScroll);
-          window.removeEventListener('resize', handleScroll);
-      };
-  }, [mobileMenuOpen]);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const navItems = [
     { href: "/about", en: "About", ko: "교회안내" },
@@ -55,14 +48,13 @@ export default function Header() {
           />
         </Link>
 
-        <nav className={`main-nav ${mobileMenuOpen ? "active" : ""}`} id="mainNav">
+        <nav className="main-nav" id="mainNav">
           <ul>
             {navItems.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   className={`nav-link ${pathname === item.href ? "active" : ""}`}
-                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {lang === "en" ? item.en : item.ko}
                 </Link>
@@ -104,27 +96,19 @@ export default function Header() {
               한국어
             </button>
           </div>
+
+          <button
+            className="mobile-menu-toggle"
+            id="mobileMenuToggle"
+            aria-label="Toggle mobile menu"
+            onClick={() => setMegaMenuOpen(!megaMenuOpen)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
-
-        <button
-          className="mobile-menu-toggle"
-          id="mobileMenuToggle"
-          aria-label="Toggle mobile menu"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
       </div>
-
-      {mobileMenuOpen && (
-        <div 
-            style={{ position: 'fixed', top: 'var(--header-height)', left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 999 }} 
-            onClick={() => setMobileMenuOpen(false)}
-            onTouchStart={() => setMobileMenuOpen(false)}
-        />
-      )}
 
       <style jsx>{`
                 .site-header {
@@ -144,7 +128,9 @@ export default function Header() {
                     justify-content: space-between;
                     height: 100%;
                     width: 100%;
-                    padding: 0 clamp(1rem, 3vw, 2rem);
+                    max-width: var(--max-width-container);
+                    margin: 0 auto;
+                    padding: 0 clamp(20px, 4vw, 40px);
                     position: relative;
                 }
 
@@ -166,9 +152,10 @@ export default function Header() {
                 }
 
                 .main-nav {
-                    position: absolute;
-                    left: 50%;
-                    transform: translateX(-50%);
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+                    padding: 0 var(--space-md);
                 }
 
                 .main-nav ul {
@@ -243,9 +230,10 @@ export default function Header() {
                 .lang-toggle {
                     display: flex;
                     gap: 2px;
-                    background: var(--color-primary);
+                    background: var(--color-bg-secondary);
                     border-radius: var(--radius-md);
                     padding: 2px;
+                    border: 1px solid var(--color-border);
                 }
 
                 .lang-toggle button {
@@ -253,15 +241,15 @@ export default function Header() {
                     border-radius: calc(var(--radius-md) - 2px);
                     font-size: var(--font-size-xs);
                     font-weight: var(--font-weight-semibold);
-                    color: var(--color-text-light);
+                    color: var(--color-text-secondary); /* Darker text for unselected */
                     transition: all var(--transition-base);
                     letter-spacing: 0.02em;
                 }
 
                 .lang-toggle button.active {
-                    background-color: var(--color-accent);
+                    background-color: var(--color-accent); /* Use theme gold/sand accent */
                     color: white;
-                    box-shadow: 0 1px 3px rgba(37, 99, 235, 0.3);
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
                 }
 
                 .lang-toggle button:not(.active):hover {
@@ -294,13 +282,24 @@ export default function Header() {
                 }
 
                 @media (max-width: 1024px) {
+                    .site-logo {
+                        max-width: 150px; /* Shrink logo */
+                    }
+                    .logo-image {
+                        max-height: 30px; /* Shrink logo image */
+                    }
+                    .main-nav ul {
+                        gap: var(--space-sm); /* Shrink gaps between menus */
+                    }
+                    .nav-link {
+                        font-size: 0.8rem; /* Shrink menu font */
+                    }
                     .mega-menu-btn span {
                         display: none;
                     }
                 }
 
                 @media (max-width: 768px) {
-
                     .main-nav {
                         display: none;
                         position: absolute;
