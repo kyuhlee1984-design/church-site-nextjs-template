@@ -32,7 +32,6 @@ export const getSermons = async (): Promise<Sermon[]> => {
             ],
         });
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return response.results.map((page: any) => {
             const getPropertyText = (prop: any) => {
                 if (!prop) return "";
@@ -98,7 +97,6 @@ export const getBanners = async (): Promise<Banner[]> => {
             ],
         });
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return response.results.map((page: any) => {
             const title = page.properties.Title?.title?.[0]?.plain_text || "";
             const files = page.properties.Images?.files || [];
@@ -140,7 +138,6 @@ export const getLiveStream = async (): Promise<LiveStream | null> => {
 
         if (response.results.length === 0) return null;
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const page: any = response.results[0];
         const title = page.properties.Title?.title?.[0]?.plain_text || "";
         const youtubeUrl = page.properties["Youtube Live Link"]?.url || "";
