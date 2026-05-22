@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -12,6 +12,23 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  // Close mobile menu on scroll or resize
+  useEffect(() => {
+      const handleScroll = () => {
+          if (mobileMenuOpen) {
+              setMobileMenuOpen(false);
+          }
+      };
+      
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      window.addEventListener('resize', handleScroll);
+      
+      return () => {
+          window.removeEventListener('scroll', handleScroll);
+          window.removeEventListener('resize', handleScroll);
+      };
+  }, [mobileMenuOpen]);
 
   const navItems = [
     { href: "/about", en: "About", ko: "교회안내" },
@@ -105,6 +122,7 @@ export default function Header() {
         <div 
             style={{ position: 'fixed', top: 'var(--header-height)', left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 999 }} 
             onClick={() => setMobileMenuOpen(false)}
+            onTouchStart={() => setMobileMenuOpen(false)}
         />
       )}
 
