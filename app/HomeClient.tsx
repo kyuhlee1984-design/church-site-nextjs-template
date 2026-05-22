@@ -76,7 +76,7 @@ export default function HomeClient({ recentSermons, banners, liveStream }: { rec
         {
             title: { en: "2026 New Year Service", ko: "2026 신년예배" },
             description: { en: "Join us for a special New Year worship service", ko: "특별 신년예배에 함께하세요" },
-            link: { en: "/events", ko: "/events" },
+            link: { en: "/community", ko: "/community" },
             linkText: { en: "View Details", ko: "자세히 보기" },
         },
         {

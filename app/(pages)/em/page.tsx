@@ -8,8 +8,10 @@ export default function EM() {
 
     const t = {
         hero: {
-            title: { en: "English Ministry (EM)", ko: "영어권 예배 (EM)" },
-            subtitle: { en: "A vibrant community for English-speaking believers", ko: "영어권 신자들을 위한 활기찬 공동체" },
+            title: { en: "Welcome to Lighthouse Ministry", ko: "Lighthouse 영어권 예배를 소개합니다" },
+            subtitle: { en: "LOVE, GROW AND LIVE TO MAKE DISCIPLES OF JESUS CHRIST!", ko: "하나님의 사랑, 성장, 그리고 삶을 통해 예수 그리스도의 제자들을 양육합니다!" },
+            verse: { en: "Matthew 28:18-20", ko: "마태복음 28:18-20" },
+            button: { en: "Become a Member", ko: "교회 등록하기" }
         },
         about: {
             title: { en: "About EM", ko: "EM 소개" },
@@ -85,9 +87,16 @@ export default function EM() {
     return (
         <>
             <section className="hero-banner" style={{ backgroundImage: "url('/images/hero-em.jpg')" }}>
-                <div className="hero-content">
-                    <h1 className="hero-title">{t.hero.title[lang]}</h1>
-                    <p className="hero-subtitle">{t.hero.subtitle[lang]}</p>
+                <div className="hero-content" style={{ textAlign: "left", width: "100%", maxWidth: "1200px", padding: "var(--space-2xl)", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+                    <h1 className="hero-title" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", marginBottom: "0.2rem", fontWeight: "800" }}>
+                        {t.hero.title[lang]}
+                    </h1>
+                    <p className="hero-subtitle" style={{ fontSize: "clamp(1rem, 1.8vw, 1.2rem)", marginBottom: "0.2rem", fontWeight: "500", letterSpacing: "0.05em", color: "rgba(255, 255, 255, 0.95)" }}>
+                        {t.hero.subtitle[lang]}
+                    </p>
+                    <p style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", fontStyle: "italic", marginBottom: "0", color: "rgba(255, 255, 255, 0.85)" }}>
+                        {t.hero.verse[lang]}
+                    </p>
                 </div>
             </section>
 

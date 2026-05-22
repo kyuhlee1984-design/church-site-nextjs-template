@@ -53,7 +53,7 @@ export default function LiveClient({ liveStream }: { liveStream: LiveStream | nu
         <>
             <section
                 className="hero-banner"
-                style={{ backgroundImage: "url('/images/hero-live.jpg')" }}
+                style={{ backgroundImage: "url('/images/hero-live.png')" }}
             >
                 <div className="hero-content">
                     <h1 className="hero-title">{t.hero.title[lang]}</h1>

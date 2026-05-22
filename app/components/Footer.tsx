@@ -10,15 +10,6 @@ export default function Footer() {
             <div className="container">
                 <div className="footer-content">
                     <div className="footer-section">
-                        <h4>{lang === "en" ? "Westside Presbyterian Church" : "서부장로교회"}</h4>
-                        <p>
-                            {lang === "en"
-                                ? "A welcoming Korean-Canadian Presbyterian community"
-                                : "환영하는 한인-캐나다 장로교회 공동체"}
-                        </p>
-                    </div>
-
-                    <div className="footer-section">
                         <h4>{lang === "en" ? "Contact" : "연락처"}</h4>
                         <p>
                             3637 Grand Park Dr.
@@ -41,10 +32,6 @@ export default function Footer() {
                     <div className="footer-section">
                         <h4>{lang === "en" ? "Connect" : "소셜 미디어"}</h4>
                         <p>
-                            <a href="https://www.westsidepc.ca" target="_blank" rel="noopener noreferrer">
-                                Website
-                            </a>
-                            <br />
                             <a href="https://www.youtube.com/@westsidepresbyterianchurch8383/featured" target="_blank" rel="noopener noreferrer">
                                 YouTube
                             </a>
@@ -52,11 +39,14 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="footer-bottom">
-                    <p>
+                <div className="footer-bottom" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '16px', textAlign: 'left' }}>
+                    <p style={{ margin: 0 }}>
                         {lang === "en"
                             ? "© 2026 Westside Presbyterian Church. All rights reserved."
                             : "© 2026 서부장로교회. 모든 권리 보유."}
+                    </p>
+                    <p style={{ margin: 0, fontSize: '0.85em', opacity: 0.7 }}>
+                        Designed & Implemented by kyuhlee1984@gmail.com
                     </p>
                 </div>
             </div>

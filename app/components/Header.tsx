@@ -19,8 +19,8 @@ export default function Header() {
     { href: "/next-gen", en: "Next Gen", ko: "다음세대" },
     { href: "/em", en: "EM", ko: "EM" },
     { href: "/ministries", en: "Ministries", ko: "사역" },
-    { href: "/events", en: "Community", ko: "서부광장" },
-    { href: "/give", en: "Online Giving", ko: "온라인헌금" },
+    { href: "/community", en: "Community", ko: "서부광장" },
+    { href: "/offering", en: "Online Giving", ko: "온라인헌금" },
   ];
 
   return (
@@ -29,10 +29,10 @@ export default function Header() {
       <div className="header-container">
         <Link href="/" className="site-logo">
           <Image
-            src="/images/church-logo-to-replace.png"
+            src="/images/church-logo-warmwhite-background.png"
             alt="Westside Presbyterian Church"
-            width={329}
-            height={71}
+            width={200}
+            height={50}
             className="logo-image"
             priority
           />
@@ -101,12 +101,19 @@ export default function Header() {
         </button>
       </div>
 
+      {mobileMenuOpen && (
+        <div 
+            style={{ position: 'fixed', top: 'var(--header-height)', left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.4)', zIndex: 999 }} 
+            onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
       <style jsx>{`
                 .site-header {
                     position: sticky;
                     top: 0;
                     z-index: 1000;
-                    background: rgba(255, 255, 255, 0.98);
+                    background: rgba(245, 241, 235, 0.95);
                     backdrop-filter: blur(12px);
                     box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
                     height: var(--header-height);
@@ -135,7 +142,7 @@ export default function Header() {
 
                 .logo-image {
                     height: auto;
-                    max-height: 44px;
+                    max-height: 16px;
                     width: auto;
                     object-fit: contain;
                 }
@@ -283,7 +290,7 @@ export default function Header() {
                         left: 0;
                         right: 0;
                         transform: none;
-                        background-color: white;
+                        background-color: var(--color-primary);
                         box-shadow: var(--shadow-lg);
                         padding: var(--space-lg);
                         max-width: none;
@@ -325,7 +332,7 @@ export default function Header() {
                     }
 
                     .logo-image {
-                        max-height: 38px;
+                        max-height: 14px;
                     }
                 }
             `}</style>

@@ -58,13 +58,13 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
                 { href: "/em", label: { en: "English Ministry", ko: "영어권 예배" } },
                 { href: "/sermons", label: { en: "Sermons", ko: "말씀" } },
                 { href: "/live", label: { en: "Live Stream", ko: "생방송" } },
-                { href: "/events", label: { en: "Community", ko: "서부광장" } },
+                { href: "/community", label: { en: "Community", ko: "서부광장" } },
             ],
         },
         {
             title: { en: "Get Involved", ko: "참여하기" },
             links: [
-                { href: "/give", label: { en: "Online Giving", ko: "온라인헌금" } },
+                { href: "/offering", label: { en: "Online Giving", ko: "온라인헌금" } },
                 { href: "/about#staff", label: { en: "Contact Us", ko: "문의하기" } },
             ],
         },
@@ -102,7 +102,7 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
             ),
         },
         {
-            href: "/give",
+            href: "/offering",
             label: { en: "Online Giving", ko: "온라인헌금" },
             icon: (
                 <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
