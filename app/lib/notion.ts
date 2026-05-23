@@ -14,6 +14,7 @@ export interface Sermon {
     date: string;
     youtubeUrl: string;
     description: string;
+    seriesTitle?: string;
 }
 
 export const getSermons = async (): Promise<Sermon[]> => {
@@ -53,6 +54,11 @@ export const getSermons = async (): Promise<Sermon[]> => {
                 return prop.url || "";
             };
 
+            const getPropertyCheckbox = (prop: any) => {
+                if (!prop || prop.type !== "checkbox") return false;
+                return prop.checkbox === true;
+            };
+
             return {
                 id: page.id,
                 title: getPropertyText(page.properties.Title),
@@ -60,6 +66,7 @@ export const getSermons = async (): Promise<Sermon[]> => {
                 date: getPropertyDate(page.properties.Date),
                 youtubeUrl: getPropertyUrl(page.properties.YoutubeURL) || getPropertyUrl(page.properties.VideoURL),
                 description: getPropertyText(page.properties.Description),
+                seriesTitle: getPropertyText(page.properties['시리즈타이틀']),
             };
         });
     } catch (error) {
@@ -72,7 +79,9 @@ export interface Banner {
     id: string;
     title: string;
     imageUrl: string;
+    date?: string;
     order: number;
+    description?: string;
 }
 
 export const getBanners = async (): Promise<Banner[]> => {
@@ -86,15 +95,9 @@ export const getBanners = async (): Promise<Banner[]> => {
     try {
         const response = await (notion.dataSources as any).query({
             data_source_id: databaseId,
-            filter: {
-                property: "Active",
-                checkbox: {
-                    equals: true,
-                },
-            },
             sorts: [
                 {
-                    property: "Order",
+                    property: "Start Date",
                     direction: "ascending",
                 },
             ],
@@ -104,10 +107,24 @@ export const getBanners = async (): Promise<Banner[]> => {
             const title = page.properties.Title?.title?.[0]?.plain_text || "";
             const files = page.properties.Images?.files || [];
             const imageUrl = files[0]?.file?.url || files[0]?.external?.url || "";
-            const order = page.properties.Order?.number || 0;
+            
+            const startDate = page.properties["Start Date"]?.date?.start || "";
+            const endDate = page.properties["End Date"]?.date?.start || "";
+            
+            let dateStr = "";
+            if (startDate && endDate && startDate !== endDate) {
+                dateStr = `${startDate} ~ ${endDate}`;
+            } else if (startDate) {
+                dateStr = startDate;
+            } else if (endDate) {
+                dateStr = endDate;
+            }
 
-            return { id: page.id, title, imageUrl, order };
-        }).filter((b: Banner) => b.imageUrl);
+            const order = page.properties.Order?.number || 0;
+            const description = page.properties.Description?.rich_text?.[0]?.plain_text || "";
+
+            return { id: page.id, title, imageUrl, date: dateStr, order, description };
+        });
     } catch (error) {
         console.error("Error fetching banners from Notion:", error);
         return [];
@@ -153,56 +170,6 @@ export const getLiveStream = async (): Promise<LiveStream | null> => {
     }
 };
 
-export interface ChurchEvent {
-    id: string;
-    title: string;
-    date: string;
-    imageUrl: string;
-    description: string;
-    category: string;
-}
-
-export const getEvents = async (): Promise<ChurchEvent[]> => {
-    const databaseId = process.env.NOTION_EVENTS_DB_ID;
-
-    if (!databaseId) {
-        console.error("Missing NOTION_EVENTS_DB_ID");
-        return [];
-    }
-
-    try {
-        const response = await (notion as any).dataSources.query({
-            data_source_id: databaseId,
-            filter: {
-                property: "Active",
-                checkbox: {
-                    equals: true,
-                },
-            },
-            sorts: [
-                {
-                    property: "Date",
-                    direction: "ascending",
-                },
-            ],
-        });
-
-        return response.results.map((page: any) => {
-            const title = page.properties.Title?.title?.[0]?.plain_text || "";
-            const date = page.properties.Date?.date?.start || "";
-            // User named the column "Thumnail" (misspelled) instead of "Image"
-            const files = page.properties.Thumnail?.files || page.properties.Image?.files || [];
-            const imageUrl = files[0]?.file?.url || files[0]?.external?.url || "";
-            const description = page.properties.Description?.rich_text?.[0]?.plain_text || "";
-            const category = page.properties.Category?.select?.name || "";
-
-            return { id: page.id, title, date, imageUrl, description, category };
-        });
-    } catch (error) {
-        console.error("Error fetching events from Notion:", error);
-        return [];
-    }
-};
 
 export interface ChurchAlbum {
     id: string;
@@ -297,5 +264,57 @@ export const getDevotionalContent = async (pageId: string): Promise<string> => {
     } catch (error) {
         console.error("Error fetching devotional content from Notion:", error);
         return "";
+    }
+};
+
+export interface Bulletin {
+    id: string;
+    date: string;
+    fileUrl: string;
+}
+
+export const getBulletins = async (): Promise<Bulletin[]> => {
+    const databaseId = process.env.NOTION_BULLETINS_DB_ID || "369d4bd5-7a29-8094-b25a-000b508bb53e";
+
+    try {
+        const response = await (notion as any).databases.query({
+            database_id: databaseId,
+            sorts: [
+                {
+                    property: "Date",
+                    direction: "descending",
+                },
+            ],
+        });
+
+        return response.results.map((page: any) => {
+            const date = page.properties.Date?.date?.start || "";
+            const files = page.properties["Files & media"]?.files || [];
+            const fileUrl = files[0]?.file?.url || files[0]?.external?.url || "";
+
+            return { id: page.id, date, fileUrl };
+        });
+    } catch (error) {
+        try {
+            const response = await (notion as any).dataSources.query({
+                data_source_id: databaseId,
+                sorts: [
+                    {
+                        property: "Date",
+                        direction: "descending",
+                    },
+                ],
+            });
+            return response.results.map((page: any) => {
+                const date = page.properties.Date?.date?.start || "";
+                const files = page.properties["Files & media"]?.files || [];
+                const fileUrl = files[0]?.file?.url || files[0]?.external?.url || "";
+
+                return { id: page.id, date, fileUrl };
+            });
+        } catch (innerError) {
+            console.error("Error fetching bulletins from Notion:", innerError);
+            return [];
+        }
     }
 };

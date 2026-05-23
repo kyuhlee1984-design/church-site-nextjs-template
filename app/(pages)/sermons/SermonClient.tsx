@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { Sermon } from "../../lib/notion";
 import VideoModal from "../../components/VideoModal";
@@ -76,6 +76,34 @@ export default function SermonClient({ initialSermons }: { initialSermons: Sermo
             s.description.toLowerCase().includes(q)
         );
     }, [searchQuery, initialSermons]);
+
+    const [activeTab, setActiveTab] = useState<"all" | "series">("all");
+    const [selectedSeries, setSelectedSeries] = useState<string | null>(null);
+    
+    // Check URL parameters for initial tab
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('tab') === 'series') {
+                setActiveTab('series');
+            }
+        }
+    }, []);
+    
+    // Group sermons by series title
+    const groupedSeries = useMemo(() => {
+        const seriesMap = new Map<string, Sermon[]>();
+        initialSermons.forEach(sermon => {
+            if (sermon.seriesTitle && sermon.seriesTitle.trim() !== "") {
+                const titleKey = sermon.seriesTitle.trim();
+                if (!seriesMap.has(titleKey)) {
+                    seriesMap.set(titleKey, []);
+                }
+                seriesMap.get(titleKey)!.push(sermon);
+            }
+        });
+        return seriesMap;
+    }, [initialSermons]);
 
     // Get sermons for current month selection
     const currentSermons = useMemo(() => {
@@ -190,7 +218,131 @@ export default function SermonClient({ initialSermons }: { initialSermons: Sermo
                     </>
                 ) : (
                     <>
-                        {/* Year Selector */}
+                        {/* Tabs Selector */}
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-md)', marginBottom: 'var(--space-3xl)' }}>
+                            <button 
+                                onClick={() => { setActiveTab("all"); setSelectedSeries(null); }}
+                                style={{
+                                    padding: '12px 24px',
+                                    borderRadius: '30px',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    fontSize: '1rem',
+                                    fontWeight: 'var(--font-weight-medium)',
+                                    background: activeTab === "all" ? 'var(--color-accent)' : 'var(--color-secondary)',
+                                    color: activeTab === "all" ? 'white' : 'var(--color-text-primary)',
+                                    boxShadow: activeTab === "all" ? '0 4px 12px rgba(74, 111, 165, 0.3)' : 'none',
+                                    transition: 'all 0.3s ease'
+                                }}
+                            >
+                                {lang === 'en' ? 'All Sermons' : '전체 말씀'}
+                            </button>
+                            <button 
+                                onClick={() => { setActiveTab("series"); setSelectedSeries(null); }}
+                                style={{
+                                    padding: '12px 24px',
+                                    borderRadius: '30px',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    fontSize: '1rem',
+                                    fontWeight: 'var(--font-weight-medium)',
+                                    background: activeTab === "series" ? 'var(--color-accent)' : 'var(--color-secondary)',
+                                    color: activeTab === "series" ? 'white' : 'var(--color-text-primary)',
+                                    boxShadow: activeTab === "series" ? '0 4px 12px rgba(74, 111, 165, 0.3)' : 'none',
+                                    transition: 'all 0.3s ease'
+                                }}
+                            >
+                                {lang === 'en' ? 'Sermon Series' : '시리즈 말씀'}
+                            </button>
+                        </div>
+
+                        {activeTab === "series" ? (
+                            <div className="series-container">
+                                {groupedSeries.size === 0 ? (
+                                    <div style={{ textAlign: "center", padding: "var(--space-3xl)" }}>
+                                        <p>{t.noSermons[lang]}</p>
+                                    </div>
+                                ) : selectedSeries === null ? (
+                                    // List of Series Cards
+                                    <div className="gallery-grid-mobile" style={{
+                                        display: 'grid',
+                                        gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                                        gap: 'var(--space-xl)',
+                                        marginBottom: 'var(--space-2xl)',
+                                    }}>
+                                        {Array.from(groupedSeries.entries()).map(([seriesTitle, sermons]) => {
+                                            const previewSermon = sermons[0];
+                                            const previewId = previewSermon ? getYoutubeId(previewSermon.youtubeUrl) : null;
+                                            return (
+                                                <div
+                                                    key={seriesTitle}
+                                                    onClick={() => setSelectedSeries(seriesTitle)}
+                                                    className="card scroll-fade compact-card-mobile"
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                        padding: 0,
+                                                        overflow: 'hidden',
+                                                        transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+                                                        borderRadius: 'var(--radius-lg)',
+                                                    }}
+                                                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = '0 16px 32px rgba(0,0,0,0.14)'; }}
+                                                    onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = ''; }}
+                                                >
+                                                    <div style={{ position: 'relative', aspectRatio: '4/3', backgroundColor: '#e8e8e8', overflow: 'hidden' }}>
+                                                        {previewId ? (
+                                                            <img src={`https://img.youtube.com/vi/${previewId}/mqdefault.jpg`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.65, transition: 'opacity 0.3s' }} />
+                                                        ) : (
+                                                            <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, #2c3e50 0%, #4a6fa5 100%)' }} />
+                                                        )}
+                                                        <div style={{
+                                                            position: 'absolute', inset: 0,
+                                                            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                                                            background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.25) 100%)',
+                                                            padding: '20px',
+                                                            textAlign: 'center'
+                                                        }}>
+                                                            <span style={{ color: 'white', fontSize: 'clamp(1.5rem, 4vw, 2rem)', fontWeight: 800, lineHeight: 1.2, textShadow: '0 2px 8px rgba(0,0,0,0.3)' }}>
+                                                                {seriesTitle}
+                                                            </span>
+                                                            <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: '0.95rem', marginTop: '12px', fontWeight: 500 }}>
+                                                                {sermons.length} {t.sermonCount[lang]}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    // Detail view for selected series
+                                    <>
+                                        <div style={{ marginBottom: 'var(--space-xl)' }}>
+                                            <button
+                                                onClick={() => setSelectedSeries(null)}
+                                                style={{
+                                                    background: 'none', border: 'none', cursor: 'pointer',
+                                                    color: 'var(--color-accent)', fontSize: '0.95rem', fontWeight: 600,
+                                                    padding: '8px 0', marginBottom: 'var(--space-md)',
+                                                }}
+                                            >
+                                                {t.back[lang]}
+                                            </button>
+                                            <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', margin: 0 }}>
+                                                {selectedSeries}
+                                                <span style={{ fontSize: '1rem', color: 'var(--color-text-secondary)', marginLeft: '12px', fontWeight: 400 }}>
+                                                    {groupedSeries.get(selectedSeries)?.length || 0}{t.sermonCount[lang]}
+                                                </span>
+                                            </h2>
+                                        </div>
+                                        <div className="card-grid card-grid-3 gallery-grid-mobile">
+                                            {groupedSeries.get(selectedSeries)?.map(sermon => renderSermonCard(sermon))}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        ) : (
+                            <>
+                                {/* Year Selector */}
                         <div style={{ display: 'flex', gap: '12px', marginBottom: 'var(--space-2xl)', flexWrap: 'wrap', justifyContent: 'center' }}>
                             {groupedData.years.map(year => {
                                 const isActive = selectedYear === year;
@@ -310,6 +462,8 @@ export default function SermonClient({ initialSermons }: { initialSermons: Sermo
                                         </div>
                                     )}
                                 </div>
+                            </>
+                        )}
                             </>
                         )}
                     </>

@@ -5,11 +5,11 @@ import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import ReactMarkdown from "react-markdown";
 import { useLanguage } from "../../contexts/LanguageContext";
-import { ChurchEvent, ChurchAlbum, Devotional } from "../../lib/notion";
+import { ChurchAlbum, Devotional, Banner, Bulletin } from "../../lib/notion";
 
-export default function CommunityClient({ events, albums, devotionals }: { events: ChurchEvent[]; albums: ChurchAlbum[]; devotionals?: Devotional[] }) {
+export default function CommunityClient({ banners, albums, devotionals, bulletins = [] }: { banners: Banner[]; albums: ChurchAlbum[]; devotionals?: Devotional[]; bulletins?: Bulletin[] }) {
     const { lang } = useLanguage();
-    const [activeTab, setActiveTab] = useState<"events" | "gallery" | "devotionals">("gallery");
+    const [activeTab, setActiveTab] = useState<"bulletin" | "events" | "gallery" | "devotionals">("bulletin");
 
     // Modal state for Gallery Carousel
     const [viewingAlbum, setViewingAlbum] = useState<ChurchAlbum | null>(null);
@@ -22,9 +22,57 @@ export default function CommunityClient({ events, albums, devotionals }: { event
     const [isLoadingContent, setIsLoadingContent] = useState(false);
     const [mounted, setMounted] = useState(false);
 
+    // Modal state for Events
+    const [viewingEvent, setViewingEvent] = useState<Banner | null>(null);
+
+    // Carousel State for Top 3 Banners
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [transitionStyle, setTransitionStyle] = useState({ clipPath: 'circle(150% at 50% 50%)', transform: 'scale(1)', filter: 'blur(0px)' });
+    const topBanners = banners.slice(0, 3);
+    const totalSlides = topBanners.length;
+
+    const effects = [
+        { clipPath: 'circle(0% at 50% 50%)', transform: 'scale(1.1)', filter: 'blur(5px)' },
+        { clipPath: 'inset(0 100% 0 0)', transform: 'scale(1)', filter: 'blur(0px)' },
+        { clipPath: 'inset(0 0 0 100%)', transform: 'scale(1)', filter: 'blur(0px)' },
+        { clipPath: 'inset(0 0 100% 0)', transform: 'scale(0.9)', filter: 'blur(10px)' },
+        { clipPath: 'inset(100% 0 0 0)', transform: 'scale(1)', filter: 'blur(0px)' },
+        { clipPath: 'inset(0 0 0 0)', transform: 'scale(1.2)', filter: 'blur(15px)' }
+    ];
+
+    const pickRandomEffect = () => {
+        setTransitionStyle(effects[Math.floor(Math.random() * effects.length)]);
+    };
+
     useEffect(() => {
         setMounted(true);
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const tabParam = params.get('tab');
+            if (tabParam === 'bulletin' || tabParam === 'events' || tabParam === 'gallery' || tabParam === 'devotionals') {
+                setActiveTab(tabParam as "bulletin" | "events" | "gallery" | "devotionals");
+            }
+        }
     }, []);
+
+    useEffect(() => {
+        if (totalSlides <= 1) return;
+        const interval = setInterval(() => {
+            pickRandomEffect();
+            setCurrentSlide((prev) => (prev + 1) % totalSlides);
+        }, 8000);
+        return () => clearInterval(interval);
+    }, [totalSlides]);
+
+    const goToPrevSlide = () => {
+        pickRandomEffect();
+        setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+    };
+
+    const goToNextSlide = () => {
+        pickRandomEffect();
+        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    };
 
     // The body overflow: hidden useEffect was removed because it breaks internal scrolling on iOS Safari.
     // Instead, we use overscrollBehavior: 'contain' on the modal containers.
@@ -77,22 +125,84 @@ export default function CommunityClient({ events, albums, devotionals }: { event
     const years = Object.keys(albumsByYear).sort((a, b) => b.localeCompare(a)); // Descending order
 
     return (
-        <div style={{ paddingTop: 'var(--space-2xl)' }}>
-            {/* Page Header */}
-            <div className="page-header" style={{ textAlign: 'center', marginBottom: 'var(--space-2xl)' }}>
-                <div className="container">
-                    <h1 className="page-title">{lang === 'en' ? 'Community' : '서부광장'}</h1>
-                    <p className="page-subtitle" style={{ maxWidth: '600px', margin: '0 auto', color: 'var(--color-text-secondary)' }}>
-                        {lang === 'en' 
-                            ? 'Stay updated with our latest events and memories.'
-                            : '서부장로교회의 다가올 행사와 아름다운 은혜의 발자취를 나눕니다.'}
-                    </p>
-                </div>
-            </div>
+        <div style={{ paddingTop: 0 }}>
+            {/* Page Header Removed as requested */}
 
             <section className="container">
+                {/* Top Carousel for Advertisements */}
+                {topBanners.length > 0 && (
+                    <div className="news-carousel" style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', position: 'relative', marginBottom: 'var(--space-3xl)' }}>
+                        <div className="carousel-container">
+                            {topBanners.map((banner, index) => (
+                                <div
+                                    key={banner.id}
+                                    className={`carousel-slide ${index === currentSlide ? "active" : ""}`}
+                                    style={{ 
+                                        position: index === currentSlide ? 'relative' : 'absolute', 
+                                        opacity: index === currentSlide ? 1 : 0, 
+                                        clipPath: index === currentSlide ? 'circle(150% at 50% 50%)' : transitionStyle.clipPath,
+                                        transform: index === currentSlide ? 'scale(1)' : transitionStyle.transform,
+                                        filter: index === currentSlide ? 'blur(0px)' : transitionStyle.filter,
+                                        transition: 'all 1.5s ease-in-out', 
+                                        width: '100%', 
+                                        height: '100%' 
+                                    }}
+                                >
+                                    <img
+                                        src={banner.imageUrl}
+                                        alt={banner.title}
+                                        className="carousel-image skeleton-loading"
+                                        style={{ width: '100%', height: '100%' }}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                        {totalSlides > 1 && (
+                            <>
+                                <button className="carousel-nav carousel-prev" onClick={goToPrevSlide} aria-label="Previous slide">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="15 18 9 12 15 6"></polyline>
+                                    </svg>
+                                </button>
+                                <button className="carousel-nav carousel-next" onClick={goToNextSlide} aria-label="Next slide">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <polyline points="9 18 15 12 9 6"></polyline>
+                                    </svg>
+                                </button>
+                                <div className="carousel-indicators">
+                                    {topBanners.map((_, index) => (
+                                        <button
+                                            key={index}
+                                            className={`indicator ${index === currentSlide ? "active" : ""}`}
+                                            onClick={() => { pickRandomEffect(); setCurrentSlide(index); }}
+                                            aria-label={`Go to slide ${index + 1}`}
+                                        />
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </div>
+                )}
+
                 {/* Tabs */}
                 <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-md)', marginBottom: 'var(--space-3xl)' }}>
+                    <button 
+                        onClick={() => setActiveTab("bulletin")}
+                        style={{
+                            padding: '12px 24px',
+                            borderRadius: '30px',
+                            border: 'none',
+                            cursor: 'pointer',
+                            fontSize: '1rem',
+                            fontWeight: 'var(--font-weight-medium)',
+                            background: activeTab === "bulletin" ? 'var(--color-accent)' : 'var(--color-secondary)',
+                            color: activeTab === "bulletin" ? 'white' : 'var(--color-text-primary)',
+                            boxShadow: activeTab === "bulletin" ? '0 4px 12px rgba(74, 111, 165, 0.3)' : 'none',
+                            transition: 'all 0.3s ease'
+                        }}
+                    >
+                        {lang === 'en' ? 'Bulletin' : '주보'}
+                    </button>
                     <button 
                         onClick={() => setActiveTab("events")}
                         style={{
@@ -147,6 +257,38 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                 </div>
 
                 {/* Content */}
+                {activeTab === "bulletin" && (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
+                        {bulletins && bulletins.length > 0 ? bulletins.map((bulletin) => (
+                            <a key={bulletin.id} href={bulletin.fileUrl} target="_blank" rel="noopener noreferrer" 
+                                className="scroll-fade"
+                                style={{ 
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', 
+                                    padding: '20px 16px', backgroundColor: 'var(--color-secondary)', 
+                                    borderRadius: '12px', textDecoration: 'none', color: 'var(--color-text-primary)',
+                                    transition: 'transform 0.2s, background-color 0.2s',
+                                    border: '1px solid var(--color-border)',
+                                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                                }}
+                                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.backgroundColor = 'var(--color-border)'; }}
+                                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.backgroundColor = 'var(--color-secondary)'; }}
+                            >
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                </svg>
+                                <div style={{ fontSize: '1.25rem', fontWeight: 'bold', letterSpacing: '-0.5px' }}>
+                                    {bulletin.date}
+                                </div>
+                            </a>
+                        )) : (
+                            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: 'var(--space-2xl)', color: 'var(--color-text-light)' }}>
+                                {lang === 'en' ? 'No bulletins available at the moment.' : '등록된 주보가 없습니다.'}
+                            </div>
+                        )}
+                    </div>
+                )}
+
                 {activeTab === "devotionals" && (
                     <div className="card-grid card-grid-2">
                         {devotionals && devotionals.length > 0 ? devotionals.map((devotional) => (
@@ -172,44 +314,33 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                 )}
 
                 {activeTab === "events" && (
-                    <div className="card-grid card-grid-3">
-                        {events.length > 0 ? events.map((event) => (
-                            <div key={event.id} className="card scroll-fade" style={{ overflow: 'hidden', padding: 0, display: 'flex', flexDirection: 'column' }}>
-                                <div className="skeleton-loading" style={{ aspectRatio: '1/1', position: 'relative' }}>
-                                    {event.imageUrl ? (
-                                        <img 
-                                            src={event.imageUrl} 
-                                            alt={event.title} 
-                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                                        />
-                                    ) : (
-                                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-light)' }}>
-                                            No Image
-                                        </div>
-                                    )}
-                                    {event.category && (
-                                        <span style={{ position: 'absolute', top: '16px', left: '16px', background: 'rgba(0,0,0,0.6)', color: 'white', padding: '4px 12px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold' }}>
-                                            {event.category}
-                                        </span>
-                                    )}
+                    <div className="events-list-container" style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '900px', margin: '0 auto' }}>
+                        {banners.length > 0 ? banners.map((banner) => (
+                            <div key={banner.id} className="event-list-item scroll-fade" onClick={() => setViewingEvent(banner)}>
+                                <div className="event-list-date">
+                                    <div className="event-date-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg>
+                                    </div>
+                                    <span className="event-date-text">{banner.date || (lang === 'en' ? 'Upcoming' : '예정된 행사')}</span>
                                 </div>
-                                <div className="card-content" style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                                    {event.date && (
-                                        <div style={{ fontSize: '0.9rem', color: 'var(--color-accent)', fontWeight: 'bold', marginBottom: '8px' }}>
-                                            {event.date}
-                                        </div>
-                                    )}
-                                    <h3 style={{ fontSize: '1.25rem', marginBottom: '12px' }}>{event.title}</h3>
-                                    {event.description && (
-                                        <p style={{ color: 'var(--color-text-secondary)', margin: 0, fontSize: '0.95rem', lineHeight: 1.6 }}>
-                                            {event.description}
-                                        </p>
-                                    )}
+                                <div className="event-list-content">
+                                    <h3 className="event-list-title">{banner.title}</h3>
+                                </div>
+                                <div className="event-list-arrow">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
                                 </div>
                             </div>
                         )) : (
-                            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '64px', color: 'var(--color-text-secondary)' }}>
-                                {lang === 'en' ? 'No upcoming events.' : '예정된 행사가 없습니다.'}
+                            <div style={{ textAlign: 'center', padding: 'var(--space-2xl)', color: 'var(--color-text-light)' }}>
+                                {lang === 'en' ? 'No events available at the moment.' : '등록된 행사가 없습니다.'}
                             </div>
                         )}
                     </div>
@@ -546,6 +677,72 @@ export default function CommunityClient({ events, albums, devotionals }: { event
                             <path d="M18 15l-6-6-6 6"/>
                         </svg>
                     </button>
+                </div>
+            ), document.body)}
+
+            {/* Event Details Popup */}
+            {mounted && viewingEvent && createPortal((
+                <div style={{ position: 'fixed', inset: 0, zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+                    {/* Backdrop */}
+                    <div 
+                        style={{ position: 'absolute', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(4px)' }} 
+                        onClick={() => setViewingEvent(null)}
+                    />
+
+                    {/* Popup Box */}
+                    <div 
+                        style={{ 
+                            position: 'relative', 
+                            width: '100%', 
+                            maxWidth: '600px', 
+                            maxHeight: '85vh', 
+                            backgroundColor: 'white', 
+                            borderRadius: '20px', 
+                            boxShadow: '0 10px 40px rgba(0,0,0,0.2)', 
+                            display: 'flex', 
+                            flexDirection: 'column',
+                            overflow: 'hidden'
+                        }}
+                    >
+                        {/* Header */}
+                        <div style={{ padding: '16px 24px', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--color-bg-secondary)' }}>
+                            <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 'bold', color: 'var(--color-primary)' }}>
+                                {lang === 'en' ? 'Event Details' : '행사 상세 안내'}
+                            </h3>
+                            <button 
+                                onClick={() => setViewingEvent(null)}
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-secondary)', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                            >
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                            </button>
+                        </div>
+
+                        {/* Content Scroll Area */}
+                        <div style={{ padding: '24px', overflowY: 'auto', overscrollBehavior: 'contain' }}>
+                            <h2 style={{ fontSize: '1.5rem', marginBottom: '8px', fontWeight: 'bold', color: 'var(--color-text-primary)' }}>
+                                {viewingEvent.title}
+                            </h2>
+                            <div style={{ fontSize: '1rem', color: 'var(--color-accent)', fontWeight: 'bold', marginBottom: '24px' }}>
+                                {viewingEvent.date ? viewingEvent.date : ''}
+                            </div>
+
+                            {viewingEvent.imageUrl && (
+                                <div style={{ marginBottom: '24px', borderRadius: '12px', overflow: 'hidden' }}>
+                                    <img src={viewingEvent.imageUrl} alt={viewingEvent.title} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                                </div>
+                            )}
+
+                            {viewingEvent.description ? (
+                                <div className="prose" style={{ lineHeight: '1.6', fontSize: '1.05rem', color: 'var(--color-text-primary)', whiteSpace: 'pre-wrap' }}>
+                                    {viewingEvent.description}
+                                </div>
+                            ) : (
+                                <div style={{ padding: '20px', textAlign: 'center', color: 'var(--color-text-light)', background: 'var(--color-bg-secondary)', borderRadius: '12px' }}>
+                                    {lang === 'en' ? 'No additional details provided.' : '상세 내용이 없습니다.'}
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             ), document.body)}
 

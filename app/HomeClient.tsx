@@ -8,7 +8,7 @@ import { useLanguage } from "./contexts/LanguageContext";
 import { Sermon, Banner, LiveStream } from "./lib/notion";
 import VideoModal from "./components/VideoModal";
 
-export default function HomeClient({ recentSermons, banners, liveStream }: { recentSermons: Sermon[]; banners: Banner[]; liveStream: LiveStream | null }) {
+export default function HomeClient({ recentSermons, liveStream }: { recentSermons: Sermon[]; liveStream: LiveStream | null }) {
     const { lang } = useLanguage();
 
     const t = {
@@ -67,31 +67,28 @@ export default function HomeClient({ recentSermons, banners, liveStream }: { rec
         },
     };
 
-    const newsSlides = [
+    const heroSlides = [
         {
-            title: { en: "Welcome to Westside Presbyterian Church!", ko: "서부장로교회에 오신 것을 환영합니다" },
-            description: { en: "Join us every Sunday at 10:00 AM & 12:30 PM", ko: "매주 주일 오전 10:00 & 오후 12:30" },
+            imageUrl: '/images/welcome_to_westside_0.jpg',
+            title: { en: "Welcome to Westside Presbyterian Church", ko: "서부장로교회에 오신 것을 환영합니다" },
+            description: { en: "", ko: "" },
             link: { en: "/about", ko: "/about" },
             linkText: { en: "Learn More", ko: "자세히 보기" },
         },
         {
-            title: { en: "2026 New Year Service", ko: "2026 신년예배" },
-            description: { en: "Join us for a special New Year worship service", ko: "특별 신년예배에 함께하세요" },
+            imageUrl: '/images/welcome_to_westside_1.png',
+            title: { en: "Worship with Us", ko: "함께 예배합시다" },
+            description: { en: "", ko: "" },
             link: { en: "/community", ko: "/community" },
             linkText: { en: "View Details", ko: "자세히 보기" },
         },
         {
-            title: { en: "Weekly Prayer Meeting", ko: "주중 기도회" },
-            description: { en: "Wednesday 7:30 PM - Join us for prayer and worship", ko: "수요일 저녁 7시 30분 - 기도와 찬양으로 함께해요" },
-            link: { en: "/about#service-times", ko: "/about#service-times" },
-            linkText: { en: "Service Times", ko: "예배시간" },
-        },
-        {
-            title: { en: "Youth Ministry Programs", ko: "다음세대 사역 프로그램" },
-            description: { en: "Middle School & High School ministries every week", ko: "주중 중고등부 사역 프로그램" },
-            link: { en: "/ministries", ko: "/ministries" },
-            linkText: { en: "Learn More", ko: "자세히 보기" },
-        },
+            imageUrl: '/images/welcome_to_westside_2.png',
+            title: { en: "Join Our Community", ko: "공동체에 참여하세요" },
+            description: { en: "", ko: "" },
+            link: { en: "/community", ko: "/community" },
+            linkText: { en: "View Details", ko: "자세히 보기" },
+        }
     ];
 
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -105,7 +102,7 @@ export default function HomeClient({ recentSermons, banners, liveStream }: { rec
         filter: 'blur(0px)'
     });
 
-    const totalSlides = banners.length > 0 ? banners.length : newsSlides.length;
+    const totalSlides = heroSlides.length;
 
     const effects = [
         { clipPath: 'circle(0% at 50% 50%)', transform: 'scale(1.1)', filter: 'blur(5px)' }, // Iris reveal
@@ -125,7 +122,7 @@ export default function HomeClient({ recentSermons, banners, liveStream }: { rec
         const interval = setInterval(() => {
             pickRandomEffect();
             setCurrentSlide((prev) => (prev + 1) % totalSlides);
-        }, 5000);
+        }, 8000);
         return () => clearInterval(interval);
     }, [totalSlides]);
 
@@ -146,69 +143,39 @@ export default function HomeClient({ recentSermons, banners, liveStream }: { rec
 
     return (
         <>
-            {/* News / Banner Carousel */}
-            <section style={{ padding: 'var(--section-padding-y) 0' }}>
+            {/* Hero Section Carousel */}
+            <section style={{ paddingTop: 0, paddingBottom: 'var(--section-padding-y)' }}>
                 <div className="container">
                     <div className="news-carousel" style={{ borderRadius: 'var(--radius-lg)', overflow: 'hidden', position: 'relative' }}>
                         <div className="carousel-container">
-                            {banners.length > 0 ? (
-                                /* Notion Image Banners */
-                                banners.map((banner, index) => (
-                                    <div
-                                        key={banner.id}
-                                        className={`carousel-slide ${index === currentSlide ? "active" : ""}`}
-                                        style={{ 
-                                            position: index === currentSlide ? 'relative' : 'absolute', 
-                                            opacity: index === currentSlide ? 1 : 0, 
-                                            clipPath: index === currentSlide ? 'circle(150% at 50% 50%)' : transitionStyle.clipPath,
-                                            transform: index === currentSlide ? 'scale(1)' : transitionStyle.transform,
-                                            filter: index === currentSlide ? 'blur(0px)' : transitionStyle.filter,
-                                            transition: 'all 1.5s ease-in-out', 
-                                            width: '100%', 
-                                            height: '100%' 
+                            {heroSlides.map((slide, index) => (
+                                <div
+                                    key={index}
+                                    className={`carousel-slide ${index === currentSlide ? "active" : ""}`}
+                                    style={{ 
+                                        position: index === currentSlide ? 'relative' : 'absolute', 
+                                        opacity: index === currentSlide ? 1 : 0, 
+                                        clipPath: index === currentSlide ? 'circle(150% at 50% 50%)' : transitionStyle.clipPath,
+                                        transform: index === currentSlide ? 'scale(1)' : transitionStyle.transform,
+                                        filter: index === currentSlide ? 'blur(0px)' : transitionStyle.filter,
+                                        transition: 'all 1.5s ease-in-out', 
+                                        width: '100%', 
+                                        height: '100%' 
+                                    }}
+                                >
+                                    {/* Static Image Background */}
+                                    <img
+                                        src={slide.imageUrl}
+                                        alt={slide.title[lang]}
+                                        className="carousel-image skeleton-loading"
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: index === 0 ? 'contain' : 'cover',
                                         }}
-                                    >
-                                        <img
-                                            src={banner.imageUrl}
-                                            alt={banner.title}
-                                            className="carousel-image skeleton-loading"
-                                            style={{
-                                                width: '100%',
-                                                height: '100%',
-                                            }}
-                                        />
-                                    </div>
-                                ))
-                            ) : (
-                                /* Fallback: Hardcoded slides */
-                                newsSlides.map((slide, index) => (
-                                    <div
-                                        key={index}
-                                        className={`carousel-slide carousel-slide-${index + 1} ${index === currentSlide ? "active" : ""}`}
-                                        style={{ 
-                                            position: index === currentSlide ? 'relative' : 'absolute', 
-                                            opacity: index === currentSlide ? 1 : 0, 
-                                            clipPath: index === currentSlide ? 'circle(150% at 50% 50%)' : transitionStyle.clipPath,
-                                            transform: index === currentSlide ? 'scale(1)' : transitionStyle.transform,
-                                            filter: index === currentSlide ? 'blur(0px)' : transitionStyle.filter,
-                                            transition: 'all 1.5s ease-in-out', 
-                                            width: '100%', 
-                                            height: '100%' 
-                                        }}
-                                    >
-                                        <div className="carousel-background">
-                                            <div className="carousel-pattern"></div>
-                                        </div>
-                                        <div className="carousel-content">
-                                            <h2 className="carousel-title">{slide.title[lang]}</h2>
-                                            <p className="carousel-description">{slide.description[lang]}</p>
-                                            <Link href={slide.link[lang]} className="btn btn-primary">
-                                                {slide.linkText[lang]}
-                                            </Link>
-                                        </div>
-                                    </div>
-                                ))
-                            )}
+                                    />
+                                </div>
+                            ))}
                         </div>
 
                         {/* Previous Button */}
@@ -289,67 +256,134 @@ export default function HomeClient({ recentSermons, banners, liveStream }: { rec
                     </div>
                 </section>
             )}
-            {/* Sunday Sermons Section */}
-            <section className="container">
-                <h2 className="section-title scroll-fade">
-                    <span style={{ fontWeight: 800 }}>{lang === 'en' ? t.sermons.title.en : t.sermons.title.ko}</span>
-                    <span style={{ fontWeight: 400, color: 'var(--color-text-tertiary)', fontSize: '0.85em', letterSpacing: '0.02em', paddingLeft: '4px' }}>
-                        | {lang === 'en' ? t.sermons.title.ko : t.sermons.title.en}
-                    </span>
-                </h2>
-                <div className="section-bracket-top"></div>
-                
-                <div className="card-grid card-grid-3 horizontal-scroll-mobile">
-                    {/* Recent Sermons from Notion */}
-                    {recentSermons.map((sermon) => {
-                        // Extract YouTube ID for thumbnail
-                        const getYoutubeId = (url: string) => {
-                            if (!url) return null;
-                            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
-                            const match = url.match(regExp);
-                            return (match && match[2].length === 11) ? match[2] : null;
-                        };
-                        const youtubeId = getYoutubeId(sermon.youtubeUrl);
-
-                        return (
-                            <div key={sermon.id} className="card scroll-fade sermon-card compact-card-mobile" style={{ overflow: 'hidden', padding: 0, cursor: 'pointer' }} onClick={() => { if (sermon.youtubeUrl) { setVideoUrl(sermon.youtubeUrl); setVideoTitle(sermon.title); } }}>
-                                {/* Thumbnail Section */}
-                                <div className="skeleton-loading" style={{ display: 'block', position: 'relative', aspectRatio: '16/9' }}>
-                                    {youtubeId ? (
-                                        <img 
-                                            src={`https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`} 
-                                            alt={sermon.title}
-                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                        />
-                                    ) : (
-                                        <div style={{ width: '100%', height: '100%', background: 'var(--color-primary)' }} />
-                                    )}
-                                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(0,0,0,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M8 5v14l11-7z" />
-                                        </svg>
-                                    </div>
-                                </div>
-
-                                {/* Content Section */}
-                                <div className="card-content" style={{ padding: '16px' }}>
-                                    <div className="card-meta" style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', marginBottom: '4px' }}>
-                                        {sermon.date} • {sermon.speaker}
-                                    </div>
-                                    <h3 className="card-title" style={{ fontSize: '1.1rem', margin: '0 0 8px 0', lineHeight: 1.3, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                                        {sermon.title}
-                                    </h3>
-                                    {sermon.description && (
-                                        <p className="card-description" style={{ margin: 0, fontSize: '0.9rem', color: 'var(--color-text-secondary)', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                                            {sermon.description}
-                                        </p>
-                                    )}
-                                </div>
+            {/* Quick Links Section (Replaces Recent Sermons Grid) */}
+            <section className="container" style={{ marginBottom: 'var(--space-4xl)' }}>
+                <style>{`
+                    .home-sketch-layout { display: flex; gap: 16px; }
+                    .home-sketch-left { display: flex; flex-direction: column; gap: 16px; flex: 1.8; }
+                    .home-sketch-right { display: flex; flex-direction: column; gap: 16px; flex: 1; }
+                    .home-sketch-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+                    .home-sketch-card { 
+                        background-color: #0A1E3F; color: white; border-radius: 12px; 
+                        display: flex; flex-direction: column; align-items: center; justify-content: center; 
+                        text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; 
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 30px 20px; text-align: center;
+                    }
+                    .home-sketch-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+                    .home-sketch-right-card { flex: 1; min-height: 180px; }
+                    
+                    @media (max-width: 768px) {
+                        .home-sketch-layout { flex-direction: column; }
+                        /* On mobile, make the right column items sit side-by-side. 
+                           row-reverse makes the second item (묵상) appear on the left, matching the sketch. */
+                        .home-sketch-right { flex-direction: row-reverse; }
+                        .home-sketch-card { padding: 20px 10px; } /* Slightly smaller padding on mobile */
+                    }
+                `}</style>
+                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+                    <div className="home-sketch-layout">
+                        {/* Left Column */}
+                        <div className="home-sketch-left">
+                            {/* Top Row: 주보, 행사 */}
+                            <div className="home-sketch-row">
+                                <Link href="/community?tab=bulletin" className="home-sketch-card">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ marginBottom: '12px', opacity: 0.9 }}>
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                                    </svg>
+                                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>{lang === 'en' ? 'Bulletin' : '주보'}</span>
+                                </Link>
+                                
+                                <Link href="/community?tab=events" className="home-sketch-card">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ marginBottom: '12px', opacity: 0.9 }}>
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>{lang === 'en' ? 'Events' : '행사'}</span>
+                                </Link>
                             </div>
-                        );
-                    })}
+
+                            {/* Middle Row: 설교 (Sermons) */}
+                            {recentSermons.length > 0 && (
+                                <div onClick={() => { 
+                                    const latest = recentSermons[0];
+                                    if (latest.youtubeUrl) { 
+                                        setVideoUrl(latest.youtubeUrl); 
+                                        setVideoTitle(latest.title); 
+                                    } 
+                                }} style={{ 
+                                    display: 'block', position: 'relative', overflow: 'hidden', borderRadius: '12px', 
+                                    cursor: 'pointer', minHeight: '300px', flex: 1,
+                                    transition: 'transform 0.2s, box-shadow 0.2s',
+                                    boxShadow: '0 4px 15px rgba(0,0,0,0.1)'
+                                }} onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.2)'; }} onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)'; }}>
+                                    {(() => {
+                                        const latest = recentSermons[0];
+                                        const getYoutubeId = (url: string) => {
+                                            if (!url) return null;
+                                            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*).*/;
+                                            const match = url.match(regExp);
+                                            return (match && match[2].length === 11) ? match[2] : null;
+                                        };
+                                        const yid = getYoutubeId(latest.youtubeUrl);
+                                        return (
+                                            <>
+                                                <div style={{ position: 'absolute', inset: 0, backgroundColor: '#2a2a2a' }}>
+                                                    <img src={yid ? `https://img.youtube.com/vi/${yid}/maxresdefault.jpg` : "/images/hero-sermons.jpg"} 
+                                                        onError={(e) => { e.currentTarget.src = yid ? `https://img.youtube.com/vi/${yid}/hqdefault.jpg` : "/images/hero-sermons.jpg"; }}
+                                                        alt="Sermons" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                                </div>
+                                                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.1) 100%)', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: 'clamp(20px, 5vw, 50px)' }}>
+                                                    <span style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1.1rem', marginBottom: '8px', letterSpacing: '0.5px' }}>{lang === 'en' ? 'Sunday Worship' : '주일예배'} ({latest.date})</span>
+                                                    <h2 style={{ color: 'white', fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', fontWeight: 'bold', margin: '0 0 12px 0', lineHeight: 1.3, maxWidth: '65%' }}>{latest.title}</h2>
+                                                    <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.1rem', margin: 0 }}>{latest.speaker}</p>
+                                                    
+                                                    <div style={{ position: 'absolute', bottom: 'clamp(20px, 5vw, 40px)', left: 'clamp(20px, 5vw, 50px)', width: '80px', height: '80px', borderRadius: '50%', backgroundColor: '#00A8E8', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'white', boxShadow: '0 8px 20px rgba(0, 168, 232, 0.4)', fontWeight: 'bold', lineHeight: 1.2, fontSize: '1rem', transition: 'transform 0.3s' }} className="play-button-hover">
+                                                        <span>{lang === 'en' ? 'Watch' : '바로'}</span>
+                                                        <span>{lang === 'en' ? 'Now' : '보기'}</span>
+                                                    </div>
+                                                </div>
+                                            </>
+                                        );
+                                    })()}
+                                </div>
+                            )}
+
+                            {/* Bottom Row: 전체말씀, 시리즈말씀 */}
+                            <div className="home-sketch-row">
+                                <Link href="/sermons" className="home-sketch-card">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ marginBottom: '12px', opacity: 0.9 }}>
+                                        <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+                                    </svg>
+                                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>{lang === 'en' ? 'View All' : '전체말씀'}</span>
+                                </Link>
+                                
+                                <Link href="/sermons?tab=series" className="home-sketch-card">
+                                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ marginBottom: '12px', opacity: 0.9 }}>
+                                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                                    </svg>
+                                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>{lang === 'en' ? 'Series' : '시리즈말씀'}</span>
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Right Column */}
+                        <div className="home-sketch-right">
+                            <Link href="/community?tab=gallery" className="home-sketch-card home-sketch-right-card">
+                                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ marginBottom: '16px', opacity: 0.9 }}>
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                                <span style={{ fontSize: '1.4rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>{lang === 'en' ? 'Gallery' : '교회 앨범'}</span>
+                            </Link>
+                            
+                            <Link href="/community?tab=devotionals" className="home-sketch-card home-sketch-right-card">
+                                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ marginBottom: '16px', opacity: 0.9 }}>
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                </svg>
+                                <span style={{ fontSize: '1.4rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>{lang === 'en' ? 'Devotionals' : '묵상'}</span>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
-                <div className="section-bracket-bottom"></div>
             </section>
 
             {/* Service Times */}
