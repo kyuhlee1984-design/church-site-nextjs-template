@@ -274,7 +274,12 @@ export interface Bulletin {
 }
 
 export const getBulletins = async (): Promise<Bulletin[]> => {
-    const databaseId = process.env.NOTION_BULLETINS_DB_ID || "369d4bd5-7a29-8094-b25a-000b508bb53e";
+    const databaseId = process.env.NOTION_BULLETINS_DB_ID;
+
+    if (!databaseId) {
+        console.error("Missing NOTION_BULLETINS_DB_ID");
+        return [];
+    }
 
     try {
         const response = await (notion as any).databases.query({
