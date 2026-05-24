@@ -3,7 +3,7 @@ import { Client } from "@notionhq/client";
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: Request, { params }: { params: { pageId: string, property: string, index: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ pageId: string, property: string, index: string }> }) {
     const { pageId, property, index: indexStr } = await params;
     const index = parseInt(indexStr || '0', 10);
 
