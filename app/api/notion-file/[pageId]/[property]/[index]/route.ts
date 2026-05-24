@@ -3,11 +3,9 @@ import { Client } from "@notionhq/client";
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
-    const pageId = searchParams.get('pageId');
-    const property = searchParams.get('property');
-    const index = parseInt(searchParams.get('index') || '0', 10);
+export async function GET(request: Request, { params }: { params: { pageId: string, property: string, index: string } }) {
+    const { pageId, property, index: indexStr } = await params;
+    const index = parseInt(indexStr || '0', 10);
 
     if (!pageId || !property) {
         return new NextResponse('Missing pageId or property', { status: 400 });
@@ -17,6 +15,7 @@ export async function GET(request: Request) {
         const notion = new Client({ auth: process.env.NOTION_TOKEN });
         const page: any = await notion.pages.retrieve({ page_id: pageId });
         
+        // Property is automatically URL decoded by Next.js in params
         const propData = page.properties[property];
         if (!propData) {
             return new NextResponse('Property not found', { status: 404 });
@@ -34,8 +33,7 @@ export async function GET(request: Request) {
             return new NextResponse('File URL missing', { status: 404 });
         }
 
-        // Cache the redirect for 30 minutes. Notion URLs expire in 60 minutes.
-        // This ensures clients don't hit the proxy on every single load, while staying safe from expiration.
+        // We use path parameters so the CDN caches each image individually.
         return NextResponse.redirect(fileUrl, {
             status: 302,
             headers: {

@@ -111,7 +111,7 @@ export const getBanners = async (): Promise<Banner[]> => {
                 if (!fileObj) return "";
                 if (fileObj.external?.url) return fileObj.external.url;
                 if (fileObj.file?.url) {
-                    return `/api/notion-file?pageId=${pageId}&property=${encodeURIComponent(property)}&index=${index}`;
+                    return `/api/notion-file/${pageId}/${encodeURIComponent(property)}/${index}`;
                 }
                 return "";
             };
@@ -213,7 +213,7 @@ export const getAlbums = async (): Promise<ChurchAlbum[]> => {
                 if (!fileObj) return "";
                 if (fileObj.external?.url) return fileObj.external.url;
                 if (fileObj.file?.url) {
-                    return `/api/notion-file?pageId=${pageId}&property=${encodeURIComponent(property)}&index=${index}`;
+                    return `/api/notion-file/${pageId}/${encodeURIComponent(property)}/${index}`;
                 }
                 return "";
             };
@@ -317,7 +317,7 @@ export const getBulletins = async (): Promise<Bulletin[]> => {
                 if (!fileObj) return "";
                 if (fileObj.external?.url) return fileObj.external.url;
                 if (fileObj.file?.url) {
-                    return `/api/notion-file?pageId=${pageId}&property=${encodeURIComponent(property)}&index=${index}`;
+                    return `/api/notion-file/${pageId}/${encodeURIComponent(property)}/${index}`;
                 }
                 return "";
             };
