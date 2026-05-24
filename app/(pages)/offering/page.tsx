@@ -44,7 +44,7 @@ export default function Give() {
                 </div>
             </section>
 
-            <section className="container">
+            <section className="container" style={{ marginTop: "4rem", marginBottom: "4rem" }}>
                 <div className="content-wrapper" style={{ maxWidth: "800px", margin: "0 auto" }}>
                     <div className="text-center mb-2xl">
                         <h2 className="mb-md" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)", fontWeight: "bold" }}>
