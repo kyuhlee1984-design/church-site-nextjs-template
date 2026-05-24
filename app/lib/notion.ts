@@ -106,7 +106,17 @@ export const getBanners = async (): Promise<Banner[]> => {
         return response.results.map((page: any) => {
             const title = page.properties.Title?.title?.[0]?.plain_text || "";
             const files = page.properties.Images?.files || [];
-            const imageUrl = files[0]?.file?.url || files[0]?.external?.url || "";
+            
+            const getProxyUrl = (fileObj: any, pageId: string, property: string, index: number = 0) => {
+                if (!fileObj) return "";
+                if (fileObj.external?.url) return fileObj.external.url;
+                if (fileObj.file?.url) {
+                    return `/api/notion-file?pageId=${pageId}&property=${encodeURIComponent(property)}&index=${index}`;
+                }
+                return "";
+            };
+
+            const imageUrl = files[0] ? getProxyUrl(files[0], page.id, "Images", 0) : "";
             
             const startDate = page.properties["Start Date"]?.date?.start || "";
             const endDate = page.properties["End Date"]?.date?.start || "";
@@ -199,15 +209,25 @@ export const getAlbums = async (): Promise<ChurchAlbum[]> => {
         });
 
         return response.results.map((page: any) => {
+            const getProxyUrl = (fileObj: any, pageId: string, property: string, index: number = 0) => {
+                if (!fileObj) return "";
+                if (fileObj.external?.url) return fileObj.external.url;
+                if (fileObj.file?.url) {
+                    return `/api/notion-file?pageId=${pageId}&property=${encodeURIComponent(property)}&index=${index}`;
+                }
+                return "";
+            };
+
             const title = page.properties.Title?.title?.[0]?.plain_text || "";
             const date = page.properties.Date?.date?.start || "";
             
             const coverFiles = page.properties["Cover Image"]?.files || [];
-            const coverImage = coverFiles[0]?.file?.url || coverFiles[0]?.external?.url || "";
+            const coverImage = coverFiles[0] ? getProxyUrl(coverFiles[0], page.id, "Cover Image", 0) : "";
             
             // User named the column "File_Media" instead of "Gallery"
-            const galleryFiles = page.properties.File_Media?.files || page.properties.Gallery?.files || [];
-            const gallery = galleryFiles.map((f: any) => f.file?.url || f.external?.url || "").filter(Boolean);
+            const galleryPropName = page.properties.File_Media ? "File_Media" : (page.properties.Gallery ? "Gallery" : "");
+            const galleryFiles = galleryPropName ? page.properties[galleryPropName].files || [] : [];
+            const gallery = galleryFiles.map((f: any, i: number) => getProxyUrl(f, page.id, galleryPropName, i)).filter(Boolean);
 
             return { id: page.id, title, date, coverImage, gallery };
         });
@@ -293,9 +313,18 @@ export const getBulletins = async (): Promise<Bulletin[]> => {
         });
 
         return response.results.map((page: any) => {
+            const getProxyUrl = (fileObj: any, pageId: string, property: string, index: number = 0) => {
+                if (!fileObj) return "";
+                if (fileObj.external?.url) return fileObj.external.url;
+                if (fileObj.file?.url) {
+                    return `/api/notion-file?pageId=${pageId}&property=${encodeURIComponent(property)}&index=${index}`;
+                }
+                return "";
+            };
+
             const date = page.properties.Date?.date?.start || "";
             const files = page.properties["Files & media"]?.files || [];
-            const fileUrl = files[0]?.file?.url || files[0]?.external?.url || "";
+            const fileUrl = files[0] ? getProxyUrl(files[0], page.id, "Files & media", 0) : "";
 
             return { id: page.id, date, fileUrl };
         });
