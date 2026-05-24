@@ -36,16 +36,20 @@ export default function Header() {
   return (
     <>
     <header className="site-header">
-      <div className="header-container">
-        <Link href="/" className="site-logo">
+      <div className="header-container container">
+        <Link href="/" className="site-logo" style={{ textDecoration: 'none' }}>
           <Image
-            src="/images/church-logo-warmwhite-background.png"
-            alt="Westside Presbyterian Church"
-            width={200}
-            height={50}
+            src="/images/church-logo_only-warmwhite-background.png"
+            alt="Westside Presbyterian Church Logo"
+            width={40}
+            height={40}
             className="logo-image"
             priority
           />
+          <div className="logo-text">
+            <span className="logo-text-ko" style={{ fontFamily: "'Jua', sans-serif", display: lang === "en" ? "none" : "block" }}>캐나다장로교 서부장로교회</span>
+            <span className="logo-text-en" style={{ display: lang === "ko" ? "none" : "block" }}>Westside Presbyterian</span>
+          </div>
         </Link>
 
         <nav className="main-nav" id="mainNav">
@@ -128,27 +132,46 @@ export default function Header() {
                     justify-content: space-between;
                     height: 100%;
                     width: 100%;
-                    max-width: var(--max-width-container);
-                    margin: 0 auto;
-                    padding: 0 clamp(20px, 4vw, 40px);
                     position: relative;
                 }
 
                 .site-logo {
-                    font-family: var(--font-family-heading);
-                    font-size: var(--font-size-2xl);
-                    font-weight: var(--font-weight-bold);
-                    color: var(--color-text-primary);
                     display: flex;
                     align-items: center;
+                    gap: 12px;
                     flex-shrink: 0;
                 }
 
                 .logo-image {
                     height: auto;
-                    max-height: 16px;
+                    max-height: 40px;
                     width: auto;
                     object-fit: contain;
+                }
+
+                .logo-text {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                }
+
+                .logo-text-ko {
+                    font-family: 'Jua', sans-serif;
+                    font-size: 1.1rem;
+                    color: var(--color-text-primary);
+                    font-weight: normal;
+                    letter-spacing: -0.02em;
+                    line-height: 1;
+                }
+
+
+                .logo-text-en {
+                    font-family: var(--font-family-heading);
+                    font-size: 1.05rem;
+                    color: var(--color-primary);
+                    font-weight: 700;
+                    letter-spacing: -0.01em;
+                    line-height: 1;
                 }
 
                 .main-nav {
@@ -282,11 +305,14 @@ export default function Header() {
                 }
 
                 @media (max-width: 1024px) {
-                    .site-logo {
-                        max-width: 150px; /* Shrink logo */
-                    }
                     .logo-image {
-                        max-height: 30px; /* Shrink logo image */
+                        max-height: 32px;
+                    }
+                    .logo-text-ko {
+                        font-size: 0.95rem;
+                    }
+                    .logo-text-en {
+                        font-size: 0.9rem;
                     }
                     .main-nav ul {
                         gap: var(--space-sm); /* Shrink gaps between menus */
@@ -345,11 +371,20 @@ export default function Header() {
                     }
 
                     .site-logo {
-                        max-width: 140px;
+                        gap: 8px;
                     }
 
                     .logo-image {
-                        max-height: 14px;
+                        max-height: 28px;
+                    }
+
+                    .logo-text-ko {
+                        font-size: 0.9rem;
+                    }
+                    
+                    .logo-text-en {
+                        font-family: var(--font-family-heading);
+                        font-size: 0.9rem;
                     }
                 }
             `}</style>

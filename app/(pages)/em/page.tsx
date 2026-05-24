@@ -8,177 +8,330 @@ export default function EM() {
 
     const t = {
         hero: {
-            title: { en: "Welcome to Lighthouse Ministry", ko: "Lighthouse 영어권 예배를 소개합니다" },
-            subtitle: { en: "LOVE, GROW AND LIVE TO MAKE DISCIPLES OF JESUS CHRIST!", ko: "하나님의 사랑, 성장, 그리고 삶을 통해 예수 그리스도의 제자들을 양육합니다!" },
+            title: { en: "LIGHTHOUSE FELLOWSHIP", ko: "LIGHTHOUSE FELLOWSHIP" },
+            subtitle: { en: "Love, Grow and Live to make disciples of Jesus Christ!", ko: "예수 그리스도의 제자를 삼기 위해 사랑하고, 성장하며, 실천합니다!" },
+        },
+        mission: {
+            title: { en: "Mission Statement", ko: "비전 선언문" },
+            statement: { en: "Love, Grow and Live to make disciples of Jesus Christ!", ko: "예수 그리스도의 제자를 삼기 위해 사랑하고, 성장하며, 실천합니다!" },
             verse: { en: "Matthew 28:18-20", ko: "마태복음 28:18-20" },
-            button: { en: "Become a Member", ko: "교회 등록하기" }
+            scripture: { 
+                en: "“18 Then Jesus came to them and said, “All authority in heaven and on earth has been given to me. 19 Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit, 20 and teaching them to obey everything I have commanded you. And surely I am with you always, to the very end of the age.”", 
+                ko: "“18 예수께서 나아와 말씀하여 이르시되 하늘과 땅의 모든 권세를 내게 주셨으니 19 그러므로 너희는 가서 모든 민족을 제자로 삼아 아버지와 아들과 성령의 이름으로 세례를 베풀고 20 내가 너희에게 분부한 모든 것을 가르쳐 지키게 하라 볼지어다 내가 세상 끝날까지 너희와 항상 함께 있으리라 하시니라”" 
+            }
         },
-        about: {
-            title: { en: "About EM", ko: "EM 소개" },
-            content: {
-                en: "Our English Ministry (EM) is a thriving community for English-speaking members of all ages. We provide worship services, Bible studies, and fellowship opportunities designed to help you grow in your faith and build meaningful relationships.",
-                ko: "영어권 예배(EM)는 모든 연령대의 영어권 교인들을 위한 활기찬 공동체입니다. 신앙 성장과 의미 있는 관계 형성을 돕기 위해 예배, 성경 공부, 그리고 친교의 기회를 제공합니다.",
+        coreValues: {
+            love: {
+                title: { en: "Love", ko: "Love" },
+                desc: { en: "Loving God and people.", ko: "하나님과 사람을 사랑합니다." },
+                verses: [
+                    {
+                        text: {
+                            en: "“29 The most important one,” answered Jesus, “is this: ‘Hear, O Israel: The Lord our God, the Lord is one. 30 Love the Lord your God with all your heart and with all your soul and with all your mind and with all your strength.’ 31 The second is this: ‘Love your neighbor as yourself.’ There is no commandment greater than these.”",
+                            ko: "29 예수께서 대답하시되 첫째는 이것이니 이스라엘아 들으라 주 곧 우리 하나님은 유일한 주시라 30 네 마음을 다하고 목숨을 다하고 뜻을 다하고 힘을 다하여 주 너의 하나님을 사랑하라 하신 것이요 31 둘째는 이것이니 네 이웃을 네 자신과 같이 사랑하라 하신 것이라 이보다 더 큰 계명이 없느니라"
+                        },
+                        ref: { en: "Mark 12:29-31", ko: "마가복음 12:29-31" }
+                    },
+                    {
+                        text: {
+                            en: "“34 A new command I give you: Love one another. As I have loved you, so you must love one another. 35 By this all men will know that you are my disciples, if you love one another.”",
+                            ko: "34 새 계명을 너희에게 주노니 서로 사랑하라 내가 너희를 사랑한 것 같이 너희도 서로 사랑하라 35 너희가 서로 사랑하면 이로써 모든 사람이 너희가 내 제자인 줄 알리라"
+                        },
+                        ref: { en: "John 13:34-35", ko: "요한복음 13:34-35" }
+                    }
+                ]
             },
-        },
-        pastor: {
-            title: { en: "EM Pastor", ko: "EM 담당 목사" },
-            name: { en: "Rev. Steven Yoon", ko: "윤상훈 목사" },
-            subtitle: { en: "Associate Pastor - EM", ko: "부목사 - EM 담당" },
-            bio: {
-                en: "Pastor Steven Yoon has been serving our English Ministry with passion and dedication. He is committed to helping young people and English-speaking members discover their purpose in Christ and grow in their faith journey.",
-                ko: "윤상훈 목사님은 열정과 헌신으로 영어권 예배를 섬기고 계십니다. 청년들과 영어권 교인들이 그리스도 안에서 자신의 목적을 발견하고 신앙의 여정에서 성장하도록 돕는 데 헌신하고 있습니다.",
+            grow: {
+                title: { en: "Grow", ko: "Grow" },
+                desc: { en: "Growing in the word of God, commune with Him through prayer and have fellowship with one another.", ko: "말씀 안에서 성장하고, 기도로 교제하며 서로 친교를 나눕니다." },
+                verses: [
+                    {
+                        text: {
+                            en: "“42 They devoted themselves to the apostles’ teaching and to fellowship, to the breaking of bread and to prayer.”",
+                            ko: "42 그들이 사도의 가르침을 받아 서로 교제하고 떡을 떼며 오로지 기도하기를 힘쓰니라"
+                        },
+                        ref: { en: "Acts 2:42", ko: "사도행전 2:42" }
+                    },
+                    {
+                        text: {
+                            en: "“16 All Scripture is God-breathed and is useful for teaching, rebuking, correcting and training in righteousness, 17 so that the servant of God may be thoroughly equipped for every good work.”",
+                            ko: "16 모든 성경은 하나님의 감동으로 된 것으로 교훈과 책망과 바르게 함과 의로 교육하기에 유익하니 17 이는 하나님의 사람으로 온전하게 하며 모든 선한 일을 행할 능력을 갖추게 하려 함이라"
+                        },
+                        ref: { en: "2 Timothy 3:16-17", ko: "디모데후서 3:16-17" }
+                    }
+                ]
             },
-            email: "Forstepssonyoon@gmail.com",
+            live: {
+                title: { en: "Live", ko: "Live" },
+                desc: { en: "Live to fulfill God’s will and desire to expand the kingdom of God.", ko: "하나님의 뜻을 이루고 하나님 나라 확장을 위해 살아갑니다." },
+                verses: [
+                    {
+                        text: {
+                            en: "“44 All the believers were together and had everything in common. 45 They sold property and possessions to give to anyone who had need. 46 Every day they continued to meet together in the temple courts. They broke bread in their homes and ate together with glad and sincere hearts, 47 praising God and enjoying the favour of all the people. And the Lord added to their number daily those who were being saved.”",
+                            ko: "44 믿는 사람이 다 함께 있어 모든 물건을 서로 통용하고 45 또 재산과 소유를 팔아 각 사람의 필요를 따라 나눠 주며 46 날마다 마음을 같이하여 성전에 모이기를 힘쓰고 집에서 떡을 떼며 기쁨과 순전한 마음으로 음식을 먹고 47 하나님을 찬미하며 또 온 백성에게 칭송을 받으니 주께서 구원 받는 사람을 날마다 더하게 하시니라"
+                        },
+                        ref: { en: "Acts 2:44-47", ko: "사도행전 2:44-47" }
+                    }
+                ]
+            }
         },
-        serviceTimes: {
-            title: { en: "Service Times", ko: "예배 시간" },
-            services: [
-                {
-                    day: { en: "Sunday", ko: "주일" },
-                    time: "11:00 AM",
-                    name: { en: "EM Worship Service", ko: "영어권 예배" },
-                    location: { en: "Fellowship Hall", ko: "친교실" },
-                },
-            ],
-        },
-        programs: {
-            title: { en: "Programs & Activities", ko: "프로그램 및 활동" },
+        events: {
+            title: { en: "Events", ko: "모임 안내" },
             items: [
                 {
-                    title: { en: "Sunday Worship", ko: "주일 예배" },
-                    description: {
-                        en: "Contemporary worship service with relevant biblical teachings for young adults and English speakers.",
-                        ko: "청년과 영어권을 위한 현대적인 예배와 성경적 가르침을 제공합니다.",
-                    },
-                },
-                {
-                    title: { en: "Small Groups", ko: "소그룹" },
-                    description: {
-                        en: "Connect with others through Bible studies and fellowship in small group settings.",
-                        ko: "소그룹에서 성경 공부와 교제를 통해 다른 사람들과 연결됩니다.",
-                    },
-                },
-                {
-                    title: { en: "Youth Ministry", ko: "청소년 사역" },
-                    description: {
-                        en: "Engaging programs for teens to grow in faith and build lasting friendships.",
-                        ko: "청소년들이 신앙 안에서 성장하고 지속적인 우정을 쌓을 수 있는 프로그램입니다.",
-                    },
-                },
-                {
-                    title: { en: "Outreach & Service", ko: "전도 및 봉사" },
-                    description: {
-                        en: "Opportunities to serve the community and share God's love through action.",
-                        ko: "지역사회를 섬기고 행동으로 하나님의 사랑을 나누는 기회를 제공합니다.",
-                    },
-                },
-            ],
+                    title: { en: "Friday Bible Study", ko: "금요 성경공부" },
+                    time: { en: "Fridays 10 pm on Zoom", ko: "금요일 밤 10시 (Zoom)" },
+                    desc: { en: "(Contact Pastor Steven for Zoom Link)", ko: "(Zoom 링크는 담당 목회자에게 문의)" }
+                }
+            ]
         },
-        cta: {
-            title: { en: "Join Us", ko: "함께하세요" },
-            description: {
-                en: "Whether you're new to faith or have been walking with Christ for years, you'll find a welcoming community at EM. Come as you are!",
-                ko: "신앙이 처음이든 오랫동안 그리스도와 함께 걸어온 분이든, EM에서 환영하는 공동체를 찾을 수 있습니다. 있는 그대로 오세요!",
-            },
-            button: { en: "Contact Us", ko: "문의하기" },
+        schedule: {
+            title: { en: "Sunday Schedule", ko: "주일 주요일정" },
+            items: [
+                { name: { en: "Sunday Service", ko: "주일 예배" }, time: "9:40 AM – 11:00 AM" },
+                { name: { en: "Small Group", ko: "소그룹 모임" }, time: "11:00 AM – 11:30 AM" },
+                { name: { en: "Bible Study", ko: "성경 공부" }, time: "11:30 AM – 12:30 PM" },
+                { name: { en: "Prayer Meeting", ko: "기도회" }, time: "1:00 PM – 1:40 PM" }
+            ]
         },
+        contact: {
+            title: { en: "Contact", ko: "문의 및 오시는 길" },
+            addressTitle: { en: "Address:", ko: "주소:" },
+            address: "3637 Grand Park Dr, Mississauga, ON L5B 4L6",
+            officeTitle: { en: "Church Office:", ko: "교회 사무실:" },
+            office: "(905) 803-8800",
+            emailTitle: { en: "Email:", ko: "이메일:" },
+            email: "westsidelighthouse@gmail.com"
+        }
     };
 
     return (
         <>
+            {/* Hero Section */}
             <section className="hero-banner" style={{ backgroundImage: "url('/images/hero-em.jpg')" }}>
-                <div className="hero-content" style={{ textAlign: "left", width: "100%", maxWidth: "1200px", padding: "var(--space-2xl)", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-                    <h1 className="hero-title" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", marginBottom: "0.2rem", fontWeight: "800" }}>
+                <div className="hero-content" style={{ textAlign: "center", width: "100%", maxWidth: "1200px", padding: "var(--space-2xl)", margin: "0 auto", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <h1 className="hero-title" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", marginBottom: "1rem", fontWeight: "800", letterSpacing: "0.05em" }}>
                         {t.hero.title[lang]}
                     </h1>
-                    <p className="hero-subtitle" style={{ fontSize: "clamp(1rem, 1.8vw, 1.2rem)", marginBottom: "0.2rem", fontWeight: "500", letterSpacing: "0.05em", color: "rgba(255, 255, 255, 0.95)" }}>
+                    <p className="hero-subtitle" style={{ fontSize: "clamp(1.1rem, 2vw, 1.5rem)", fontWeight: "500", letterSpacing: "0.05em", color: "rgba(255, 255, 255, 0.95)" }}>
                         {t.hero.subtitle[lang]}
                     </p>
-                    <p style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.1rem)", fontStyle: "italic", marginBottom: "0", color: "rgba(255, 255, 255, 0.85)" }}>
-                        {t.hero.verse[lang]}
-                    </p>
                 </div>
             </section>
 
-            {/* About EM Section */}
-            <section className="container">
-                <h2 className="section-title">{t.about.title[lang]}</h2>
-                <div className="content-wrapper">
-                    <p className="text-lg" style={{ maxWidth: "800px", margin: "0 auto", lineHeight: "var(--line-height-relaxed)" }}>
-                        {t.about.content[lang]}
+            {/* Mission Statement */}
+            <section style={{ padding: "var(--section-padding-y) 0", backgroundColor: "var(--color-bg-main)" }}>
+                <div className="container" style={{ textAlign: "center", maxWidth: "800px", margin: "0 auto" }}>
+                    <h2 className="section-title" style={{ marginBottom: "var(--space-xl)" }}>{t.mission.title[lang]}</h2>
+                    <p style={{ fontSize: "1.5rem", fontWeight: "bold", color: "var(--color-primary)", marginBottom: "var(--space-lg)", lineHeight: "1.6" }}>
+                        {t.mission.statement[lang]}
                     </p>
+                    <div style={{ backgroundColor: "var(--color-bg-secondary)", padding: "var(--space-xl)", borderRadius: "var(--radius-lg)", marginTop: "var(--space-lg)" }}>
+                        <p style={{ fontStyle: "italic", lineHeight: "1.8", fontSize: "1.1rem", marginBottom: "var(--space-md)", color: "var(--color-text-primary)" }}>
+                            {t.mission.scripture[lang]}
+                        </p>
+                        <p style={{ fontWeight: "bold", color: "var(--color-accent)", textAlign: "right" }}>
+                            - {t.mission.verse[lang]} -
+                        </p>
+                    </div>
                 </div>
             </section>
 
-            {/* Pastor Section */}
-            <section className="container" style={{ backgroundColor: "var(--color-bg-secondary)" }}>
-                <div className="content-wrapper">
-                    <div className="card scroll-fade">
-                        <div className="card-content">
-                            <h3 className="card-title">{t.pastor.name[lang]}</h3>
-                            <div className="card-meta">{t.pastor.subtitle[lang]}</div>
-                            <p className="card-description">{t.pastor.bio[lang]}</p>
-                            <div className="card-footer">
-                                <a href={`mailto:${t.pastor.email}`} className="btn btn-secondary">
-                                    {t.pastor.email}
-                                </a>
+            {/* Core Values - 3 Cards Layout */}
+            <section style={{ 
+                padding: "var(--space-4xl) 0",
+                backgroundColor: "#1e1b4b",
+                backgroundImage: "radial-gradient(circle at 0% 0%, #1d4ed8 0%, transparent 50%), radial-gradient(circle at 100% 0%, #171e36 0%, transparent 50%), radial-gradient(circle at 0% 100%, #831843 0%, transparent 50%), radial-gradient(circle at 100% 100%, #ea580c 0%, transparent 50%)",
+            }}>
+                <div className="container" style={{ padding: "0 var(--space-md)" }}>
+                    <div style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                        gap: "var(--space-xl)",
+                        alignItems: "stretch"
+                    }}>
+                        
+                        {/* Love Card */}
+                        <div className="card scroll-fade" style={{ 
+                            background: "rgba(255, 255, 255, 0.05)", 
+                            backdropFilter: "blur(12px)", 
+                            WebkitBackdropFilter: "blur(12px)",
+                            border: "1px solid rgba(255, 255, 255, 0.1)", 
+                            borderRadius: "var(--radius-2xl)", 
+                            padding: "var(--space-2xl)", 
+                            color: "white",
+                            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+                            display: "flex",
+                            flexDirection: "column"
+                        }}>
+                            <h3 style={{ fontSize: "2.5rem", color: "#fca5a5", marginBottom: "var(--space-md)", fontWeight: "800", letterSpacing: "1px", textAlign: "center" }}>
+                                {t.coreValues.love.title[lang]}
+                            </h3>
+                            <p style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "var(--space-xl)", color: "rgba(255,255,255,0.9)", textAlign: "center", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
+                                {t.coreValues.love.desc[lang]}
+                            </p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)', marginTop: "auto" }}>
+                                {t.coreValues.love.verses.map((v, i) => (
+                                    <div key={i}>
+                                        <p style={{ fontStyle: "italic", fontSize: "1rem", lineHeight: "1.6", marginBottom: "var(--space-xs)", color: "rgba(255,255,255,0.85)", wordBreak: "keep-all" }}>
+                                            {v.text[lang]}
+                                        </p>
+                                        <p style={{ fontWeight: "700", fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", textAlign: "right" }}>
+                                            - {v.ref[lang]}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
+                        </div>
+
+                        {/* Grow Card */}
+                        <div className="card scroll-fade" style={{ 
+                            background: "rgba(255, 255, 255, 0.05)", 
+                            backdropFilter: "blur(12px)", 
+                            WebkitBackdropFilter: "blur(12px)",
+                            border: "1px solid rgba(255, 255, 255, 0.1)", 
+                            borderRadius: "var(--radius-2xl)", 
+                            padding: "var(--space-2xl)", 
+                            color: "white",
+                            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+                            display: "flex",
+                            flexDirection: "column",
+                            transitionDelay: "0.1s"
+                        }}>
+                            <h3 style={{ fontSize: "2.5rem", color: "#fcd34d", marginBottom: "var(--space-md)", fontWeight: "800", letterSpacing: "1px", textAlign: "center" }}>
+                                {t.coreValues.grow.title[lang]}
+                            </h3>
+                            <p style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "var(--space-xl)", color: "rgba(255,255,255,0.9)", textAlign: "center", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
+                                {t.coreValues.grow.desc[lang]}
+                            </p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)', marginTop: "auto" }}>
+                                {t.coreValues.grow.verses.map((v, i) => (
+                                    <div key={i}>
+                                        <p style={{ fontStyle: "italic", fontSize: "1rem", lineHeight: "1.6", marginBottom: "var(--space-xs)", color: "rgba(255,255,255,0.85)", wordBreak: "keep-all" }}>
+                                            {v.text[lang]}
+                                        </p>
+                                        <p style={{ fontWeight: "700", fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", textAlign: "right" }}>
+                                            - {v.ref[lang]}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Live Card */}
+                        <div className="card scroll-fade" style={{ 
+                            background: "rgba(255, 255, 255, 0.05)", 
+                            backdropFilter: "blur(12px)", 
+                            WebkitBackdropFilter: "blur(12px)",
+                            border: "1px solid rgba(255, 255, 255, 0.1)", 
+                            borderRadius: "var(--radius-2xl)", 
+                            padding: "var(--space-2xl)", 
+                            color: "white",
+                            boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
+                            display: "flex",
+                            flexDirection: "column",
+                            transitionDelay: "0.2s"
+                        }}>
+                            <h3 style={{ fontSize: "2.5rem", color: "#fdba74", marginBottom: "var(--space-md)", fontWeight: "800", letterSpacing: "1px", textAlign: "center" }}>
+                                {t.coreValues.live.title[lang]}
+                            </h3>
+                            <p style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "var(--space-xl)", color: "rgba(255,255,255,0.9)", textAlign: "center", whiteSpace: "pre-wrap", wordBreak: "keep-all" }}>
+                                {t.coreValues.live.desc[lang]}
+                            </p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)', marginTop: "auto" }}>
+                                {t.coreValues.live.verses.map((v, i) => (
+                                    <div key={i}>
+                                        <p style={{ fontStyle: "italic", fontSize: "1rem", lineHeight: "1.6", marginBottom: "var(--space-xs)", color: "rgba(255,255,255,0.85)", wordBreak: "keep-all" }}>
+                                            {t.coreValues.live.verses[i].text[lang]}
+                                        </p>
+                                        <p style={{ fontWeight: "700", fontSize: "0.9rem", color: "rgba(255,255,255,0.6)", textAlign: "right" }}>
+                                            - {t.coreValues.live.verses[i].ref[lang]}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            {/* Schedule & Events */}
+            <section style={{ padding: "var(--section-padding-y) 0", backgroundColor: "var(--color-bg-main)", position: "relative", zIndex: 10 }}>
+                <div className="container" style={{ maxWidth: "1000px", margin: "0 auto" }}>
+                    <div style={{ 
+                        display: "grid", 
+                        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                        color: "white", 
+                        borderRadius: "var(--radius-lg)",
+                        overflow: "hidden",
+                        boxShadow: "var(--shadow-lg)",
+                        position: "relative"
+                    }} className="scroll-fade">
+                        {/* Blurred Background Image */}
+                        <div style={{
+                            position: "absolute",
+                            top: 0, left: 0, right: 0, bottom: 0,
+                            backgroundImage: "url('/images/schedule-bg.jpg')",
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            filter: "blur(6px) brightness(0.4)",
+                            transform: "scale(1.05)", // prevent blurry edges showing white
+                            zIndex: 0
+                        }} />
+
+                        {/* Sunday Schedule */}
+                        <div style={{ padding: "var(--space-2xl)", position: "relative", zIndex: 1 }}>
+                            <h2 className="section-title" style={{ textAlign: "left", color: "white", marginTop: 0, marginBottom: "var(--space-xl)", display: "block" }}>{t.schedule.title[lang]}</h2>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-md)" }}>
+                                {t.schedule.items.map((item, i) => (
+                                    <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.2)", paddingBottom: "var(--space-sm)" }}>
+                                        <span style={{ fontSize: "1.1rem", fontWeight: "500" }}>{item.name[lang]}</span>
+                                        <span style={{ fontSize: "1.1rem", color: "#fcd34d", fontWeight: "bold" }}>{item.time}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Events */}
+                        <div style={{ padding: "var(--space-2xl)", backgroundColor: "rgba(0,0,0,0.3)", position: "relative", zIndex: 1 }}>
+                            <h2 className="section-title" style={{ textAlign: "left", color: "white", marginTop: 0, marginBottom: "var(--space-xl)", display: "block" }}>{t.events.title[lang]}</h2>
+                            {t.events.items.map((item, i) => (
+                                <div key={i} style={{ marginBottom: "var(--space-lg)" }}>
+                                    <h3 style={{ fontSize: "1.4rem", color: "#fcd34d", marginBottom: "var(--space-xs)", fontWeight: "bold" }}>
+                                        {item.title[lang]}
+                                    </h3>
+                                    <p style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "4px" }}>
+                                        {item.time[lang]}
+                                    </p>
+                                    <p style={{ color: "rgba(255,255,255,0.7)", fontStyle: "italic" }}>
+                                        {item.desc[lang]}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Service Times */}
-            <section className="container">
-                <h2 className="section-title">{t.serviceTimes.title[lang]}</h2>
-                <div className="card-grid card-grid-1">
-                    {t.serviceTimes.services.map((service, index) => (
-                        <div key={index} className="card scroll-fade">
-                            <div className="card-content">
-                                <div style={{ display: "flex", alignItems: "center", gap: "var(--space-lg)", marginBottom: "var(--space-md)" }}>
-                                    <div style={{ fontSize: "var(--font-size-2xl)", fontWeight: "var(--font-weight-bold)", color: "var(--color-accent)" }}>
-                                        {service.time}
-                                    </div>
-                                    <div>
-                                        <div style={{ fontSize: "var(--font-size-lg)", fontWeight: "var(--font-weight-semibold)" }}>
-                                            {service.name[lang]}
-                                        </div>
-                                        <div style={{ fontSize: "var(--font-size-sm)", color: "var(--color-text-light)" }}>
-                                            {service.day[lang]} • {service.location[lang]}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            {/* Contact */}
+            <section style={{ padding: "var(--section-padding-y) 0", backgroundColor: "var(--color-bg-secondary)", position: "relative", zIndex: 10 }}>
+                <div className="container" style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
+                    <h2 className="section-title" style={{ marginBottom: "var(--space-xl)" }}>{t.contact.title[lang]}</h2>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-md)", fontSize: "1.1rem" }}>
+                        <div>
+                            <span style={{ fontWeight: "bold", color: "var(--color-primary)", marginRight: "8px" }}>{t.contact.addressTitle[lang]}</span>
+                            <span>{t.contact.address}</span>
                         </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Programs */}
-            <section className="container">
-                <h2 className="section-title">{t.programs.title[lang]}</h2>
-                <div className="card-grid card-grid-2">
-                    {t.programs.items.map((program, index) => (
-                        <div key={index} className="card scroll-fade">
-                            <div className="card-content">
-                                <h3 className="card-title">{program.title[lang]}</h3>
-                                <p className="card-description">{program.description[lang]}</p>
-                            </div>
+                        <div>
+                            <span style={{ fontWeight: "bold", color: "var(--color-primary)", marginRight: "8px" }}>{t.contact.officeTitle[lang]}</span>
+                            <span>{t.contact.office}</span>
                         </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* CTA Section */}
-            <section className="container" style={{ backgroundColor: "var(--color-bg-secondary)" }}>
-                <div className="content-wrapper" style={{ textAlign: "center" }}>
-                    <h2 className="section-title">{t.cta.title[lang]}</h2>
-                    <p className="text-lg" style={{ maxWidth: "600px", margin: "0 auto var(--space-2xl)" }}>
-                        {t.cta.description[lang]}
-                    </p>
-                    <Link href="/about#staff" className="btn btn-primary btn-lg">
-                        {t.cta.button[lang]}
-                    </Link>
+                        <div>
+                            <span style={{ fontWeight: "bold", color: "var(--color-primary)", marginRight: "8px" }}>{t.contact.emailTitle[lang]}</span>
+                            <a href={`mailto:${t.contact.email}`} style={{ color: "var(--color-accent)", textDecoration: "none", fontWeight: "bold" }}>{t.contact.email}</a>
+                        </div>
+                    </div>
                 </div>
             </section>
         </>

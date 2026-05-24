@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
+import { useModalBackButton } from "../hooks/useModalBackButton";
 
 function getYoutubeEmbedUrl(url: string): string | null {
     if (!url) return null;
@@ -24,6 +25,14 @@ export default function VideoModal({ url, title, onClose }: VideoModalProps) {
     const [isVisible, setIsVisible] = useState(false);
     const [mounted, setMounted] = useState(false);
 
+    const handleClose = useCallback(() => {
+        setIsVisible(false);
+        setTimeout(onClose, 250);
+    }, [onClose]);
+
+    // Handle mobile back button
+    useModalBackButton(!!url, handleClose);
+
     useEffect(() => {
         setMounted(true);
     }, []);
@@ -40,10 +49,6 @@ export default function VideoModal({ url, title, onClose }: VideoModalProps) {
         };
     }, [url]);
 
-    const handleClose = useCallback(() => {
-        setIsVisible(false);
-        setTimeout(onClose, 250);
-    }, [onClose]);
 
     // Close on Escape key
     useEffect(() => {

@@ -28,16 +28,16 @@ export default function Footer() {
                         <div style={{ display: 'flex', gap: '32px', flexWrap: 'wrap', lineHeight: '1.6' }}>
                             <div style={{ flex: '1 1 min-content' }}>
                                 <p style={{ margin: '0 0 4px 0', whiteSpace: 'nowrap' }}><strong>{lang === "en" ? "Sunday Worship" : "주일 예배"}</strong></p>
-                                <p style={{ margin: 0, opacity: 0.8, fontSize: '0.9em', whiteSpace: 'nowrap' }}>{lang === "en" ? "1st Service:" : "1부:"} 10:00 AM</p>
-                                <p style={{ margin: '0 0 12px 0', opacity: 0.8, fontSize: '0.9em', whiteSpace: 'nowrap' }}>{lang === "en" ? "2nd Service:" : "2부:"} 12:30 PM</p>
+                                <p style={{ margin: 0, opacity: 0.8, fontSize: '0.9em', whiteSpace: 'nowrap' }}>{lang === "en" ? "1st Service:" : "1부:"} 9:40 AM</p>
+                                <p style={{ margin: '0 0 12px 0', opacity: 0.8, fontSize: '0.9em', whiteSpace: 'nowrap' }}>{lang === "en" ? "2nd Service:" : "2부:"} 11:40 AM</p>
                             </div>
                             <div style={{ flex: '1 1 min-content' }}>
                                 <p style={{ margin: '0 0 4px 0', whiteSpace: 'nowrap' }}><strong>{lang === "en" ? "English (EM)" : "영어권 (EM)"}</strong></p>
-                                <p style={{ margin: '0 0 12px 0', opacity: 0.8, fontSize: '0.9em', whiteSpace: 'nowrap' }}>{lang === "en" ? "Sundays:" : "주일:"} 11:00 AM</p>
+                                <p style={{ margin: '0 0 12px 0', opacity: 0.8, fontSize: '0.9em', whiteSpace: 'nowrap' }}>{lang === "en" ? "Sundays:" : "주일:"} 9:40 AM</p>
                             </div>
                             <div style={{ flex: '1 1 min-content' }}>
                                 <p style={{ margin: '0 0 4px 0', whiteSpace: 'nowrap' }}><strong>{lang === "en" ? "Youth Service" : "청년부 예배"}</strong></p>
-                                <p style={{ margin: 0, opacity: 0.8, fontSize: '0.9em', whiteSpace: 'nowrap' }}>{lang === "en" ? "Sundays:" : "주일:"} 2:40 PM</p>
+                                <p style={{ margin: 0, opacity: 0.8, fontSize: '0.9em', whiteSpace: 'nowrap' }}>{lang === "en" ? "Sundays:" : "주일:"} 2:30 PM</p>
                             </div>
                         </div>
                     </div>

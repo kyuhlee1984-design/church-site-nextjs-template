@@ -27,10 +27,11 @@ export default function HomeClient({ recentSermons, liveStream }: { recentSermon
                 {
                     category: { en: "Sunday Worship", ko: "주일예배" },
                     items: [
-                        { time: { en: "10:00 AM", ko: "오전 10:00" }, name: { en: "1st Service (Korean)", ko: "1부 예배 (한국어)" } },
-                        { time: { en: "11:00 AM", ko: "오전 11:00" }, name: { en: "English Ministry (EM)", ko: "영어권 (EM)" } },
-                        { time: { en: "12:30 PM", ko: "오후 12:30" }, name: { en: "2nd Service (Korean)", ko: "2부 예배 (한국어)" } },
-                        { time: { en: "2:40 PM", ko: "오후 2:40" }, name: { en: "Youth Service", ko: "청년부 예배" } },
+                        { time: { en: "8:00 AM", ko: "오전 8:00" }, name: { en: "Steward Service", ko: "청지기 예배" } },
+                        { time: { en: "9:40 AM", ko: "오전 9:40" }, name: { en: "1st Service (Korean)", ko: "1부 예배 (한국어)" } },
+                        { time: { en: "11:40 AM", ko: "오전 11:40" }, name: { en: "2nd Service (Korean)", ko: "2부 예배 (한국어)" } },
+                        { time: { en: "9:40 AM", ko: "오전 9:40" }, name: { en: "English Ministry (EM)", ko: "영어권 (EM)" } },
+                        { time: { en: "2:30 PM", ko: "오후 2:30" }, name: { en: "Youth Service", ko: "청년부 예배" } },
                     ],
                 },
                 {
@@ -171,7 +172,7 @@ export default function HomeClient({ recentSermons, liveStream }: { recentSermon
                                         style={{
                                             width: '100%',
                                             height: '100%',
-                                            objectFit: index === 0 ? 'contain' : 'cover',
+                                            objectFit: 'cover',
                                         }}
                                     />
                                 </div>
@@ -231,9 +232,8 @@ export default function HomeClient({ recentSermons, liveStream }: { recentSermon
                             </p>
                             
                             <div style={{ marginBottom: '40px', color: 'rgba(255,255,255,0.9)', fontSize: '0.95rem', lineHeight: '1.8' }}>
-                                <p style={{ color: 'rgba(255, 255, 255, 0.9)', marginBottom: '4px' }}>{lang === 'en' ? 'Sunday Worship:' : '주일예배:'} {lang === 'en' ? '1st (10:00 AM) / 2nd (12:30 PM)' : '1부 (오전 10시) / 2부 (오후 12시 30분)'}</p>
-                                <p style={{ color: 'rgba(255, 255, 255, 0.9)', marginBottom: '4px' }}>{lang === 'en' ? 'English (EM):' : '영어권 (EM):'} {lang === 'en' ? 'Sunday (11:00 AM)' : '주일 (오전 11시)'}</p>
-                                <p style={{ color: 'rgba(255, 255, 255, 0.9)', margin: 0 }}>{lang === 'en' ? 'Youth Service: Sunday (2:40 PM)' : '청년부 예배: 주일 (오후 2시 40분)'}</p>
+                                <p style={{ color: 'rgba(255, 255, 255, 0.9)', marginBottom: '4px' }}>{lang === 'en' ? 'Sunday Worship:' : '주일예배:'} {lang === 'en' ? '1st (9:40 AM) / 2nd (11:40 AM)' : '1부 (오전 9:40) / 2부 (오전 11:40)'}</p>
+                                <p style={{ color: 'rgba(255, 255, 255, 0.9)', marginBottom: 0 }}>{lang === 'en' ? 'EM:' : '영어권 (EM):'} {lang === 'en' ? 'Sunday (9:40 AM)' : '주일 (오전 9:40)'} | {lang === 'en' ? 'Youth:' : '청년부:'} {lang === 'en' ? 'Sunday (2:30 PM)' : '주일 (오후 2:30)'}</p>
                             </div>
                             
                             <Link href="/live" className="btn" style={{ alignSelf: 'flex-start', backgroundColor: 'white', color: '#0B1B2D', padding: '12px 24px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 'bold', textDecoration: 'none' }}>

@@ -1,10 +1,17 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 export default function About() {
     const { lang } = useLanguage();
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const t = {
         hero: {
@@ -138,7 +145,7 @@ export default function About() {
                         { time: { en: "9:40 AM", ko: "오전 9:40" }, name: { en: "1st Service", ko: "1부" } },
                         { time: { en: "11:40 AM", ko: "오전 11:40" }, name: { en: "2nd Service", ko: "2부" } },
                         { time: { en: "9:40 AM", ko: "오전 9:40" }, name: { en: "EM Service", ko: "EM 예배" } },
-                        { time: { en: "2:40 PM", ko: "오후 2:40" }, name: { en: "Youth Service", ko: "청년예배" } },
+                        { time: { en: "2:30 PM", ko: "오후 2:30" }, name: { en: "Youth Service", ko: "청년예배" } },
                     ],
                 },
                 {
@@ -411,6 +418,40 @@ export default function About() {
                     </div>
                 </div>
             </section>
+
+            {/* Global Scroll to Top Button for the page */}
+            {mounted && createPortal(
+                <button
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    style={{
+                        position: 'fixed',
+                        bottom: '30px',
+                        right: '30px',
+                        width: '50px',
+                        height: '50px',
+                        borderRadius: '50%',
+                        backgroundColor: 'var(--color-accent)',
+                        color: 'white',
+                        border: 'none',
+                        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 9000,
+                        opacity: 0.9,
+                        transition: 'opacity 0.2s'
+                    }}
+                    onMouseOver={(e) => e.currentTarget.style.opacity = '1'}
+                    onMouseOut={(e) => e.currentTarget.style.opacity = '0.9'}
+                    title={lang === 'en' ? 'Scroll to top' : '맨 위로'}
+                >
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18 15l-6-6-6 6"/>
+                    </svg>
+                </button>,
+                document.body
+            )}
 
             <style jsx>{`
         .quick-nav {

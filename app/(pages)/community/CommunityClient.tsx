@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import ReactMarkdown from "react-markdown";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { ChurchAlbum, Devotional, Banner, Bulletin } from "../../lib/notion";
+import { useModalBackButton } from "../../hooks/useModalBackButton";
 
 export default function CommunityClient({ banners, albums, devotionals, bulletins = [] }: { banners: Banner[]; albums: ChurchAlbum[]; devotionals?: Devotional[]; bulletins?: Bulletin[] }) {
     const { lang } = useLanguage();
@@ -24,6 +25,11 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
 
     // Modal state for Events
     const [viewingEvent, setViewingEvent] = useState<Banner | null>(null);
+
+    // Handle mobile hardware back button for modals
+    useModalBackButton(!!selectedAlbum, () => setSelectedAlbum(null));
+    useModalBackButton(!!viewingDevotional, () => setViewingDevotional(null));
+    useModalBackButton(!!viewingEvent, () => setViewingEvent(null));
 
     // Carousel State for Top 3 Banners
     const [currentSlide, setCurrentSlide] = useState(0);

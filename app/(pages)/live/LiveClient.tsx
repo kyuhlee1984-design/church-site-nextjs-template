@@ -39,9 +39,9 @@ export default function LiveClient({ liveStream }: { liveStream: LiveStream | nu
             first: { en: "1st Service", ko: "1부 예배" },
             english: { en: "English (EM)", ko: "영어권 (EM)" },
             second: { en: "2nd Service", ko: "2부 예배" },
-            firstTime: { en: "10:00 AM", ko: "오전 10:00" },
-            englishTime: { en: "11:00 AM", ko: "오전 11:00" },
-            secondTime: { en: "12:30 PM", ko: "오후 12:30" },
+            firstTime: { en: "9:40 AM", ko: "오전 9:40" },
+            englishTime: { en: "9:40 AM", ko: "오전 9:40" },
+            secondTime: { en: "11:40 AM", ko: "오전 11:40" },
             note: {
                 en: "Can't make it in person? We live stream both services every Sunday!",
                 ko: "직접 참석하기 어려우신가요? 매주 일요일 두 예배 모두 실시간 중계합니다!",
@@ -81,7 +81,7 @@ export default function LiveClient({ liveStream }: { liveStream: LiveStream | nu
                                 {t.serviceTimes.first[lang]} ({t.serviceTimes.firstTime[lang]}) / {t.serviceTimes.english[lang]} ({t.serviceTimes.englishTime[lang]}) / {t.serviceTimes.second[lang]} ({t.serviceTimes.secondTime[lang]})
                             </p>
                             <p style={{ color: 'rgba(255, 255, 255, 0.9)', marginTop: 'var(--space-sm)' }}>
-                                <strong>{lang === 'en' ? 'Youth Service:' : '청년부 예배:'}</strong> {lang === 'en' ? 'Sunday (2:40 PM)' : '주일 (오후 2시 40분)'}
+                                <strong>{lang === 'en' ? 'Youth Service:' : '청년부 예배:'}</strong> {lang === 'en' ? 'Sunday (2:30 PM)' : '주일 (오후 2시 30분)'}
                             </p>
                             <p style={{ color: 'rgba(255, 255, 255, 0.7)', marginTop: 'var(--space-md)', fontSize: '0.85rem' }}>
                                 {t.serviceTimes.note[lang]}

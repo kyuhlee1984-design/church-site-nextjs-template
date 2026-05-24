@@ -1,6 +1,7 @@
 /* ========================================
    MODERN CHURCH WEBSITE - DESIGN SYSTEM
    ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
 @font-face {
     font-family: 'Cafe24Shiningstar';
@@ -11,6 +12,20 @@
 @font-face {
     font-family: 'SangSangRock';
     src: url('https://gcore.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/SangSangRockOTF.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Ownglyph_positive';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2604-1@1.1/Ownglyph_positive.woff2') format('woff2');
+    font-weight: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
     font-weight: normal;
     font-display: swap;
 }
@@ -261,8 +276,8 @@ section {
 
 .card-title {
     font-size: var(--font-size-2xl);
-    font-family: 'SangSangRock', cursive;
-    font-weight: normal; /* SangSangRock doesn't need bold to look good, it's naturally thick */
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-bold);
     margin-bottom: var(--space-md);
     color: var(--color-text-primary);
     line-height: 1.3;
@@ -563,7 +578,8 @@ section {
     margin-top: var(--space-xl);
     margin-bottom: var(--space-xs); /* reduced bottom margin so bracket sits right underneath */
     font-size: 1.8rem;
-    font-family: var(--font-family-cute);
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-bold);
     color: var(--color-text-primary);
     display: flex;
     align-items: baseline;
@@ -571,8 +587,8 @@ section {
 }
 
 .section-title span:first-child {
-    font-family: var(--font-family-cute);
-    font-weight: 400 !important; /* Jua is naturally thick, faux bold ruins it */
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-bold);
     letter-spacing: 1px;
 }
 
