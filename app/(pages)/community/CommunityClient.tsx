@@ -531,7 +531,7 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
                                                         )}
                                                     </div>
                                                     <div className="card-content" style={{ padding: '16px' }}>
-                                                        <h3 style={{ fontSize: '1.1rem', margin: '0 0 4px 0' }}>{album.title}</h3>
+                                                        <h3 style={{ fontSize: '1rem', margin: '0 0 4px 0' }}>{album.title}</h3>
                                                         {album.date && (
                                                             <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
                                                                 {album.date}
