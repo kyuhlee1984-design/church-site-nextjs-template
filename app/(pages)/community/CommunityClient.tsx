@@ -19,7 +19,7 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
 
     // Filter state for Gallery
     const [searchQuery, setSearchQuery] = useState("");
-    const [selectedTag, setSelectedTag] = useState<string | null>(null);
+    const [selectedAlbumTitle, setSelectedAlbumTitle] = useState<string | null>(null);
 
     // Modal state for Devotionals
     const [viewingDevotional, setViewingDevotional] = useState<Devotional | null>(null);
@@ -124,14 +124,14 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
         }
     };
 
-    // Extract unique tags from albums
-    const allTags = Array.from(new Set(albums.flatMap(album => album.tags || []))).sort();
+    // Extract unique album titles from albums
+    const allAlbumTitles = Array.from(new Set(albums.map(album => album.albumTitle).filter(Boolean))).sort();
 
-    // Filter albums by search query and selected tag
+    // Filter albums by search query (tag) and selected album title
     const filteredAlbums = albums.filter(album => {
-        const matchesSearch = album.title.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesTag = selectedTag ? (album.tags && album.tags.includes(selectedTag)) : true;
-        return matchesSearch && matchesTag;
+        const matchesSearch = searchQuery ? (album.tags && album.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))) : true;
+        const matchesAlbumTitle = selectedAlbumTitle ? (album.albumTitle === selectedAlbumTitle) : true;
+        return matchesSearch && matchesAlbumTitle;
     });
 
     // Group albums by year
@@ -386,7 +386,7 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
                             <div style={{ position: 'relative', width: '100%', maxWidth: '440px' }}>
                                 <input
                                     type="text"
-                                    placeholder={lang === 'en' ? "Search albums..." : "앨범 제목 검색..."}
+                                    placeholder={lang === 'en' ? "Search tags..." : "태그 검색..."}
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     style={{
@@ -420,48 +420,48 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
                                 )}
                             </div>
 
-                            {/* Tag Filters */}
-                            {allTags.length > 0 && (
+                            {/* Album Title Filters */}
+                            {allAlbumTitles.length > 0 && (
                                 <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyItems: 'center', justifyContent: 'center', width: '100%', maxWidth: '800px' }}>
                                     <button
-                                        onClick={() => setSelectedTag(null)}
+                                        onClick={() => setSelectedAlbumTitle(null)}
                                         style={{
                                             padding: '8px 20px',
                                             borderRadius: '24px',
-                                            border: selectedTag === null ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
-                                            background: selectedTag === null ? 'var(--color-accent)' : 'transparent',
-                                            color: selectedTag === null ? 'white' : 'var(--color-text-secondary)',
+                                            border: selectedAlbumTitle === null ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
+                                            background: selectedAlbumTitle === null ? 'var(--color-accent)' : 'transparent',
+                                            color: selectedAlbumTitle === null ? 'white' : 'var(--color-text-secondary)',
                                             cursor: 'pointer',
                                             fontSize: '0.95rem',
-                                            fontWeight: selectedTag === null ? 'bold' : '500',
+                                            fontWeight: selectedAlbumTitle === null ? 'bold' : '500',
                                             transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                                            boxShadow: selectedTag === null ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
+                                            boxShadow: selectedAlbumTitle === null ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
                                         }}
-                                        onMouseEnter={(e) => { if (selectedTag !== null) { e.currentTarget.style.background = 'var(--color-secondary)'; e.currentTarget.style.color = 'var(--color-text-primary)'; } }}
-                                        onMouseLeave={(e) => { if (selectedTag !== null) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--color-text-secondary)'; } }}
+                                        onMouseEnter={(e) => { if (selectedAlbumTitle !== null) { e.currentTarget.style.background = 'var(--color-secondary)'; e.currentTarget.style.color = 'var(--color-text-primary)'; } }}
+                                        onMouseLeave={(e) => { if (selectedAlbumTitle !== null) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--color-text-secondary)'; } }}
                                     >
                                         {lang === 'en' ? 'All' : '전체'}
                                     </button>
-                                    {allTags.map(tag => (
+                                    {allAlbumTitles.map(albumTitle => (
                                         <button
-                                            key={tag}
-                                            onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
+                                            key={albumTitle}
+                                            onClick={() => setSelectedAlbumTitle(albumTitle === selectedAlbumTitle ? null : albumTitle)}
                                             style={{
                                                 padding: '8px 20px',
                                                 borderRadius: '24px',
-                                                border: tag === selectedTag ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
-                                                background: tag === selectedTag ? 'var(--color-accent)' : 'transparent',
-                                                color: tag === selectedTag ? 'white' : 'var(--color-text-secondary)',
+                                                border: albumTitle === selectedAlbumTitle ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
+                                                background: albumTitle === selectedAlbumTitle ? 'var(--color-accent)' : 'transparent',
+                                                color: albumTitle === selectedAlbumTitle ? 'white' : 'var(--color-text-secondary)',
                                                 cursor: 'pointer',
                                                 fontSize: '0.95rem',
-                                                fontWeight: tag === selectedTag ? 'bold' : '500',
+                                                fontWeight: albumTitle === selectedAlbumTitle ? 'bold' : '500',
                                                 transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                                                boxShadow: tag === selectedTag ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
+                                                boxShadow: albumTitle === selectedAlbumTitle ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
                                             }}
-                                            onMouseEnter={(e) => { if (tag !== selectedTag) { e.currentTarget.style.background = 'var(--color-secondary)'; e.currentTarget.style.color = 'var(--color-text-primary)'; } }}
-                                            onMouseLeave={(e) => { if (tag !== selectedTag) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--color-text-secondary)'; } }}
+                                            onMouseEnter={(e) => { if (albumTitle !== selectedAlbumTitle) { e.currentTarget.style.background = 'var(--color-secondary)'; e.currentTarget.style.color = 'var(--color-text-primary)'; } }}
+                                            onMouseLeave={(e) => { if (albumTitle !== selectedAlbumTitle) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--color-text-secondary)'; } }}
                                         >
-                                            {tag}
+                                            {albumTitle}
                                         </button>
                                     ))}
                                 </div>

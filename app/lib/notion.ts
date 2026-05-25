@@ -188,6 +188,7 @@ export interface ChurchAlbum {
     coverImage: string;
     gallery: string[];
     tags: string[];
+    albumTitle: string;
 }
 
 export const getAlbums = async (): Promise<ChurchAlbum[]> => {
@@ -233,7 +234,9 @@ export const getAlbums = async (): Promise<ChurchAlbum[]> => {
             const tagsProp = page.properties.Tags?.rich_text?.[0]?.plain_text || "";
             const tags = tagsProp ? tagsProp.split(',').map((t: string) => t.trim()).filter(Boolean) : [];
 
-            return { id: page.id, title, date, coverImage, gallery, tags };
+            const albumTitleProp = page.properties['Album Title']?.rich_text?.[0]?.plain_text || "";
+
+            return { id: page.id, title, date, coverImage, gallery, tags, albumTitle: albumTitleProp };
         });
     } catch (error) {
         console.error("Error fetching albums from Notion:", error);
