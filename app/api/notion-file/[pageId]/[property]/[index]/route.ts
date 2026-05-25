@@ -15,10 +15,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ page
         const notion = new Client({ auth: process.env.NOTION_TOKEN });
         const page: any = await notion.pages.retrieve({ page_id: pageId });
         
-        // Property is automatically URL decoded by Next.js in params
-        const propData = page.properties[property];
+        // Decode the property just in case Next.js didn't decode it automatically
+        const decodedProperty = decodeURIComponent(property);
+        const propData = page.properties[decodedProperty];
         if (!propData) {
-            return new NextResponse('Property not found', { status: 404 });
+            return new NextResponse('Property not found: ' + decodedProperty, { status: 404 });
         }
 
         const files = propData.files;
