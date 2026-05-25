@@ -17,6 +17,10 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
     const [selectedAlbum, setSelectedAlbum] = useState<ChurchAlbum | null>(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+    // Filter state for Gallery
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
     // Modal state for Devotionals
     const [viewingDevotional, setViewingDevotional] = useState<Devotional | null>(null);
     const [devotionalContent, setDevotionalContent] = useState<string | null>(null);
@@ -120,8 +124,18 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
         }
     };
 
+    // Extract unique tags from albums
+    const allTags = Array.from(new Set(albums.flatMap(album => album.tags || []))).sort();
+
+    // Filter albums by search query and selected tag
+    const filteredAlbums = albums.filter(album => {
+        const matchesSearch = album.title.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesTag = selectedTag ? (album.tags && album.tags.includes(selectedTag)) : true;
+        return matchesSearch && matchesTag;
+    });
+
     // Group albums by year
-    const albumsByYear = albums.reduce((acc, album) => {
+    const albumsByYear = filteredAlbums.reduce((acc, album) => {
         const year = album.date ? album.date.substring(0, 4) : 'Unknown';
         if (!acc[year]) acc[year] = [];
         acc[year].push(album);
@@ -354,7 +368,88 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
 
                 {activeTab === "gallery" && (
                     <div id="gallery-top" style={{ scrollMarginTop: '100px' }}>
-                        {albums.length > 0 ? (
+                        
+                        {/* Search and Filter Section */}
+                        <div style={{ marginBottom: '32px', display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
+                            {/* Search Bar */}
+                            <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
+                                <input
+                                    type="text"
+                                    placeholder={lang === 'en' ? "Search albums..." : "앨범 제목 검색..."}
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px 20px 12px 48px',
+                                        borderRadius: '30px',
+                                        border: '1px solid var(--color-border)',
+                                        background: 'var(--color-bg-primary)',
+                                        fontSize: '1rem',
+                                        color: 'var(--color-text-primary)',
+                                        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                                        outline: 'none',
+                                        transition: 'all 0.3s ease'
+                                    }}
+                                    onFocus={(e) => e.target.style.boxShadow = '0 4px 12px rgba(74, 111, 165, 0.2)'}
+                                    onBlur={(e) => e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)'}
+                                />
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-light)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)' }}>
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                {searchQuery && (
+                                    <button 
+                                        onClick={() => setSearchQuery("")}
+                                        style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                    >
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    </button>
+                                )}
+                            </div>
+
+                            {/* Tag Filters */}
+                            {allTags.length > 0 && (
+                                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyItems: 'center', justifyContent: 'center', width: '100%', maxWidth: '800px' }}>
+                                    <button
+                                        onClick={() => setSelectedTag(null)}
+                                        style={{
+                                            padding: '6px 16px',
+                                            borderRadius: '20px',
+                                            border: selectedTag === null ? 'none' : '1px solid var(--color-border)',
+                                            background: selectedTag === null ? 'var(--color-accent)' : 'var(--color-secondary)',
+                                            color: selectedTag === null ? 'white' : 'var(--color-text-secondary)',
+                                            cursor: 'pointer',
+                                            fontSize: '0.9rem',
+                                            fontWeight: 'bold',
+                                            transition: 'all 0.2s ease',
+                                        }}
+                                    >
+                                        {lang === 'en' ? 'All' : '전체'}
+                                    </button>
+                                    {allTags.map(tag => (
+                                        <button
+                                            key={tag}
+                                            onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
+                                            style={{
+                                                padding: '6px 16px',
+                                                borderRadius: '20px',
+                                                border: tag === selectedTag ? 'none' : '1px solid var(--color-border)',
+                                                background: tag === selectedTag ? 'var(--color-accent)' : 'var(--color-secondary)',
+                                                color: tag === selectedTag ? 'white' : 'var(--color-text-secondary)',
+                                                cursor: 'pointer',
+                                                fontSize: '0.9rem',
+                                                fontWeight: 'bold',
+                                                transition: 'all 0.2s ease',
+                                            }}
+                                        >
+                                            {tag}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {filteredAlbums.length > 0 ? (
                             <>
                                 {/* Year Tabs */}
                                 <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '32px', flexWrap: 'wrap' }}>
@@ -432,7 +527,7 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
                             </>
                         ) : (
                             <div style={{ textAlign: 'center', padding: '64px', color: 'var(--color-text-secondary)' }}>
-                                {lang === 'en' ? 'No albums available.' : '등록된 앨범이 없습니다.'}
+                                {lang === 'en' ? 'No albums match your search criteria.' : '조건에 맞는 앨범이 없습니다.'}
                             </div>
                         )}
                     </div>
