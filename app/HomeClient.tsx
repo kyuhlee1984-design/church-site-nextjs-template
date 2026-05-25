@@ -248,7 +248,7 @@ export default function HomeClient({ recentSermons, liveStream }: { recentSermon
                         {/* Right Side: Image */}
                         <div className="image-pane" style={{ position: 'relative', width: '100%', height: '100%', backgroundColor: '#2a2a2a' }}>
                             <Image 
-                                src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=1000&auto=format&fit=crop" 
+                                src="/images/live-service-bg.jpg" 
                                 alt="Worship Service" 
                                 fill 
                                 style={{ objectFit: 'cover' }} 
