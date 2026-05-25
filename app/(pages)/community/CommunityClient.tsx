@@ -205,75 +205,86 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
                 )}
 
                 {/* Tabs */}
-                <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-md)', marginBottom: 'var(--space-3xl)' }}>
-                    <button 
-                        onClick={() => setActiveTab("bulletin")}
-                        style={{
-                            padding: '12px 24px',
-                            borderRadius: '30px',
-                            border: 'none',
-                            cursor: 'pointer',
-                            fontSize: '1rem',
-                            fontWeight: 'var(--font-weight-medium)',
-                            background: activeTab === "bulletin" ? 'var(--color-accent)' : 'var(--color-secondary)',
-                            color: activeTab === "bulletin" ? 'white' : 'var(--color-text-primary)',
-                            boxShadow: activeTab === "bulletin" ? '0 4px 12px rgba(74, 111, 165, 0.3)' : 'none',
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        {lang === 'en' ? 'Bulletin' : '주보'}
-                    </button>
-                    <button 
-                        onClick={() => setActiveTab("events")}
-                        style={{
-                            padding: '12px 24px',
-                            borderRadius: '30px',
-                            border: 'none',
-                            cursor: 'pointer',
-                            fontSize: '1rem',
-                            fontWeight: 'var(--font-weight-medium)',
-                            background: activeTab === "events" ? 'var(--color-accent)' : 'var(--color-secondary)',
-                            color: activeTab === "events" ? 'white' : 'var(--color-text-primary)',
-                            boxShadow: activeTab === "events" ? '0 4px 12px rgba(74, 111, 165, 0.3)' : 'none',
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        {lang === 'en' ? 'Upcoming Events' : '다가올 행사'}
-                    </button>
-                    <button 
-                        onClick={() => setActiveTab("gallery")}
-                        style={{
-                            padding: '12px 24px',
-                            borderRadius: '30px',
-                            border: 'none',
-                            cursor: 'pointer',
-                            fontSize: '1rem',
-                            fontWeight: 'var(--font-weight-medium)',
-                            background: activeTab === "gallery" ? 'var(--color-accent)' : 'var(--color-secondary)',
-                            color: activeTab === "gallery" ? 'white' : 'var(--color-text-primary)',
-                            boxShadow: activeTab === "gallery" ? '0 4px 12px rgba(74, 111, 165, 0.3)' : 'none',
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        {lang === 'en' ? 'Westside Gallery' : '서부 갤러리'}
-                    </button>
-                    <button 
-                        onClick={() => setActiveTab("devotionals")}
-                        style={{
-                            padding: '12px 24px',
-                            borderRadius: '30px',
-                            border: 'none',
-                            cursor: 'pointer',
-                            fontSize: '1rem',
-                            fontWeight: 'var(--font-weight-medium)',
-                            background: activeTab === "devotionals" ? 'var(--color-accent)' : 'var(--color-secondary)',
-                            color: activeTab === "devotionals" ? 'white' : 'var(--color-text-primary)',
-                            boxShadow: activeTab === "devotionals" ? '0 4px 12px rgba(74, 111, 165, 0.3)' : 'none',
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        {lang === 'en' ? "Devotionals" : '푸른초장'}
-                    </button>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-3xl)' }}>
+                    <div style={{ 
+                        display: 'inline-flex', 
+                        flexWrap: 'wrap',
+                        justifyContent: 'center', 
+                        gap: '8px', 
+                        background: 'var(--color-secondary)', 
+                        padding: '8px', 
+                        borderRadius: '40px',
+                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)'
+                    }}>
+                        <button 
+                            onClick={() => setActiveTab("bulletin")}
+                            style={{
+                                padding: '10px 24px',
+                                borderRadius: '30px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                fontWeight: activeTab === "bulletin" ? 'bold' : '500',
+                                background: activeTab === "bulletin" ? 'var(--color-accent)' : 'transparent',
+                                color: activeTab === "bulletin" ? 'white' : 'var(--color-text-secondary)',
+                                boxShadow: activeTab === "bulletin" ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
+                        >
+                            {lang === 'en' ? 'Bulletin' : '주보'}
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab("events")}
+                            style={{
+                                padding: '10px 24px',
+                                borderRadius: '30px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                fontWeight: activeTab === "events" ? 'bold' : '500',
+                                background: activeTab === "events" ? 'var(--color-accent)' : 'transparent',
+                                color: activeTab === "events" ? 'white' : 'var(--color-text-secondary)',
+                                boxShadow: activeTab === "events" ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
+                        >
+                            {lang === 'en' ? 'Upcoming Events' : '다가올 행사'}
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab("gallery")}
+                            style={{
+                                padding: '10px 24px',
+                                borderRadius: '30px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                fontWeight: activeTab === "gallery" ? 'bold' : '500',
+                                background: activeTab === "gallery" ? 'var(--color-accent)' : 'transparent',
+                                color: activeTab === "gallery" ? 'white' : 'var(--color-text-secondary)',
+                                boxShadow: activeTab === "gallery" ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
+                        >
+                            {lang === 'en' ? 'Westside Gallery' : '서부 갤러리'}
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab("devotionals")}
+                            style={{
+                                padding: '10px 24px',
+                                borderRadius: '30px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                fontWeight: activeTab === "devotionals" ? 'bold' : '500',
+                                background: activeTab === "devotionals" ? 'var(--color-accent)' : 'transparent',
+                                color: activeTab === "devotionals" ? 'white' : 'var(--color-text-secondary)',
+                                boxShadow: activeTab === "devotionals" ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
+                        >
+                            {lang === 'en' ? "Devotionals" : '푸른초장'}
+                        </button>
+                    </div>
                 </div>
 
                 {/* Content */}
@@ -370,9 +381,9 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
                     <div id="gallery-top" style={{ scrollMarginTop: '100px' }}>
                         
                         {/* Search and Filter Section */}
-                        <div style={{ marginBottom: '32px', display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
+                        <div style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center' }}>
                             {/* Search Bar */}
-                            <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
+                            <div style={{ position: 'relative', width: '100%', maxWidth: '440px' }}>
                                 <input
                                     type="text"
                                     placeholder={lang === 'en' ? "Search albums..." : "앨범 제목 검색..."}
@@ -380,49 +391,54 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
                                     onChange={(e) => setSearchQuery(e.target.value)}
                                     style={{
                                         width: '100%',
-                                        padding: '12px 20px 12px 48px',
+                                        padding: '14px 20px 14px 48px',
                                         borderRadius: '30px',
-                                        border: '1px solid var(--color-border)',
+                                        border: '1px solid rgba(0,0,0,0.06)',
                                         background: 'var(--color-bg-primary)',
-                                        fontSize: '1rem',
+                                        fontSize: '1.05rem',
                                         color: 'var(--color-text-primary)',
-                                        boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+                                        boxShadow: '0 8px 24px rgba(0,0,0,0.06)',
                                         outline: 'none',
                                         transition: 'all 0.3s ease'
                                     }}
-                                    onFocus={(e) => e.target.style.boxShadow = '0 4px 12px rgba(74, 111, 165, 0.2)'}
-                                    onBlur={(e) => e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)'}
+                                    onFocus={(e) => { e.target.style.boxShadow = '0 12px 32px rgba(0,0,0,0.1)'; e.target.style.border = '1px solid var(--color-border)'; }}
+                                    onBlur={(e) => { e.target.style.boxShadow = '0 8px 24px rgba(0,0,0,0.06)'; e.target.style.border = '1px solid rgba(0,0,0,0.06)'; }}
                                 />
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-light)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)' }}>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-light)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ position: 'absolute', left: '18px', top: '50%', transform: 'translateY(-50%)' }}>
                                     <circle cx="11" cy="11" r="8"></circle>
                                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                                 </svg>
                                 {searchQuery && (
                                     <button 
                                         onClick={() => setSearchQuery("")}
-                                        style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-light)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                        style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', background: 'var(--color-secondary)', border: 'none', cursor: 'pointer', color: 'var(--color-text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '28px', height: '28px', borderRadius: '50%', transition: 'all 0.2s ease' }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--color-border)'; e.currentTarget.style.color = 'var(--color-text-primary)'; }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--color-secondary)'; e.currentTarget.style.color = 'var(--color-text-secondary)'; }}
                                     >
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                     </button>
                                 )}
                             </div>
 
                             {/* Tag Filters */}
                             {allTags.length > 0 && (
-                                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyItems: 'center', justifyContent: 'center', width: '100%', maxWidth: '800px' }}>
+                                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyItems: 'center', justifyContent: 'center', width: '100%', maxWidth: '800px' }}>
                                     <button
                                         onClick={() => setSelectedTag(null)}
                                         style={{
-                                            padding: '6px 16px',
-                                            borderRadius: '20px',
-                                            border: selectedTag === null ? 'none' : '1px solid var(--color-border)',
-                                            background: selectedTag === null ? 'var(--color-accent)' : 'var(--color-secondary)',
+                                            padding: '8px 20px',
+                                            borderRadius: '24px',
+                                            border: selectedTag === null ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
+                                            background: selectedTag === null ? 'var(--color-accent)' : 'transparent',
                                             color: selectedTag === null ? 'white' : 'var(--color-text-secondary)',
                                             cursor: 'pointer',
-                                            fontSize: '0.9rem',
-                                            fontWeight: 'bold',
-                                            transition: 'all 0.2s ease',
+                                            fontSize: '0.95rem',
+                                            fontWeight: selectedTag === null ? 'bold' : '500',
+                                            transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                                            boxShadow: selectedTag === null ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
                                         }}
+                                        onMouseEnter={(e) => { if (selectedTag !== null) { e.currentTarget.style.background = 'var(--color-secondary)'; e.currentTarget.style.color = 'var(--color-text-primary)'; } }}
+                                        onMouseLeave={(e) => { if (selectedTag !== null) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--color-text-secondary)'; } }}
                                     >
                                         {lang === 'en' ? 'All' : '전체'}
                                     </button>
@@ -431,16 +447,19 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
                                             key={tag}
                                             onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
                                             style={{
-                                                padding: '6px 16px',
-                                                borderRadius: '20px',
-                                                border: tag === selectedTag ? 'none' : '1px solid var(--color-border)',
-                                                background: tag === selectedTag ? 'var(--color-accent)' : 'var(--color-secondary)',
+                                                padding: '8px 20px',
+                                                borderRadius: '24px',
+                                                border: tag === selectedTag ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
+                                                background: tag === selectedTag ? 'var(--color-accent)' : 'transparent',
                                                 color: tag === selectedTag ? 'white' : 'var(--color-text-secondary)',
                                                 cursor: 'pointer',
-                                                fontSize: '0.9rem',
-                                                fontWeight: 'bold',
-                                                transition: 'all 0.2s ease',
+                                                fontSize: '0.95rem',
+                                                fontWeight: tag === selectedTag ? 'bold' : '500',
+                                                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                                                boxShadow: tag === selectedTag ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
                                             }}
+                                            onMouseEnter={(e) => { if (tag !== selectedTag) { e.currentTarget.style.background = 'var(--color-secondary)'; e.currentTarget.style.color = 'var(--color-text-primary)'; } }}
+                                            onMouseLeave={(e) => { if (tag !== selectedTag) { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--color-text-secondary)'; } }}
                                         >
                                             {tag}
                                         </button>
