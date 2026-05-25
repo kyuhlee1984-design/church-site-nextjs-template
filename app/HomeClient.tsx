@@ -125,6 +125,7 @@ export default function HomeClient({ recentSermons, liveStream }: { recentSermon
             setCurrentSlide((prev) => (prev + 1) % totalSlides);
         }, 8000);
         return () => clearInterval(interval);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [totalSlides]);
 
     const goToSlide = (index: number) => {
