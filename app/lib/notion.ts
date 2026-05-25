@@ -80,6 +80,7 @@ export interface Banner {
     title: string;
     imageUrl: string;
     date?: string;
+    endDate?: string;
     order: number;
     description?: string;
 }
@@ -133,7 +134,7 @@ export const getBanners = async (): Promise<Banner[]> => {
             const order = page.properties.Order?.number || 0;
             const description = page.properties.Description?.rich_text?.[0]?.plain_text || "";
 
-            return { id: page.id, title, imageUrl, date: dateStr, order, description };
+            return { id: page.id, title, imageUrl, date: dateStr, endDate: endDate || startDate, order, description };
         });
     } catch (error) {
         console.error("Error fetching banners from Notion:", error);

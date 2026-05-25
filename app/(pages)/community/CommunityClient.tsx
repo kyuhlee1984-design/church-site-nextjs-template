@@ -10,7 +10,7 @@ import { useModalBackButton } from "../../hooks/useModalBackButton";
 
 export default function CommunityClient({ banners, albums, devotionals, bulletins = [] }: { banners: Banner[]; albums: ChurchAlbum[]; devotionals?: Devotional[]; bulletins?: Bulletin[] }) {
     const { lang } = useLanguage();
-    const [activeTab, setActiveTab] = useState<"bulletin" | "events" | "gallery" | "devotionals">("bulletin");
+    const [activeTab, setActiveTab] = useState<"bulletin" | "events" | "past-events" | "gallery" | "devotionals">("bulletin");
 
     // Modal state for Gallery Carousel
     const [viewingAlbum, setViewingAlbum] = useState<ChurchAlbum | null>(null);
@@ -38,7 +38,12 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
     // Carousel State for Top 3 Banners
     const [currentSlide, setCurrentSlide] = useState(0);
     const [transitionStyle, setTransitionStyle] = useState({ clipPath: 'circle(150% at 50% 50%)', transform: 'scale(1)', filter: 'blur(0px)' });
-    const topBanners = banners.slice(0, 3);
+    // Filter events into upcoming and past
+    const todayStr = new Date().toISOString().split('T')[0]; // "YYYY-MM-DD"
+    const upcomingBanners = banners.filter(b => !b.endDate || b.endDate >= todayStr);
+    const pastBanners = banners.filter(b => b.endDate && b.endDate < todayStr);
+
+    const topBanners = upcomingBanners.slice(0, 3);
     const totalSlides = topBanners.length;
 
     const effects = [
@@ -59,8 +64,10 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
         if (typeof window !== 'undefined') {
             const params = new URLSearchParams(window.location.search);
             const tabParam = params.get('tab');
-            if (tabParam === 'bulletin' || tabParam === 'events' || tabParam === 'gallery' || tabParam === 'devotionals') {
-                setActiveTab(tabParam as "bulletin" | "events" | "gallery" | "devotionals");
+            if (tabParam) {
+                if (tabParam === 'bulletin' || tabParam === 'events' || tabParam === 'past-events' || tabParam === 'gallery' || tabParam === 'devotionals') {
+                    setActiveTab(tabParam as "bulletin" | "events" | "past-events" | "gallery" | "devotionals");
+                }
             }
         }
     }, []);
@@ -104,6 +111,10 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
         } finally {
             setIsLoadingContent(false);
         }
+    };
+
+    const openEvent = (banner: Banner) => {
+        setViewingEvent(banner);
     };
 
     const openAlbum = (album: ChurchAlbum) => {
@@ -251,6 +262,23 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
                             {lang === 'en' ? 'Upcoming Events' : '다가올 행사'}
                         </button>
                         <button 
+                            onClick={() => setActiveTab("past-events")}
+                            style={{
+                                padding: '10px 24px',
+                                borderRadius: '30px',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontSize: '1rem',
+                                fontWeight: activeTab === "past-events" ? 'bold' : '500',
+                                background: activeTab === "past-events" ? 'var(--color-accent)' : 'transparent',
+                                color: activeTab === "past-events" ? 'white' : 'var(--color-text-secondary)',
+                                boxShadow: activeTab === "past-events" ? '0 4px 12px rgba(0,0,0,0.15)' : 'none',
+                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                            }}
+                        >
+                            {lang === 'en' ? 'Past Events' : '지난 행사'}
+                        </button>
+                        <button 
                             onClick={() => setActiveTab("gallery")}
                             style={{
                                 padding: '10px 24px',
@@ -346,8 +374,8 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
 
                 {activeTab === "events" && (
                     <div className="events-list-container" style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '900px', margin: '0 auto' }}>
-                        {banners.length > 0 ? banners.map((banner) => (
-                            <div key={banner.id} className="event-list-item scroll-fade" onClick={() => setViewingEvent(banner)}>
+                        {upcomingBanners.length > 0 ? upcomingBanners.map((banner) => (
+                            <div key={banner.id} className="event-list-item scroll-fade" onClick={() => openEvent(banner)}>
                                 <div className="event-list-date">
                                     <div className="event-date-icon">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -371,7 +399,40 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
                             </div>
                         )) : (
                             <div style={{ textAlign: 'center', padding: 'var(--space-2xl)', color: 'var(--color-text-light)' }}>
-                                {lang === 'en' ? 'No events available at the moment.' : '등록된 행사가 없습니다.'}
+                                {lang === 'en' ? 'No upcoming events available at the moment.' : '등록된 다가올 행사가 없습니다.'}
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {activeTab === "past-events" && (
+                    <div className="events-list-container" style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '900px', margin: '0 auto' }}>
+                        {pastBanners.length > 0 ? pastBanners.map((banner) => (
+                            <div key={banner.id} className="event-list-item scroll-fade" style={{ opacity: 0.7 }} onClick={() => openEvent(banner)}>
+                                <div className="event-list-date">
+                                    <div className="event-date-icon">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                                        </svg>
+                                    </div>
+                                    <span className="event-date-text">{banner.date}</span>
+                                </div>
+                                <div className="event-list-content">
+                                    <h3 className="event-list-title" style={{ color: 'var(--color-text-secondary)' }}>{banner.title}</h3>
+                                </div>
+                                <div className="event-list-arrow">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                        )) : (
+                            <div style={{ textAlign: 'center', padding: 'var(--space-2xl)', color: 'var(--color-text-light)' }}>
+                                {lang === 'en' ? 'No past events available.' : '지난 행사가 없습니다.'}
                             </div>
                         )}
                     </div>
