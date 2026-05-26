@@ -74,8 +74,7 @@ export default function VideoModal({ url, title, onClose }: VideoModalProps) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                background: isVisible ? "rgba(0, 0, 0, 0.85)" : "rgba(0, 0, 0, 0)",
-                backdropFilter: isVisible ? "blur(8px)" : "none",
+                background: isVisible ? "rgba(0, 0, 0, 0.95)" : "rgba(0, 0, 0, 0)",
                 transition: "all 0.25s ease",
                 cursor: "pointer",
             }}
@@ -86,7 +85,6 @@ export default function VideoModal({ url, title, onClose }: VideoModalProps) {
                     position: "relative",
                     width: "min(90vw, 960px)",
                     maxHeight: "90vh",
-                    transform: isVisible ? "scale(1)" : "scale(0.85)",
                     opacity: isVisible ? 1 : 0,
                     transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                     cursor: "default",
@@ -110,7 +108,6 @@ export default function VideoModal({ url, title, onClose }: VideoModalProps) {
                         alignItems: "center",
                         justifyContent: "center",
                         fontSize: "20px",
-                        backdropFilter: "blur(4px)",
                         transition: "background 0.2s",
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.3)")}
@@ -134,11 +131,12 @@ export default function VideoModal({ url, title, onClose }: VideoModalProps) {
                     borderRadius: "12px",
                     overflow: "hidden",
                     boxShadow: "0 25px 60px rgba(0,0,0,0.5)",
+                    transform: "translateZ(0)", // Hardware acceleration for better performance without breaking fullscreen
                 }}>
                     <iframe
                         src={embedUrl}
                         title={title || "Video"}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                         allowFullScreen
                         style={{
                             position: "absolute",
