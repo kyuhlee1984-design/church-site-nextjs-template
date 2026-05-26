@@ -32,10 +32,19 @@ export async function GET(request: Request, { params }: { params: Promise<{ page
             return new NextResponse('File URL missing', { status: 404 });
         }
 
-        // We use path parameters so the CDN caches each image individually.
-        return NextResponse.redirect(fileUrl, {
-            status: 302,
+        // We fetch the image and return it directly to avoid Next.js Image component domain restrictions
+        const fileResponse = await fetch(fileUrl);
+        if (!fileResponse.ok) {
+            return new NextResponse('Failed to fetch file from Notion', { status: fileResponse.status });
+        }
+        
+        const contentType = fileResponse.headers.get('content-type');
+        const buffer = await fileResponse.arrayBuffer();
+
+        return new NextResponse(buffer, {
+            status: 200,
             headers: {
+                'Content-Type': contentType || 'application/octet-stream',
                 'Cache-Control': 'public, max-age=1800, s-maxage=1800, stale-while-revalidate=86400',
             }
         });
