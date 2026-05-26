@@ -32,6 +32,7 @@ export default function CommunityClient({ banners, albums, devotionals, bulletin
 
     // Handle mobile hardware back button for modals
     useModalBackButton(!!selectedAlbum, () => setSelectedAlbum(null));
+    useModalBackButton(!!viewingAlbum, () => setViewingAlbum(null));
     useModalBackButton(!!viewingDevotional, () => setViewingDevotional(null));
     useModalBackButton(!!viewingEvent, () => setViewingEvent(null));
 

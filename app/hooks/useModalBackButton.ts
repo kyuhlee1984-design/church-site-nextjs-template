@@ -1,37 +1,39 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 /**
  * Custom hook to close a modal when the mobile hardware back button is pressed.
- * It pushes a dummy state to the history stack when the modal opens,
- * and intercepts the back button to close the modal instead of navigating.
+ * It handles stacked modals gracefully by using unique IDs.
  */
 export function useModalBackButton(isOpen: boolean, onClose: () => void) {
+    const idRef = useRef(Math.random().toString(36).substring(2, 9));
     const [historyPushed, setHistoryPushed] = useState(false);
 
-    // Manage pushing and cleaning up the dummy history state
     useEffect(() => {
         if (isOpen && !historyPushed) {
-            window.history.pushState({ modalOpen: true }, '');
+            window.history.pushState({ modalId: idRef.current }, '');
             setHistoryPushed(true);
         } else if (!isOpen && historyPushed) {
-            // If the modal was closed normally (e.g. clicking X),
-            // we should pop the dummy state we created.
-            // We check if the state is still there to avoid popping real history.
-            if (window.history.state?.modalOpen) {
+            // Only pop if the current history state is EXACTLY our modalId
+            // This prevents popping if the user already navigated back using hardware button
+            if (window.history.state?.modalId === idRef.current) {
                 window.history.back();
             }
             setHistoryPushed(false);
         }
     }, [isOpen, historyPushed]);
 
-    // Listen for the hardware back button
     useEffect(() => {
-        const handlePopState = () => {
-            if (isOpen) {
+        const handlePopState = (e: PopStateEvent) => {
+            if (isOpen && historyPushed) {
+                // If the new state matches our ID, we just became the active top-most state again.
+                if (e.state?.modalId === idRef.current) {
+                    return;
+                }
+                // Otherwise, the user popped to a state BEFORE us, so we must close.
                 onClose();
             }
         };
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
-    }, [isOpen, onClose]);
+    }, [isOpen, historyPushed, onClose]);
 }
